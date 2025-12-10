@@ -279,7 +279,7 @@
       font-size: clamp(2.4rem, 3.2vw, 3rem);
       line-height: 1.06;
       letter-spacing: -0.02em;
-      margin: 0 0 14px;
+      margin: 0 0 10px;
       color: var(--ws-text-main);
       max-width: 18ch;
       position: relative;
@@ -332,13 +332,20 @@
       50.1%, 100% { opacity: 0; }
     }
 
+    .ws-hero-sub {
+      margin: 4px 0 14px;
+      font-size: 0.98rem;
+      max-width: 34ch;
+      color: var(--ws-text-soft);
+    }
+
     .ws-hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       align-items: center;
       justify-content: center;
-      margin-top: 10px;
+      margin-top: 8px;
       margin-bottom: 0;
     }
 
@@ -551,6 +558,29 @@
       max-width: 48ch;
     }
 
+    /* SECTION BANDS (full-width feeling inside page) */
+
+    .ws-section-band {
+      border-radius: 22px;
+      padding: 22px 20px 24px;
+      margin-top: 6px;
+    }
+
+    .ws-section-band--about {
+      background: #e9eefc;
+      border: 1px solid rgba(167, 182, 222, 0.9);
+    }
+
+    .ws-section-band--benefit {
+      background: #f0f3ff;
+      border: 1px solid rgba(193, 204, 238, 0.9);
+    }
+
+    .ws-section-band--gallery {
+      background: #edf1ff;
+      border: 1px solid rgba(182, 195, 233, 0.9);
+    }
+
     /* ABOUT SECTION */
 
     .ws-about-grid {
@@ -601,8 +631,8 @@
 
     .ws-about-card {
       border-radius: var(--ws-radius-lg);
-      background: var(--ws-surface);
-      border: 1px solid var(--ws-border-subtle);
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(184, 197, 229, 0.9);
       padding: 14px 16px;
       box-shadow: 0 12px 28px rgba(13, 32, 78, 0.04);
       font-size: 0.86rem;
@@ -812,8 +842,6 @@
 
     .ws-placeholder {
       border-radius: var(--ws-radius-lg);
-      border: 1px dashed var(--ws-border-subtle);
-      background: var(--ws-surface);
       padding: 18px 16px;
       display: flex;
       align-items: center;
@@ -825,22 +853,21 @@
 
     .ws-placeholder--carousel {
       min-height: 160px;
-      background-image: repeating-linear-gradient(
-        -45deg,
-        #f5f7ff 0,
-        #f5f7ff 6px,
-        #ffffff 6px,
-        #ffffff 12px
-      );
+      background: transparent;
+      border: none;
     }
 
     .ws-placeholder--visual {
       min-height: 220px;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
     }
 
     .ws-placeholder--mini {
       min-height: 80px;
       font-size: 0.8rem;
+      background: var(--ws-surface-soft);
+      border: 1px dashed var(--ws-border-subtle);
     }
 
     /* Benefit sections per outcome */
@@ -868,6 +895,7 @@
       font-weight: 600;
       margin-bottom: 6px;
       color: var(--ws-text-main);
+      text-align: left;
     }
 
     .ws-benefit-kicker {
@@ -876,12 +904,17 @@
       letter-spacing: 0.18em;
       color: var(--ws-text-muted);
       margin-bottom: 4px;
+      text-align: left;
     }
 
     @media (max-width: 900px) {
       .ws-benefit-layout {
         grid-template-columns: minmax(0, 1fr);
         min-height: auto;
+      }
+      .ws-benefit-heading,
+      .ws-benefit-kicker {
+        text-align: left;
       }
     }
 
@@ -1382,6 +1415,10 @@
           <div class="ws-hero-cursor" aria-hidden="true"></div>
         </div>
 
+        <p class="ws-hero-sub">
+          WebSpark rebuilds your existing site into a cleaner, sharper, more trustworthy experience – in HTML you fully control.
+        </p>
+
         <div class="ws-hero-actions">
           <a href="https://www.placeholder.com" class="ws-btn-primary">
             <span>Get started</span>
@@ -1422,7 +1459,7 @@
     </div>
   </section>
 
-  <!-- ABOUT SECTION -->
+  <!-- ABOUT SECTION (band-style, different background) -->
   <section id="about" aria-labelledby="about-title">
     <div class="ws-section-header">
       <div class="ws-section-kicker">About WebSpark</div>
@@ -1433,45 +1470,47 @@
       </p>
     </div>
 
-    <div class="ws-about-grid">
-      <div class="ws-about-text">
-        <p>
-          Instead of asking you to tear everything down, WebSpark works on top of your existing content.
-          You keep your copy, pages, and message – we focus on how all of it is arranged and experienced.
-        </p>
-        <p>
-          The output is clean, readable HTML you can drop into your stack, hand to a developer, or keep
-          as your new baseline.
-        </p>
+    <div class="ws-section-band ws-section-band--about">
+      <div class="ws-about-grid">
+        <div class="ws-about-text">
+          <p>
+            Instead of asking you to tear everything down, WebSpark works on top of your existing content.
+            You keep your copy, pages, and message – we focus on how all of it is arranged and experienced.
+          </p>
+          <p>
+            The output is clean, readable HTML you can drop into your stack, hand to a developer, or keep
+            as your new baseline.
+          </p>
 
-        <ul class="ws-about-points">
-          <li><span class="ws-about-bullet"></span><span>Start from your current site, not a blank canvas.</span></li>
-          <li><span class="ws-about-bullet"></span><span>Reduce visual noise while keeping your brand intact.</span></li>
-          <li><span class="ws-about-bullet"></span><span>End with HTML you fully understand and control.</span></li>
-        </ul>
-      </div>
-
-      <aside class="ws-about-card" aria-label="What WebSpark focuses on">
-        <div class="ws-about-card-label">What WebSpark actually changes</div>
-        <div class="ws-about-card-grid">
-          <div class="ws-about-stat">
-            <div class="ws-about-stat-key">First-view layout</div>
-            <div class="ws-about-stat-val">Hero, headline, CTA</div>
-          </div>
-          <div class="ws-about-stat">
-            <div class="ws-about-stat-key">Visual hierarchy</div>
-            <div class="ws-about-stat-val">What eyes hit first</div>
-          </div>
-          <div class="ws-about-stat">
-            <div class="ws-about-stat-key">Structure</div>
-            <div class="ws-about-stat-val">Sections, spacing, flow</div>
-          </div>
-          <div class="ws-about-stat">
-            <div class="ws-about-stat-key">Code output</div>
-            <div class="ws-about-stat-val">Clean HTML &amp; CSS</div>
-          </div>
+          <ul class="ws-about-points">
+            <li><span class="ws-about-bullet"></span><span>Start from your current site, not a blank canvas.</span></li>
+            <li><span class="ws-about-bullet"></span><span>Reduce visual noise while keeping your brand intact.</span></li>
+            <li><span class="ws-about-bullet"></span><span>End with HTML you fully understand and control.</span></li>
+          </ul>
         </div>
-      </aside>
+
+        <aside class="ws-about-card" aria-label="What WebSpark focuses on">
+          <div class="ws-about-card-label">What WebSpark actually changes</div>
+          <div class="ws-about-card-grid">
+            <div class="ws-about-stat">
+              <div class="ws-about-stat-key">First-view layout</div>
+              <div class="ws-about-stat-val">Hero, headline, CTA</div>
+            </div>
+            <div class="ws-about-stat">
+              <div class="ws-about-stat-key">Visual hierarchy</div>
+              <div class="ws-about-stat-val">Where eyes land first</div>
+            </div>
+            <div class="ws-about-stat">
+              <div class="ws-about-stat-key">Structure</div>
+              <div class="ws-about-stat-val">Sections, spacing, flow</div>
+            </div>
+            <div class="ws-about-stat">
+              <div class="ws-about-stat-key">Code output</div>
+              <div class="ws-about-stat-val">Clean HTML &amp; CSS</div>
+            </div>
+          </div>
+        </aside>
+      </div>
     </div>
   </section>
 
@@ -1486,100 +1525,102 @@
       </p>
     </div>
 
-    <div class="ws-layout-gallery">
-      <!-- Pair A -->
-      <article class="ws-layout-pair" data-variant="a" aria-label="Homepage layout example">
-        <div class="ws-layout-before">
-          <div class="ws-layout-label">Before</div>
-          <div class="mono-lines">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
+    <div class="ws-section-band ws-section-band--gallery">
+      <div class="ws-layout-gallery">
+        <!-- Pair A -->
+        <article class="ws-layout-pair" data-variant="a" aria-label="Homepage layout example">
+          <div class="ws-layout-before">
+            <div class="ws-layout-label">Before</div>
+            <div class="mono-lines">
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+            </div>
           </div>
-        </div>
-        <div class="ws-layout-after">
-          <div class="ws-layout-label">After</div>
-          <div class="ws-layout-tag">Hero focus</div>
-          <div class="ws-layout-after-grid a">
-            <div class="ws-tile">
-              <div class="ws-tile-title"></div>
-              <div class="ws-tile-sub"></div>
-              <div class="ws-tile-row">
-                <div class="ws-block small"></div>
+          <div class="ws-layout-after">
+            <div class="ws-layout-label">After</div>
+            <div class="ws-layout-tag">Hero focus</div>
+            <div class="ws-layout-after-grid a">
+              <div class="ws-tile">
+                <div class="ws-tile-title"></div>
+                <div class="ws-tile-sub"></div>
+                <div class="ws-tile-row">
+                  <div class="ws-block small"></div>
+                  <div class="ws-block small"></div>
+                  <div class="ws-block small"></div>
+                </div>
+              </div>
+              <div class="ws-tile">
+                <div class="ws-block image tall"></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Pair B -->
+        <article class="ws-layout-pair" data-variant="b" aria-label="Services layout example">
+          <div class="ws-layout-before">
+            <div class="ws-layout-label">Before</div>
+            <div class="mono-lines">
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+            </div>
+          </div>
+          <div class="ws-layout-after">
+            <div class="ws-layout-label">After</div>
+            <div class="ws-layout-tag">Service clarity</div>
+            <div class="ws-layout-after-grid b">
+              <div class="ws-tile">
+                <div class="ws-tile-title"></div>
+                <div class="ws-tile-sub"></div>
+                <div class="ws-tile-row">
+                  <div class="ws-block medium"></div>
+                  <div class="ws-block medium"></div>
+                  <div class="ws-block medium"></div>
+                </div>
+              </div>
+              <div class="ws-tile">
+                <div class="ws-block image tall"></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Pair C (centered) -->
+        <article class="ws-layout-pair" data-variant="c" aria-label="Content layout example">
+          <div class="ws-layout-before">
+            <div class="ws-layout-label">Before</div>
+            <div class="mono-lines">
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+            </div>
+          </div>
+          <div class="ws-layout-after">
+            <div class="ws-layout-label">After</div>
+            <div class="ws-layout-tag">Visual balance</div>
+            <div class="ws-layout-after-grid c">
+              <div class="ws-tile">
+                <div class="ws-block image tall"></div>
+              </div>
+              <div class="ws-tile">
+                <div class="ws-tile-title"></div>
+                <div class="ws-tile-sub"></div>
                 <div class="ws-block small"></div>
                 <div class="ws-block small"></div>
               </div>
             </div>
-            <div class="ws-tile">
-              <div class="ws-block image tall"></div>
-            </div>
           </div>
-        </div>
-      </article>
-
-      <!-- Pair B -->
-      <article class="ws-layout-pair" data-variant="b" aria-label="Services layout example">
-        <div class="ws-layout-before">
-          <div class="ws-layout-label">Before</div>
-          <div class="mono-lines">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-          </div>
-        </div>
-        <div class="ws-layout-after">
-          <div class="ws-layout-label">After</div>
-          <div class="ws-layout-tag">Service clarity</div>
-          <div class="ws-layout-after-grid b">
-            <div class="ws-tile">
-              <div class="ws-tile-title"></div>
-              <div class="ws-tile-sub"></div>
-              <div class="ws-tile-row">
-                <div class="ws-block medium"></div>
-                <div class="ws-block medium"></div>
-                <div class="ws-block medium"></div>
-              </div>
-            </div>
-            <div class="ws-tile">
-              <div class="ws-block image tall"></div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Pair C (centered) -->
-      <article class="ws-layout-pair" data-variant="c" aria-label="Content layout example">
-        <div class="ws-layout-before">
-          <div class="ws-layout-label">Before</div>
-          <div class="mono-lines">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-          </div>
-        </div>
-        <div class="ws-layout-after">
-          <div class="ws-layout-label">After</div>
-          <div class="ws-layout-tag">Visual balance</div>
-          <div class="ws-layout-after-grid c">
-            <div class="ws-tile">
-              <div class="ws-block image tall"></div>
-            </div>
-            <div class="ws-tile">
-              <div class="ws-tile-title"></div>
-              <div class="ws-tile-sub"></div>
-              <div class="ws-block small"></div>
-              <div class="ws-block small"></div>
-            </div>
-          </div>
-        </div>
-      </article>
+        </article>
+      </div>
     </div>
   </section>
 
-  <!-- REAL-PAGE PREVIEWS PLACEHOLDER -->
+  <!-- REAL-PAGE PREVIEWS PLACEHOLDER (band-style) -->
   <section aria-labelledby="gallery-title">
     <div class="ws-section-header">
       <div class="ws-section-kicker">Real-page previews</div>
@@ -1590,9 +1631,11 @@
       </p>
     </div>
 
-    <div class="ws-placeholder ws-placeholder--carousel">
-      Placeholder: future screenshot carousel or grid (before / after images of real WebSpark projects).
-      <!-- Example: insert a slider library here and feed it <img> tags of your redesigned pages. -->
+    <div class="ws-section-band ws-section-band--gallery">
+      <div class="ws-placeholder ws-placeholder--carousel">
+        Placeholder: future screenshot carousel or grid (before / after images of real WebSpark projects).
+        <!-- Example: insert a slider library here and feed it <img> tags of your redesigned pages. -->
+      </div>
     </div>
   </section>
 
@@ -1610,85 +1653,95 @@
 
   <!-- Benefit 1 -->
   <section class="ws-benefit-section" aria-labelledby="benefit-first-impressions">
-    <div class="ws-benefit-layout">
-      <div class="ws-benefit-text-block">
-        <div class="ws-benefit-kicker">Outcome 01</div>
-        <h3 class="ws-benefit-heading" id="benefit-first-impressions">Better first impressions</h3>
-        <p>
-          Your hero is the first five seconds of your brand. WebSpark rebuilds that first view so visitors
-          know exactly what you do and who it’s for, before they scroll.
-        </p>
-      </div>
-      <div class="ws-placeholder ws-placeholder--visual">
-        Placeholder: visual of a “before” hero vs a cleaner, higher-impact hero.
+    <div class="ws-section-band ws-section-band--benefit">
+      <div class="ws-benefit-layout">
+        <div class="ws-benefit-text-block">
+          <div class="ws-benefit-kicker">Outcome 01</div>
+          <h3 class="ws-benefit-heading" id="benefit-first-impressions">Better first impressions</h3>
+          <p>
+            Your hero is the first five seconds of your brand. WebSpark rebuilds that first view so visitors
+            know exactly what you do and who it’s for, before they scroll.
+          </p>
+        </div>
+        <div class="ws-placeholder ws-placeholder--visual">
+          Placeholder: visual of a “before” hero vs a cleaner, higher-impact hero.
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Benefit 2 -->
   <section class="ws-benefit-section" aria-labelledby="benefit-more-customers">
-    <div class="ws-benefit-layout">
-      <div class="ws-placeholder ws-placeholder--visual">
-        Placeholder: visual of a simple funnel (landing → contact) becoming more direct and focused.
-      </div>
-      <div class="ws-benefit-text-block">
-        <div class="ws-benefit-kicker">Outcome 02</div>
-        <h3 class="ws-benefit-heading" id="benefit-more-customers">More customers</h3>
-        <p>
-          Layout and copy are arranged so people always know the next step – whether it’s booking a call,
-          starting a trial, or sending an inquiry.
-        </p>
+    <div class="ws-section-band ws-section-band--benefit">
+      <div class="ws-benefit-layout">
+        <div class="ws-placeholder ws-placeholder--visual">
+          Placeholder: visual of a simple funnel (landing → contact) becoming more direct and focused.
+        </div>
+        <div class="ws-benefit-text-block">
+          <div class="ws-benefit-kicker">Outcome 02</div>
+          <h3 class="ws-benefit-heading" id="benefit-more-customers">More customers</h3>
+          <p>
+            Layout and copy are arranged so people always know the next step – whether it’s booking a call,
+            starting a trial, or sending an inquiry.
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Benefit 3 -->
   <section class="ws-benefit-section" aria-labelledby="benefit-more-trust">
-    <div class="ws-benefit-layout">
-      <div class="ws-benefit-text-block">
-        <div class="ws-benefit-kicker">Outcome 03</div>
-        <h3 class="ws-benefit-heading" id="benefit-more-trust">More trust</h3>
-        <p>
-          Calmer colors, better type, and consistent spacing signal that you’re established and reliable –
-          not experimental or thrown together.
-        </p>
-      </div>
-      <div class="ws-placeholder ws-placeholder--visual">
-        Placeholder: split visual showing a noisy, cluttered layout next to a calmer, more confident one.
+    <div class="ws-section-band ws-section-band--benefit">
+      <div class="ws-benefit-layout">
+        <div class="ws-benefit-text-block">
+          <div class="ws-benefit-kicker">Outcome 03</div>
+          <h3 class="ws-benefit-heading" id="benefit-more-trust">More trust</h3>
+          <p>
+            Calmer colors, better type, and consistent spacing signal that you’re established and reliable –
+            not experimental or thrown together.
+          </p>
+        </div>
+        <div class="ws-placeholder ws-placeholder--visual">
+          Placeholder: split visual showing a noisy, cluttered layout next to a calmer, more confident one.
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Benefit 4 -->
   <section class="ws-benefit-section" aria-labelledby="benefit-stronger-brand">
-    <div class="ws-benefit-layout">
-      <div class="ws-placeholder ws-placeholder--visual">
-        Placeholder: visual with logo & brand color used sparsely but deliberately across a layout.
-      </div>
-      <div class="ws-benefit-text-block">
-        <div class="ws-benefit-kicker">Outcome 04</div>
-        <h3 class="ws-benefit-heading" id="benefit-stronger-brand">Stronger brand</h3>
-        <p>
-          We keep your logo and core palette, then architect layouts that make your brand feel intentional,
-          not template-driven.
-        </p>
+    <div class="ws-section-band ws-section-band--benefit">
+      <div class="ws-benefit-layout">
+        <div class="ws-placeholder ws-placeholder--visual">
+          Placeholder: visual with logo & brand color used sparsely but deliberately across a layout.
+        </div>
+        <div class="ws-benefit-text-block">
+          <div class="ws-benefit-kicker">Outcome 04</div>
+          <h3 class="ws-benefit-heading" id="benefit-stronger-brand">Stronger brand</h3>
+          <p>
+            We keep your logo and core palette, then architect layouts that make your brand feel intentional,
+            not template-driven.
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Benefit 5 -->
   <section class="ws-benefit-section" aria-labelledby="benefit-more-traffic">
-    <div class="ws-benefit-layout">
-      <div class="ws-benefit-text-block">
-        <div class="ws-benefit-kicker">Outcome 05</div>
-        <h3 class="ws-benefit-heading" id="benefit-more-traffic">More traffic (smarter SEO)</h3>
-        <p>
-          Clean HTML, clear headings, and accessible structure give search engines and humans an easier time
-          understanding your site.
-        </p>
-      </div>
-      <div class="ws-placeholder ws-placeholder--visual">
-        Placeholder: visual of heading structure / content blocks arranged for readability and SEO.
+    <div class="ws-section-band ws-section-band--benefit">
+      <div class="ws-benefit-layout">
+        <div class="ws-benefit-text-block">
+          <div class="ws-benefit-kicker">Outcome 05</div>
+          <h3 class="ws-benefit-heading" id="benefit-more-traffic">More traffic (smarter SEO)</h3>
+          <p>
+            Clean HTML, clear headings, and accessible structure give search engines and humans an easier time
+            understanding your site.
+          </p>
+        </div>
+        <div class="ws-placeholder ws-placeholder--visual">
+          Placeholder: visual of heading structure / content blocks arranged for readability and SEO.
+        </div>
       </div>
     </div>
   </section>
@@ -1704,50 +1757,52 @@
       </p>
     </div>
 
-    <div class="ws-demo-grid">
-      <!-- Demo 1 -->
-      <article class="ws-demo-card">
-        <div class="ws-demo-topline">
-          <span class="ws-demo-domain">Example layout A</span>
-          <button class="ws-demo-toggle" type="button" data-target="demo-1">
-            <span class="icon">✨</span>
-            <span>Click to improve</span>
-          </button>
-        </div>
-        <div class="ws-demo-layout" id="demo-1" data-variant="blog" aria-label="Demo layout">
-          <div class="ws-demo-label">Before</div>
-          <div class="ws-demo-layout-inner">
-            <div class="hero-bar"></div>
-            <div class="hero-strip"></div>
-            <div class="cols">
-              <div class="col-block"></div>
-              <div class="col-block"></div>
+    <div class="ws-section-band ws-section-band--gallery">
+      <div class="ws-demo-grid">
+        <!-- Demo 1 -->
+        <article class="ws-demo-card">
+          <div class="ws-demo-topline">
+            <span class="ws-demo-domain">Example layout A</span>
+            <button class="ws-demo-toggle" type="button" data-target="demo-1">
+              <span class="icon">✨</span>
+              <span>Click to improve</span>
+            </button>
+          </div>
+          <div class="ws-demo-layout" id="demo-1" data-variant="blog" aria-label="Demo layout">
+            <div class="ws-demo-label">Before</div>
+            <div class="ws-demo-layout-inner">
+              <div class="hero-bar"></div>
+              <div class="hero-strip"></div>
+              <div class="cols">
+                <div class="col-block"></div>
+                <div class="col-block"></div>
+              </div>
             </div>
           </div>
-        </div>
-      </article>
+        </article>
 
-      <!-- Demo 2 -->
-      <article class="ws-demo-card">
-        <div class="ws-demo-topline">
-          <span class="ws-demo-domain">Example layout B</span>
-          <button class="ws-demo-toggle" type="button" data-target="demo-2">
-            <span class="icon">✨</span>
-            <span>Click to improve</span>
-          </button>
-        </div>
-        <div class="ws-demo-layout" id="demo-2" data-variant="grid" aria-label="Demo layout">
-          <div class="ws-demo-label">Before</div>
-          <div class="ws-demo-layout-inner">
-            <div class="hero-bar"></div>
-            <div class="thumb-row">
-              <div class="thumb"></div>
-              <div class="thumb"></div>
-              <div class="thumb"></div>
+        <!-- Demo 2 -->
+        <article class="ws-demo-card">
+          <div class="ws-demo-topline">
+            <span class="ws-demo-domain">Example layout B</span>
+            <button class="ws-demo-toggle" type="button" data-target="demo-2">
+              <span class="icon">✨</span>
+              <span>Click to improve</span>
+            </button>
+          </div>
+          <div class="ws-demo-layout" id="demo-2" data-variant="grid" aria-label="Demo layout">
+            <div class="ws-demo-label">Before</div>
+            <div class="ws-demo-layout-inner">
+              <div class="hero-bar"></div>
+              <div class="thumb-row">
+                <div class="thumb"></div>
+                <div class="thumb"></div>
+                <div class="thumb"></div>
+              </div>
             </div>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -1887,7 +1942,7 @@
   // Year in footer
   document.getElementById('ws-year').textContent = new Date().getFullYear();
 
-  // Title selection + font-swap animation (pixelation removed)
+  // Title selection + font-swap animation
   window.addEventListener('load', function () {
     var titleWrap = document.querySelector('.ws-hero-title-wrap');
     var cursorEl = document.querySelector('.ws-hero-cursor');
