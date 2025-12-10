@@ -215,6 +215,7 @@
     .ws-hero-side-inner {
       width: 100%;
       max-width: 320px;
+      margin-top: -10px; /* Nudge abstracts slightly higher */
     }
 
     .ws-hero-center {
@@ -240,6 +241,10 @@
 
       .ws-hero-center {
         order: 1;
+      }
+
+      .ws-hero-side-inner {
+        margin-top: 0;
       }
     }
 
@@ -275,10 +280,10 @@
     }
 
     .ws-hero-sub {
-      font-size: 1rem;
+      font-size: 0.96rem;
       line-height: 1.7;
       color: var(--ws-text-soft);
-      max-width: 38ch;
+      max-width: 34ch;
       margin: 0 0 20px;
     }
 
@@ -365,24 +370,23 @@
     .ws-hero-title-highlight-bar {
       position: absolute;
       left: 0;
-      top: 50%;
-      height: 1.3em;
-      transform: translateY(-50%);
-      border-radius: 4px;
+      top: 0;
+      height: 100%;
+      border-radius: 6px;
       background: rgba(80, 134, 255, 0.18);
       width: 0;
       pointer-events: none;
-      transition: width 0.45s ease-out;
+      transition: width 0.45s ease-out, opacity 0.4s ease-out;
+      z-index: -1;
     }
 
     .ws-hero-cursor {
       position: absolute;
-      top: 50%;
+      top: 0;
       right: -4px;
       width: 1px;
-      height: 1.3em;
+      height: 100%;
       background: #1e2947;
-      transform: translateY(-50%);
       opacity: 0;
     }
 
@@ -393,6 +397,10 @@
     .ws-hero-title-selected .ws-hero-cursor {
       opacity: 1;
       animation: ws-cursor-blink 0.25s step-end 0s 3;
+    }
+
+    .ws-hero-title-wrap.ws-hero-title-done .ws-hero-title-highlight-bar {
+      opacity: 0;
     }
 
     @keyframes ws-cursor-blink {
@@ -536,17 +544,29 @@
       border: 1px solid rgba(151, 170, 223, 0.9);
     }
 
-    /* Pixelate / unpixelate */
+    /* Pixelated overlay */
+
+    .ws-hero-pixel-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.9;
+      background-image:
+        linear-gradient(90deg, rgba(160, 175, 215, 0.55) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(160, 175, 215, 0.55) 1px, transparent 1px);
+      background-size: 10px 10px;
+      mix-blend-mode: soft-light;
+      transition: opacity 1s ease-out;
+    }
 
     .ws-hero-frame.pixelated .ws-pane,
     .ws-hero-frame.pixelated .ws-pane-card-main,
     .ws-hero-frame.pixelated .ws-pane-thumbnail,
     .ws-hero-frame.pixelated .ws-pane-badge,
     .ws-hero-frame.pixelated .ws-pane-line {
-      filter: blur(7px);
-      image-rendering: pixelated;
-      transform: scale(1.02);
-      transition: filter 0.7s ease-out, transform 0.7s ease-out;
+      filter: blur(2px);
+      transform: scale(1.01);
+      transition: filter 1s ease-out, transform 1s ease-out;
     }
 
     .ws-hero-frame.unpixelated .ws-pane,
@@ -555,8 +575,11 @@
     .ws-hero-frame.unpixelated .ws-pane-badge,
     .ws-hero-frame.unpixelated .ws-pane-line {
       filter: blur(0);
-      image-rendering: auto;
       transform: scale(1);
+    }
+
+    .ws-hero-frame.unpixelated .ws-hero-pixel-overlay {
+      opacity: 0;
     }
 
     /* Sections */
@@ -777,7 +800,7 @@
     }
 
     .ws-placeholder--visual {
-      min-height: 140px;
+      min-height: 190px;
     }
 
     .ws-placeholder--mini {
@@ -788,13 +811,13 @@
     /* Benefit sections per outcome */
 
     .ws-benefit-section {
-      margin: 30px 0;
+      margin: 44px 0;
     }
 
     .ws-benefit-layout {
       display: grid;
       grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-      gap: 18px;
+      gap: 26px;
       align-items: center;
     }
 
@@ -903,7 +926,7 @@
     .ws-demo-layout-inner {
       display: grid;
       gap: 6px;
-      min-height: 230px; /* Taller, more like a web screen */
+      min-height: 260px; /* Taller, more like a web screen */
     }
 
     /* demo shapes (still placeholders) */
@@ -930,7 +953,7 @@
     }
 
     .ws-demo-layout[data-variant="blog"] .col-block {
-      height: 60px;
+      height: 70px;
       border-radius: 10px;
       background: #dde4f7;
     }
@@ -942,7 +965,7 @@
     }
 
     .ws-demo-layout[data-variant="grid"] .thumb {
-      height: 80px;
+      height: 90px;
       border-radius: 10px;
       background: #e1e6f7;
     }
@@ -961,7 +984,7 @@
     }
 
     .ws-demo-layout[data-variant="service"] .service-card {
-      height: 80px;
+      height: 90px;
       border-radius: 12px;
       background: #e2e8f7;
     }
@@ -1124,7 +1147,7 @@
       content: "";
       position: absolute;
       border-radius: 999px;
-      background: radial-gradient(circle at center, rgba(17, 64, 166, 0.08), transparent 60%);
+      background: radial-gradient(circle at center, rgba(17, 64, 166, 0.06), transparent 60%);
       width: 420px;
       height: 420px;
       opacity: 0.8;
@@ -1138,6 +1161,44 @@
     .ws-cta-final::after {
       bottom: -140px;
       right: -200px;
+    }
+
+    /* CTA animated shapes */
+
+    .ws-cta-shapes {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .ws-cta-shape {
+      position: absolute;
+      transform: translate(0, 0) rotate(var(--rot, 0deg));
+      transition: transform 0.05s linear;
+      opacity: 0.8;
+    }
+
+    .ws-cta-shape.circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: #ffcc70;
+    }
+
+    .ws-cta-shape.square {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      background: #7ad3ff;
+    }
+
+    .ws-cta-shape.triangle {
+      width: 0;
+      height: 0;
+      border-left: 11px solid transparent;
+      border-right: 11px solid transparent;
+      border-bottom: 20px solid #ff8ab3;
     }
 
     /* Footer */
@@ -1243,7 +1304,7 @@
   <section class="ws-hero" aria-labelledby="hero-title">
     <div class="ws-hero-shell">
 
-      <!-- Left: BEFORE visual placeholder -->
+      <!-- Left: BEFORE visual -->
       <div class="ws-hero-side ws-hero-side-left" aria-hidden="true">
         <div class="ws-hero-side-inner">
           <div class="ws-hero-frame pixelated">
@@ -1264,6 +1325,7 @@
                 <div class="ws-pane-line"></div>
               </div>
             </div>
+            <div class="ws-hero-pixel-overlay" aria-hidden="true"></div>
           </div>
         </div>
       </div>
@@ -1285,8 +1347,7 @@
         </div>
 
         <p class="ws-hero-sub">
-          WebSpark takes your existing site and rebuilds it into a cleaner, sharper, more trustworthy experience –
-          in production-ready HTML you fully control.
+          WebSpark rebuilds your existing site into a cleaner, sharper, more trustworthy experience – in HTML you fully control.
         </p>
 
         <div class="ws-hero-actions">
@@ -1307,7 +1368,7 @@
         </div>
       </div>
 
-      <!-- Right: AFTER visual placeholder -->
+      <!-- Right: AFTER visual -->
       <div class="ws-hero-side ws-hero-side-right" aria-hidden="true">
         <div class="ws-hero-side-inner">
           <div class="ws-hero-frame pixelated">
@@ -1333,6 +1394,7 @@
                 </div>
               </div>
             </div>
+            <div class="ws-hero-pixel-overlay" aria-hidden="true"></div>
           </div>
         </div>
       </div>
@@ -1444,7 +1506,7 @@
     </div>
   </section>
 
-  <!-- REAL-PAGE PREVIEWS PLACEHOLDER (for future screenshot carousel) -->
+  <!-- REAL-PAGE PREVIEWS PLACEHOLDER -->
   <section aria-labelledby="gallery-title">
     <div class="ws-section-header">
       <div class="ws-section-kicker">Real-page previews</div>
@@ -1455,7 +1517,6 @@
       </p>
     </div>
 
-    <!-- Placeholder: replace contents of this div with a carousel / grid of screenshots -->
     <div class="ws-placeholder ws-placeholder--carousel">
       Placeholder: future screenshot carousel or grid (before / after images of real WebSpark projects).
       <!-- Example: insert a slider library here and feed it <img> tags of your redesigned pages. -->
@@ -1485,7 +1546,6 @@
           know exactly what you do and who it’s for, before they scroll.
         </p>
       </div>
-      <!-- Placeholder for image / animation showing hero redesign -->
       <div class="ws-placeholder ws-placeholder--visual">
         Placeholder: visual of a “before” hero vs a cleaner, higher-impact hero.
       </div>
@@ -1495,7 +1555,6 @@
   <!-- Benefit 2 -->
   <section class="ws-benefit-section" aria-labelledby="benefit-more-customers">
     <div class="ws-benefit-layout">
-      <!-- Alternate side -->
       <div class="ws-placeholder ws-placeholder--visual">
         Placeholder: visual of a simple funnel (landing → contact) becoming more direct and focused.
       </div>
@@ -1576,7 +1635,7 @@
       <!-- Demo 1 -->
       <article class="ws-demo-card">
         <div class="ws-demo-topline">
-          <span class="ws-demo-domain">coastalcafe.com</span>
+          <span class="ws-demo-domain">Example layout A</span>
           <button class="ws-demo-toggle" type="button" data-target="demo-1">
             <span class="icon">✨</span>
             <span>Click to improve</span>
@@ -1599,7 +1658,7 @@
       <!-- Demo 2 -->
       <article class="ws-demo-card">
         <div class="ws-demo-topline">
-          <span class="ws-demo-domain">northpeakstudio.com</span>
+          <span class="ws-demo-domain">Example layout B</span>
           <button class="ws-demo-toggle" type="button" data-target="demo-2">
             <span class="icon">✨</span>
             <span>Click to improve</span>
@@ -1694,9 +1753,9 @@
     </div>
   </section>
 
-  <!-- FINAL CTA: full-height ribbon -->
+  <!-- FINAL CTA: full-height ribbon with animated shapes -->
   <section aria-labelledby="cta-title">
-    <div class="ws-cta-final">
+    <div class="ws-cta-final" id="ws-cta-final">
       <div class="ws-cta-final-inner">
         <h2 class="ws-cta-final-title" id="cta-title">
           Ready for your site to feel as good as it works?
@@ -1708,6 +1767,26 @@
           <span>Get started</span>
           <span class="ws-chevron">↗</span>
         </a>
+      </div>
+
+      <!-- Abstract shapes that move with scroll -->
+      <div class="ws-cta-shapes">
+        <!-- Base positions are around the center; movement is applied via JS -->
+        <div class="ws-cta-shape circle"
+             style="top: 25%; left: 45%; --rot: 0deg;"
+             data-x="-140" data-y="-80"></div>
+
+        <div class="ws-cta-shape square"
+             style="top: 30%; left: 58%; --rot: 18deg;"
+             data-x="120" data-y="-40"></div>
+
+        <div class="ws-cta-shape triangle"
+             style="top: 55%; left: 40%; --rot: -8deg;"
+             data-x="-110" data-y="110"></div>
+
+        <div class="ws-cta-shape circle"
+             style="top: 65%; left: 60%; --rot: 0deg;"
+             data-x="130" data-y="90"></div>
       </div>
     </div>
   </section>
@@ -1744,19 +1823,19 @@
     var frames = document.querySelectorAll('.ws-hero-frame');
     var titleWrap = document.querySelector('.ws-hero-title-wrap');
 
-    // Step 1: unpixelate hero frames
+    // Step 1: keep pixelated briefly, then unpixelate
     setTimeout(function () {
       frames.forEach(function (frame) {
-        frame.classList.remove('pixelated');
         frame.classList.add('unpixelated');
+        frame.classList.remove('pixelated');
       });
-    }, 250);
+    }, 350);
 
-    // Step 2: run selection + cursor animation
+    // Step 2: run selection + cursor animation after pixelation is noticeable
     setTimeout(function () {
       if (!titleWrap) return;
       titleWrap.classList.add('ws-hero-title-selected');
-    }, 1000);
+    }, 1100);
 
     // Step 3: swap hero font to Montserrat after selection
     setTimeout(function () {
@@ -1765,6 +1844,12 @@
         '"Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
       );
     }, 1800);
+
+    // Step 4: fade out highlight so it doesn't stay forever
+    setTimeout(function () {
+      if (!titleWrap) return;
+      titleWrap.classList.add('ws-hero-title-done');
+    }, 2300);
   });
 
   // Interactive demo toggles
@@ -1788,6 +1873,39 @@
         }
       });
     });
+  })();
+
+  // Final CTA shapes scroll effect
+  (function attachCTAParallax() {
+    var cta = document.getElementById('ws-cta-final');
+    if (!cta) return;
+    var shapes = cta.querySelectorAll('.ws-cta-shape');
+
+    function updateShapes() {
+      var rect = cta.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+
+      // Progress ~ how centered the CTA is in viewport (0 = far, 1 = centered)
+      var centerY = rect.top + rect.height / 2;
+      var viewportCenter = vh / 2;
+      var distance = Math.abs(centerY - viewportCenter);
+      var maxDist = viewportCenter + rect.height / 2;
+      var progress = 1 - Math.min(1, distance / maxDist); // 0..1
+
+      shapes.forEach(function (shape) {
+        var maxX = parseFloat(shape.getAttribute('data-x')) || 0;
+        var maxY = parseFloat(shape.getAttribute('data-y')) || 0;
+        var tx = maxX * progress;
+        var ty = maxY * progress;
+        shape.style.setProperty('--tx', tx + 'px');
+        shape.style.setProperty('--ty', ty + 'px');
+        shape.style.transform = 'translate(' + tx + 'px,' + ty + 'px) rotate(' + (getComputedStyle(shape).getPropertyValue('--rot') || '0deg') + ')';
+      });
+    }
+
+    window.addEventListener('scroll', updateShapes, { passive: true });
+    window.addEventListener('resize', updateShapes);
+    updateShapes();
   })();
 </script>
 
