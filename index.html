@@ -111,8 +111,7 @@
       position: absolute;
       inset: 6px;
       border-radius: 10px;
-      background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.4));
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.4));
       box-shadow: 0 0 0 1px rgba(72, 101, 162, 0.2);
     }
 
@@ -181,19 +180,6 @@
       transform: translateY(-1px);
     }
 
-    /* Hero */
-
-    .ws-hero {
-      padding: 40px 0 32px;
-    }
-
-    .ws-hero-shell {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-      gap: 40px;
-      align-items: center;
-    }
-
     @media (max-width: 900px) {
       .ws-header-inner {
         gap: 14px;
@@ -202,10 +188,21 @@
       .ws-nav-links {
         display: none;
       }
+    }
 
-      .ws-hero-shell {
-        grid-template-columns: minmax(0, 1fr);
-      }
+    /* Hero */
+
+    .ws-hero {
+      padding: 40px 0 32px;
+    }
+
+    .ws-hero-shell {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .ws-pill {
@@ -231,21 +228,21 @@
 
     .ws-hero-title {
       font-family: var(--ws-hero-font);
-      font-size: clamp(2.3rem, 3vw, 2.9rem);
+      font-size: clamp(2.4rem, 3.2vw, 3rem);
       line-height: 1.06;
       letter-spacing: -0.02em;
       margin: 0 0 14px;
       color: var(--ws-text-main);
       position: relative;
-      max-width: 20ch;
+      max-width: 18ch;
     }
 
     .ws-hero-sub {
-      font-size: 0.98rem;
-      line-height: 1.6;
+      font-size: 1rem;
+      line-height: 1.7;
       color: var(--ws-text-soft);
-      max-width: 34ch;
-      margin-bottom: 20px;
+      max-width: 38ch;
+      margin: 0 0 20px;
     }
 
     .ws-hero-highlight {
@@ -258,6 +255,7 @@
       flex-wrap: wrap;
       gap: 10px;
       align-items: center;
+      justify-content: center;
       margin-bottom: 16px;
     }
 
@@ -266,11 +264,11 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 10px 20px;
+      padding: 10px 22px;
       border-radius: var(--ws-radius-pill);
       background: var(--ws-accent);
       color: #ffffff;
-      font-size: 0.96rem;
+      font-size: 0.98rem;
       font-weight: 500;
       border: none;
       box-shadow: 0 14px 30px rgba(15, 46, 112, 0.22);
@@ -316,6 +314,7 @@
       flex-wrap: wrap;
       gap: 16px;
       align-items: center;
+      justify-content: center;
     }
 
     .ws-hero-meta strong {
@@ -329,10 +328,10 @@
       background: rgba(146, 161, 196, 0.7);
     }
 
-    /* Hero visual */
-
     .ws-hero-visual-shell {
-      position: relative;
+      margin-top: 26px;
+      width: 100%;
+      max-width: 520px;
     }
 
     .ws-hero-frame {
@@ -366,7 +365,7 @@
 
     .ws-hero-dot:nth-child(1) { background: #ff7b7b; }
     .ws-hero-dot:nth-child(2) { background: #ffb86b; }
-    .ws-hero-dot:nth-child(3) { background: #24d38a; }
+    .ws-hero-dot:nth-child(3) { background: #24d38b; }
 
     .ws-hero-url {
       font-size: 0.75rem;
@@ -419,25 +418,14 @@
       background: #d4ddef;
     }
 
-    .ws-pane-line:nth-child(1) {
-      width: 80%;
-    }
-
-    .ws-pane-line:nth-child(2) {
-      width: 60%;
-    }
-
-    .ws-pane-line:nth-child(3) {
-      width: 76%;
-    }
-
-    .ws-pane-line:nth-child(4) {
-      width: 52%;
-    }
+    .ws-pane-line:nth-child(1) { width: 80%; }
+    .ws-pane-line:nth-child(2) { width: 60%; }
+    .ws-pane-line:nth-child(3) { width: 76%; }
+    .ws-pane-line:nth-child(4) { width: 52%; }
 
     .ws-pane--after .ws-pane-body {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.1fr 1.2fr;
       gap: 8px;
       align-items: stretch;
     }
@@ -494,9 +482,7 @@
     }
 
     .ws-hero-annotation {
-      position: absolute;
-      right: 7%;
-      bottom: 12%;
+      margin-top: 8px;
       font-size: 0.72rem;
       padding: 6px 10px;
       background: rgba(17, 64, 166, 0.08);
@@ -700,8 +686,6 @@
     .ws-layout-before .mono-lines .line:nth-child(3) { width: 90%; }
     .ws-layout-before .mono-lines .line:nth-child(4) { width: 90%; }
 
-    /* pair-specific tweaks so they don't all look identical */
-
     .ws-layout-pair[data-variant="a"] .mono-lines .line:nth-child(3) { width: 70%; }
     .ws-layout-pair[data-variant="b"] .mono-lines .line:nth-child(1) { width: 80%; }
     .ws-layout-pair[data-variant="b"] .mono-lines .line:nth-child(4) { width: 60%; }
@@ -788,6 +772,32 @@
       background: rgba(17, 64, 166, 0.06);
       color: var(--ws-accent);
       font-weight: 500;
+    }
+
+    /* Real-page previews placeholder */
+
+    .ws-placeholder {
+      border-radius: var(--ws-radius-lg);
+      border: 1px dashed var(--ws-border-subtle);
+      background: var(--ws-surface);
+      padding: 18px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ws-text-muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .ws-placeholder--carousel {
+      min-height: 160px;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        #f5f7ff 0,
+        #f5f7ff 6px,
+        #ffffff 6px,
+        #ffffff 12px
+      );
     }
 
     /* Selling points (5 bullets) */
@@ -932,24 +942,25 @@
       margin-bottom: 6px;
     }
 
-    /* Demo layout internals – three different shapes */
-
     .ws-demo-layout-inner {
       display: grid;
       gap: 6px;
+      min-height: 150px; /* Taller, more web-page-shaped */
     }
+
+    /* Demo layout internals – three different shapes */
 
     /* variant 1: blog */
 
     .ws-demo-layout[data-variant="blog"] .hero-bar {
-      height: 20px;
+      height: 22px;
       border-radius: 12px;
-      background: #d9e0f2;
+      background: #dbe1f2;
       width: 80%;
     }
 
     .ws-demo-layout[data-variant="blog"] .hero-strip {
-      height: 60px;
+      height: 80px;
       border-radius: 12px;
       background: #e2e8ff;
     }
@@ -961,7 +972,7 @@
     }
 
     .ws-demo-layout[data-variant="blog"] .col-block {
-      height: 40px;
+      height: 52px;
       border-radius: 10px;
       background: #dde4f7;
     }
@@ -971,19 +982,19 @@
     }
 
     .ws-demo-layout[data-variant="blog"].is-improved .col-block:nth-child(1) {
-      height: 46px;
+      height: 60px;
       background: #f1f3ff;
     }
 
     .ws-demo-layout[data-variant="blog"].is-improved .col-block:nth-child(2) {
-      height: 32px;
+      height: 40px;
       background: #e0e6ff;
     }
 
     /* variant 2: product grid */
 
     .ws-demo-layout[data-variant="grid"] .hero-bar {
-      height: 18px;
+      height: 20px;
       border-radius: 12px;
       background: #dbe1f2;
       width: 60%;
@@ -996,14 +1007,14 @@
     }
 
     .ws-demo-layout[data-variant="grid"] .thumb {
-      height: 45px;
+      height: 70px;
       border-radius: 10px;
       background: #e1e6f7;
     }
 
     .ws-demo-layout[data-variant="grid"].is-improved .thumb:nth-child(1),
     .ws-demo-layout[data-variant="grid"].is-improved .thumb:nth-child(2) {
-      height: 58px;
+      height: 90px;
       background: linear-gradient(135deg, #9eb4ff, #3d62ce);
     }
 
@@ -1014,7 +1025,7 @@
     /* variant 3: service layout */
 
     .ws-demo-layout[data-variant="service"] .hero-bar {
-      height: 18px;
+      height: 20px;
       border-radius: 12px;
       background: #dbe1f2;
       width: 70%;
@@ -1034,7 +1045,7 @@
     }
 
     .ws-demo-layout[data-variant="service"] .service-card {
-      height: 44px;
+      height: 70px;
       border-radius: 12px;
       background: #e2e8f7;
     }
@@ -1044,7 +1055,7 @@
     }
 
     .ws-demo-layout[data-variant="service"].is-improved .service-card:nth-child(2) {
-      height: 56px;
+      height: 86px;
       background: #f0f3ff;
     }
 
@@ -1146,70 +1157,35 @@
       font-weight: 500;
     }
 
-    /* Contact / reviews CTA */
+    /* Final CTA */
 
-    .ws-cta-strip {
+    .ws-cta-final {
       margin-top: 30px;
-      border-radius: var(--ws-radius-lg);
-      background: linear-gradient(135deg, #ffffff, #eef2ff);
+      border-radius: var(--ws-radius-xl);
+      background: #ffffff;
       border: 1px solid var(--ws-border-strong);
-      padding: 18px 16px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
+      padding: 26px 20px 28px;
+      text-align: center;
+      box-shadow: 0 18px 40px rgba(15, 32, 72, 0.08);
     }
 
-    .ws-cta-text-main {
-      font-size: 1rem;
+    .ws-cta-final-title {
+      font-size: 1.6rem;
       font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
       color: var(--ws-text-main);
     }
 
-    .ws-cta-text-sub {
-      font-size: 0.86rem;
+    .ws-cta-final-sub {
+      font-size: 0.94rem;
       color: var(--ws-text-soft);
-      margin-top: 2px;
+      max-width: 40ch;
+      margin: 0 auto 18px;
     }
 
-    .ws-cta-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .ws-btn-outline {
-      padding: 8px 14px;
-      border-radius: var(--ws-radius-pill);
-      border: 1px solid var(--ws-accent);
-      background: #ffffff;
-      font-size: 0.88rem;
-      font-weight: 500;
-      color: var(--ws-accent);
-      cursor: pointer;
-      transition: background 0.18s ease-out, color 0.18s ease-out, box-shadow 0.18s ease-out, transform 0.1s ease-out;
-    }
-
-    .ws-btn-outline:hover {
-      background: var(--ws-accent);
-      color: #ffffff;
-      box-shadow: 0 10px 24px rgba(10, 31, 82, 0.22);
-      transform: translateY(-1px);
-    }
-
-    .ws-link-quiet {
-      font-size: 0.84rem;
-      color: var(--ws-text-soft);
-      text-decoration: underline;
-      text-decoration-color: rgba(96, 115, 161, 0.4);
-      text-underline-offset: 3px;
-    }
-
-    .ws-link-quiet:hover {
-      color: var(--ws-accent);
-      text-decoration-color: var(--ws-accent);
+    .ws-cta-final .ws-btn-primary {
+      padding-inline: 26px;
     }
 
     /* Footer */
@@ -1234,6 +1210,15 @@
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
+    }
+
+    .ws-footer-links a {
+      text-decoration: none;
+      color: var(--ws-text-muted);
+    }
+
+    .ws-footer-links a:hover {
+      color: var(--ws-accent);
     }
 
     /* Floating redesign button */
@@ -1305,38 +1290,40 @@
   <!-- HERO -->
   <section class="ws-hero" aria-labelledby="hero-title">
     <div class="ws-hero-shell">
-      <div>
-        <div class="ws-pill">
-          <span class="ws-pill-dot"></span>
-          <span>Web redesign, delivered in clean HTML</span>
-        </div>
-        <div class="ws-hero-title-wrap">
-          <div class="ws-hero-title-highlight-bar" aria-hidden="true"></div>
-          <h1 class="ws-hero-title" id="hero-title">
-            Turn your good website<br>
-            into a <span class="ws-hero-highlight">great first impression.</span>
-          </h1>
-          <div class="ws-hero-cursor" aria-hidden="true"></div>
-        </div>
-        <p class="ws-hero-sub">
-          WebSpark takes your existing site and rebuilds it into a cleaner, sharper, more trustworthy experience –
-          in production-ready HTML you fully control.
-        </p>
-        <div class="ws-hero-actions">
-          <a href="https://www.placeholder.com" class="ws-btn-primary">
-            <span>Get started in minutes</span>
-            <span class="ws-chevron">↗</span>
-          </a>
-          <button class="ws-btn-ghost" type="button" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">
-            <span class="icon">▶</span>
-            <span>Watch it transform a layout</span>
-          </button>
-        </div>
-        <div class="ws-hero-meta">
-          <span><strong>Cleaner layouts</strong> without rebuilding from scratch.</span>
-          <span class="ws-hero-meta-divider"></span>
-          <span>Keep your content. Upgrade everything around it.</span>
-        </div>
+      <div class="ws-pill">
+        <span class="ws-pill-dot"></span>
+        <span>Upgrade the way your website feels – not just how it looks</span>
+      </div>
+
+      <div class="ws-hero-title-wrap">
+        <div class="ws-hero-title-highlight-bar" aria-hidden="true"></div>
+        <h1 class="ws-hero-title" id="hero-title">
+          Turn your good website<br>
+          into a <span class="ws-hero-highlight">great first impression.</span>
+        </h1>
+        <div class="ws-hero-cursor" aria-hidden="true"></div>
+      </div>
+
+      <p class="ws-hero-sub">
+        WebSpark takes your existing site and rebuilds it into a cleaner, sharper, more trustworthy experience –
+        in production-ready HTML you fully control.
+      </p>
+
+      <div class="ws-hero-actions">
+        <a href="https://www.placeholder.com" class="ws-btn-primary">
+          <span>Get started in minutes</span>
+          <span class="ws-chevron">↗</span>
+        </a>
+        <button class="ws-btn-ghost" type="button" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">
+          <span class="icon">▶</span>
+          <span>See a layout transform</span>
+        </button>
+      </div>
+
+      <div class="ws-hero-meta">
+        <span><strong>Cleaner layouts</strong> without rebuilding from scratch.</span>
+        <span class="ws-hero-meta-divider"></span>
+        <span>Keep your content. Upgrade everything around it.</span>
       </div>
 
       <div class="ws-hero-visual-shell" aria-hidden="true">
@@ -1374,10 +1361,11 @@
               </div>
             </div>
           </div>
-          <div class="ws-hero-annotation">
-            <span class="ws-hero-annotation-icon">★</span>
-            <span>Same content, sharper structure.</span>
-          </div>
+        </div>
+
+        <div class="ws-hero-annotation">
+          <span class="ws-hero-annotation-icon">★</span>
+          <span>Same content, sharper structure.</span>
         </div>
       </div>
     </div>
@@ -1387,10 +1375,10 @@
   <section id="examples" aria-labelledby="examples-title">
     <div class="ws-section-header">
       <div class="ws-section-kicker">Layout transformations</div>
-      <h2 class="ws-section-title" id="examples-title">See how small changes reshape everything</h2>
+      <h2 class="ws-section-title" id="examples-title">See how structure changes perception</h2>
       <p class="ws-section-sub">
-        WebSpark focuses on structure: spacing, hierarchy, and where your users’ eyes land first.
-        Here are simplified snapshots of how a “good enough” layout becomes a clearer, more intentional one.
+        WebSpark focuses on spacing, hierarchy, and where your users’ eyes land first.
+        These simplified snapshots show how a “good enough” layout becomes a clearer, more intentional one.
       </p>
     </div>
 
@@ -1487,6 +1475,24 @@
     </div>
   </section>
 
+  <!-- REAL-PAGE PREVIEWS PLACEHOLDER (for future screenshot carousel) -->
+  <section aria-labelledby="gallery-title">
+    <div class="ws-section-header">
+      <div class="ws-section-kicker">Real-page previews</div>
+      <h2 class="ws-section-title" id="gallery-title">Show your site before & after</h2>
+      <p class="ws-section-sub">
+        This area is reserved for actual screenshots of your pages once WebSpark has redesigned them.
+        For now, it’s a placeholder so we know exactly where that story will live.
+      </p>
+    </div>
+
+    <!-- Placeholder: replace contents of this div with a carousel / grid of screenshots -->
+    <div class="ws-placeholder ws-placeholder--carousel">
+      Placeholder: future screenshot carousel or grid (before / after images of real WebSpark projects).
+      <!-- Example: insert a slider library here and feed it <img> tags of your redesigned pages. -->
+    </div>
+  </section>
+
   <!-- BENEFITS (5 SELLING POINTS) -->
   <section id="benefits" aria-labelledby="benefits-title">
     <div class="ws-section-header">
@@ -1514,7 +1520,7 @@
           <div>
             <div class="ws-benefit-title">Better first impressions</div>
             <div class="ws-benefit-text">
-              Strong hero hierarchy and cleaner spacing mean visitors understand what you do within seconds.
+              Strong hero hierarchy and calmer spacing mean visitors understand what you do within seconds.
             </div>
           </div>
         </article>
@@ -1534,7 +1540,7 @@
           <div>
             <div class="ws-benefit-title">More trust</div>
             <div class="ws-benefit-text">
-              A calmer visual language and consistent typography make your brand feel established, not experimental.
+              A restrained visual language and consistent typography make your brand feel established, not experimental.
             </div>
           </div>
         </article>
@@ -1706,29 +1712,24 @@
             <span class="ws-track-pill">Reduced for trust</span>
           </div>
         </div>
+        <!-- Placeholder: if you want an animation here later, you can replace the track with a small SVG or Lottie -->
       </aside>
     </div>
   </section>
 
-  <!-- FINAL CTA / CONTACT & REVIEWS -->
+  <!-- FINAL CTA: simple, focused ribbon -->
   <section aria-labelledby="cta-title">
-    <div class="ws-section-header">
-      <div class="ws-section-kicker">Ready when you are</div>
-      <h2 class="ws-section-title" id="cta-title">When you’re ready to upgrade the way your site feels</h2>
-    </div>
-
-    <div class="ws-cta-strip">
-      <div>
-        <div class="ws-cta-text-main">Start with the page that matters most.</div>
-        <div class="ws-cta-text-sub">
-          Send WebSpark your homepage or a key landing page – we’ll turn it into a cleaner, more confident version of itself.
-        </div>
-      </div>
-      <div class="ws-cta-actions">
-        <a href="https://www.placeholder.com" class="ws-btn-outline">Get started</a>
-        <a href="https://www.example2.com" class="ws-link-quiet">Talk with us first</a>
-        <a href="https://example3.com" class="ws-link-quiet">Submit a review</a>
-      </div>
+    <div class="ws-cta-final">
+      <h2 class="ws-cta-final-title" id="cta-title">
+        Ready for your site to feel as good as it works?
+      </h2>
+      <p class="ws-cta-final-sub">
+        Start with one page – usually your homepage or a key landing page – and let WebSpark show you the cleaner version of what you already built.
+      </p>
+      <a href="https://www.placeholder.com" class="ws-btn-primary">
+        <span>Get started</span>
+        <span class="ws-chevron">↗</span>
+      </a>
     </div>
   </section>
 
@@ -1739,6 +1740,8 @@
         <a href="#how-it-works">How it works</a>
         <a href="#examples">Examples</a>
         <a href="#demo">Demo</a>
+        <a href="https://www.example2.com">Contact</a>
+        <a href="https://example3.com">Reviews</a>
       </div>
     </div>
   </footer>
@@ -1762,7 +1765,6 @@
     var frame = document.getElementById('hero-frame');
     if (!frame) return;
 
-    // Unpixelate shortly after load
     setTimeout(function () {
       frame.classList.remove('pixelated');
       frame.classList.add('unpixelated');
@@ -1776,7 +1778,6 @@
       titleWrap.classList.add('ws-hero-title-selected');
     }, 600);
 
-    // After selection animation, swap font to Montserrat
     setTimeout(function () {
       document.documentElement.style.setProperty(
         '--ws-hero-font',
