@@ -215,7 +215,7 @@
     .ws-hero-side-inner {
       width: 100%;
       max-width: 320px;
-      margin-top: -10px; /* Nudge abstracts slightly higher */
+      margin-top: -32px; /* move top visuals higher */
     }
 
     .ws-hero-center {
@@ -269,6 +269,11 @@
       box-shadow: 0 0 0 5px rgba(20, 195, 139, 0.15);
     }
 
+    .ws-hero-title-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
     .ws-hero-title {
       font-family: var(--ws-hero-font);
       font-size: clamp(2.4rem, 3.2vw, 3rem);
@@ -277,10 +282,12 @@
       margin: 0 0 14px;
       color: var(--ws-text-main);
       max-width: 18ch;
+      position: relative;
+      z-index: 1;
     }
 
     .ws-hero-sub {
-      font-size: 0.96rem;
+      font-size: 0.88rem; /* smaller text size */
       line-height: 1.7;
       color: var(--ws-text-soft);
       max-width: 34ch;
@@ -290,6 +297,47 @@
     .ws-hero-highlight {
       color: var(--ws-accent);
       font-weight: 600;
+    }
+
+    .ws-hero-title-highlight-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      border-radius: 6px;
+      background: rgba(80, 134, 255, 0.18);
+      width: 0;
+      pointer-events: none;
+      transition: width 0.45s ease-out, opacity 0.4s ease-out;
+      z-index: 0;
+    }
+
+    .ws-hero-cursor {
+      position: absolute;
+      right: -4px;
+      bottom: 0;
+      width: 2px;
+      height: 1.2em;
+      background: #1e2947;
+      opacity: 0;
+    }
+
+    .ws-hero-title-selected .ws-hero-title-highlight-bar {
+      width: 100%;
+    }
+
+    .ws-hero-title-selected .ws-hero-cursor {
+      opacity: 1;
+      animation: ws-cursor-blink 0.25s step-end 0s 3;
+    }
+
+    .ws-hero-title-wrap.ws-hero-title-done .ws-hero-title-highlight-bar {
+      opacity: 0;
+    }
+
+    @keyframes ws-cursor-blink {
+      0%, 50% { opacity: 1; }
+      50.1%, 100% { opacity: 0; }
     }
 
     .ws-hero-actions {
@@ -358,54 +406,6 @@
       margin-top: 10px;
       font-size: 0.8rem;
       color: var(--ws-text-muted);
-    }
-
-    /* Hero title selection */
-
-    .ws-hero-title-wrap {
-      position: relative;
-      display: inline-block;
-    }
-
-    .ws-hero-title-highlight-bar {
-      position: absolute;
-      left: 0;
-      top: 0;
-      height: 100%;
-      border-radius: 6px;
-      background: rgba(80, 134, 255, 0.18);
-      width: 0;
-      pointer-events: none;
-      transition: width 0.45s ease-out, opacity 0.4s ease-out;
-      z-index: -1;
-    }
-
-    .ws-hero-cursor {
-      position: absolute;
-      top: 0;
-      right: -4px;
-      width: 1px;
-      height: 100%;
-      background: #1e2947;
-      opacity: 0;
-    }
-
-    .ws-hero-title-selected .ws-hero-title-highlight-bar {
-      width: 100%;
-    }
-
-    .ws-hero-title-selected .ws-hero-cursor {
-      opacity: 1;
-      animation: ws-cursor-blink 0.25s step-end 0s 3;
-    }
-
-    .ws-hero-title-wrap.ws-hero-title-done .ws-hero-title-highlight-bar {
-      opacity: 0;
-    }
-
-    @keyframes ws-cursor-blink {
-      0%, 50% { opacity: 1; }
-      50.1%, 100% { opacity: 0; }
     }
 
     /* Hero side visuals */
@@ -550,13 +550,13 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      opacity: 0.9;
+      opacity: 1;
       background-image:
-        linear-gradient(90deg, rgba(160, 175, 215, 0.55) 1px, transparent 1px),
-        linear-gradient(0deg, rgba(160, 175, 215, 0.55) 1px, transparent 1px);
-      background-size: 10px 10px;
-      mix-blend-mode: soft-light;
-      transition: opacity 1s ease-out;
+        linear-gradient(90deg, rgba(160, 175, 215, 0.7) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(160, 175, 215, 0.7) 1px, transparent 1px);
+      background-size: 16px 16px;
+      mix-blend-mode: multiply;
+      transition: opacity 1.1s ease-out;
     }
 
     .ws-hero-frame.pixelated .ws-pane,
@@ -564,9 +564,9 @@
     .ws-hero-frame.pixelated .ws-pane-thumbnail,
     .ws-hero-frame.pixelated .ws-pane-badge,
     .ws-hero-frame.pixelated .ws-pane-line {
-      filter: blur(2px);
-      transform: scale(1.01);
-      transition: filter 1s ease-out, transform 1s ease-out;
+      filter: blur(3px);
+      transform: scale(1.03);
+      transition: filter 1.1s ease-out, transform 1.1s ease-out;
     }
 
     .ws-hero-frame.unpixelated .ws-pane,
@@ -593,6 +593,8 @@
       flex-direction: column;
       gap: 6px;
       margin-bottom: 18px;
+      text-align: center;
+      align-items: center;
     }
 
     .ws-section-kicker {
@@ -800,7 +802,7 @@
     }
 
     .ws-placeholder--visual {
-      min-height: 190px;
+      min-height: 220px;
     }
 
     .ws-placeholder--mini {
@@ -811,14 +813,15 @@
     /* Benefit sections per outcome */
 
     .ws-benefit-section {
-      margin: 44px 0;
+      margin: 60px 0;
     }
 
     .ws-benefit-layout {
       display: grid;
       grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-      gap: 26px;
+      gap: 32px;
       align-items: center;
+      min-height: 380px;
     }
 
     .ws-benefit-text-block {
@@ -845,6 +848,7 @@
     @media (max-width: 900px) {
       .ws-benefit-layout {
         grid-template-columns: minmax(0, 1fr);
+        min-height: auto;
       }
     }
 
@@ -926,7 +930,7 @@
     .ws-demo-layout-inner {
       display: grid;
       gap: 6px;
-      min-height: 260px; /* Taller, more like a web screen */
+      min-height: 260px;
     }
 
     /* demo shapes (still placeholders) */
@@ -1175,8 +1179,8 @@
     .ws-cta-shape {
       position: absolute;
       transform: translate(0, 0) rotate(var(--rot, 0deg));
-      transition: transform 0.05s linear;
       opacity: 0.8;
+      transition: transform 0.05s linear;
     }
 
     .ws-cta-shape.circle {
@@ -1353,7 +1357,6 @@
         <div class="ws-hero-actions">
           <a href="https://www.placeholder.com" class="ws-btn-primary">
             <span>Get started</span>
-            <span class="ws-chevron">↗</span>
           </a>
         </div>
 
@@ -1644,7 +1647,6 @@
         <div class="ws-demo-layout" id="demo-1" data-variant="blog" aria-label="Demo layout">
           <div class="ws-demo-label">Before</div>
           <div class="ws-demo-layout-inner">
-            <!-- Placeholder: replace this block with a real visual representation of the page later -->
             <div class="hero-bar"></div>
             <div class="hero-strip"></div>
             <div class="cols">
@@ -1667,7 +1669,6 @@
         <div class="ws-demo-layout" id="demo-2" data-variant="grid" aria-label="Demo layout">
           <div class="ws-demo-label">Before</div>
           <div class="ws-demo-layout-inner">
-            <!-- Placeholder: replace this block with a real visual representation of the page later -->
             <div class="hero-bar"></div>
             <div class="thumb-row">
               <div class="thumb"></div>
@@ -1745,7 +1746,6 @@
           </div>
         </div>
 
-        <!-- Placeholder: small animation or graphic about the process -->
         <div class="ws-placeholder ws-placeholder--mini">
           Placeholder: subtle process animation (e.g., steps flowing from “old HTML” to “clean WebSpark HTML”).
         </div>
@@ -1771,7 +1771,6 @@
 
       <!-- Abstract shapes that move with scroll -->
       <div class="ws-cta-shapes">
-        <!-- Base positions are around the center; movement is applied via JS -->
         <div class="ws-cta-shape circle"
              style="top: 25%; left: 45%; --rot: 0deg;"
              data-x="-140" data-y="-80"></div>
@@ -1822,20 +1821,21 @@
   window.addEventListener('load', function () {
     var frames = document.querySelectorAll('.ws-hero-frame');
     var titleWrap = document.querySelector('.ws-hero-title-wrap');
+    var cursorEl = document.querySelector('.ws-hero-cursor');
 
-    // Step 1: keep pixelated briefly, then unpixelate
+    // Step 1: stay pixelated briefly, then unpixelate more slowly
     setTimeout(function () {
       frames.forEach(function (frame) {
         frame.classList.add('unpixelated');
         frame.classList.remove('pixelated');
       });
-    }, 350);
+    }, 900); // delay so the pixelation is noticeable
 
-    // Step 2: run selection + cursor animation after pixelation is noticeable
+    // Step 2: run selection + cursor animation after pixelation
     setTimeout(function () {
       if (!titleWrap) return;
       titleWrap.classList.add('ws-hero-title-selected');
-    }, 1100);
+    }, 1400);
 
     // Step 3: swap hero font to Montserrat after selection
     setTimeout(function () {
@@ -1843,13 +1843,14 @@
         '--ws-hero-font',
         '"Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
       );
-    }, 1800);
+    }, 2100);
 
-    // Step 4: fade out highlight so it doesn't stay forever
+    // Step 4: fade out highlight and hide cursor so it doesn't get stuck
     setTimeout(function () {
       if (!titleWrap) return;
       titleWrap.classList.add('ws-hero-title-done');
-    }, 2300);
+      if (cursorEl) cursorEl.style.opacity = '0';
+    }, 2600);
   });
 
   // Interactive demo toggles
@@ -1875,31 +1876,51 @@
     });
   })();
 
-  // Final CTA shapes scroll effect
+  // Final CTA shapes scroll effect with monotonic expansion on scroll down
   (function attachCTAParallax() {
     var cta = document.getElementById('ws-cta-final');
     if (!cta) return;
     var shapes = cta.querySelectorAll('.ws-cta-shape');
 
+    var lastScrollY = window.scrollY;
+    var lastProgress = 0;
+
+    function baseProgressFromRect(rect) {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      // 0 when CTA is far below viewport, 1 once CTA top has passed viewport center
+      var start = vh;                // when rect.top == vh -> 0
+      var end = vh * 0.2;            // when rect.top == 0.2*vh -> ~1
+      var t = (start - rect.top) / (start - end);
+      return Math.max(0, Math.min(1, t));
+    }
+
     function updateShapes() {
       var rect = cta.getBoundingClientRect();
-      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var base = baseProgressFromRect(rect);
 
-      // Progress ~ how centered the CTA is in viewport (0 = far, 1 = centered)
-      var centerY = rect.top + rect.height / 2;
-      var viewportCenter = vh / 2;
-      var distance = Math.abs(centerY - viewportCenter);
-      var maxDist = viewportCenter + rect.height / 2;
-      var progress = 1 - Math.min(1, distance / maxDist); // 0..1
+      var scrollY = window.scrollY;
+      var scrollingDown = scrollY >= lastScrollY;
+
+      var progress;
+      if (scrollingDown) {
+        // Never shrink while scrolling down
+        progress = Math.max(lastProgress, base);
+      } else {
+        // Allow shrink when scrolling up
+        progress = base;
+      }
+
+      progress = Math.max(0, Math.min(1, progress));
+      lastProgress = progress;
+      lastScrollY = scrollY;
 
       shapes.forEach(function (shape) {
         var maxX = parseFloat(shape.getAttribute('data-x')) || 0;
         var maxY = parseFloat(shape.getAttribute('data-y')) || 0;
         var tx = maxX * progress;
         var ty = maxY * progress;
-        shape.style.setProperty('--tx', tx + 'px');
-        shape.style.setProperty('--ty', ty + 'px');
-        shape.style.transform = 'translate(' + tx + 'px,' + ty + 'px) rotate(' + (getComputedStyle(shape).getPropertyValue('--rot') || '0deg') + ')';
+        var rot = getComputedStyle(shape).getPropertyValue('--rot') || '0deg';
+        shape.style.transform = 'translate(' + tx + 'px,' + ty + 'px) rotate(' + rot + ')';
       });
     }
 
