@@ -1350,24 +1350,27 @@
       text-transform: uppercase;
       opacity: .85;
     }
+
+    .ws-main { padding: 32px 20px; }
+    .ws-main > .ws-section { max-width: 1100px; margin: 0 auto; }
 </style>
 </head>
 <body>
 <header class="ws-header">
   <div class="ws-header-inner">
-    <a href="#" class="ws-logo">
+    <a href="index.html" class="ws-logo">
       <div class="ws-logo-mark" aria-hidden="true"></div>
       <span>WebSpark</span>
     </a>
 
     <nav class="ws-nav" aria-label="Primary">
       <div class="ws-nav-links">
-        <a href="#how-it-works" class="ws-nav-link">How it works</a>
-        <a href="#examples" class="ws-nav-link">Examples</a>
-        <a href="#demo" class="ws-nav-link">Demo</a>
+        <a href="index.html#how-it-works" class="ws-nav-link">How it works</a>
+        <a href="index.html#examples" class="ws-nav-link">Examples</a>
+        <a href="index.html#demo" class="ws-nav-link">Demo</a>
         <a href="contact.html" class="ws-nav-link">Contact</a>
       </div>
-      <a href="contact.html" class="ws-nav-cta">Get started</a>
+      <a href="#contact-form" class="ws-nav-cta">Get started</a>
     </nav>
   </div>
 </header>
@@ -1386,15 +1389,12 @@
       <div class="ws-contact-grid">
         <div class="ws-contact-card">
           <h2 class="ws-card-title">Send a message</h2>
-          <p class="ws-card-sub">
-            This form is designed for a static website. Pure HTML can’t reliably “send email” by itself without a form backend.
-            If you want true in-site sending, wire this form to a service (Formspree) or a small backend endpoint.
-          </p>
+          <p class="ws-card-sub">Send us a message and we’ll reply as soon as possible.</p>
 
-          <form class="ws-form" id="contactForm" action="#" method="post" novalidate>
+          <form class="ws-form" id="contact-form" action="#" method="post" novalidate>
             <div class="ws-form-row">
               <label class="ws-label" for="name">Name</label>
-              <input class="ws-input" id="name" name="name" type="text" autocomplete="name" required placeholder="Your name">
+              <input class="ws-input" id="name" name="name" type="text" autocomplete="name" required placeholder="Write your message here...">
             </div>
 
             <div class="ws-form-row">
@@ -1413,7 +1413,7 @@
             </div>
 
             <div class="ws-form-row">
-              <label class="ws-label" for="goals">What do you want improved?</label>
+              <label class="ws-label" for="goals">Message</label>
               <textarea class="ws-textarea" id="goals" name="goals" rows="5" required
                         placeholder="Example: make it look modern, improve trust, clarify services, increase conversions, mobile polish…"></textarea>
             </div>
@@ -1446,24 +1446,7 @@
             </div>
           </div>
 
-          <div class="ws-contact-explain">
-            <h3 class="ws-mini-title">What happens after you reach out?</h3>
-            <ul class="ws-bullets">
-              <li>I review your current site quickly and identify the biggest “trust and clarity” gaps.</li>
-              <li>You get a short plan: what changes matter, what to ignore, and a realistic next step.</li>
-              <li>If it’s a fit, we move into a rebuild that’s clean, modern, and conversion-focused.</li>
-            </ul>
           </div>
-
-          <div class="ws-contact-explain">
-            <h3 class="ws-mini-title">Want faster results?</h3>
-            <p class="ws-card-sub">
-              Include a link to your site and 2–3 competitor sites you like. That speeds up direction and tone.
-            </p>
-          </div>
-        </aside>
-      </div>
-    </div>
   </section>
 </main>
 
@@ -1513,9 +1496,9 @@
       <span>© <span id="ws-year"></span> WebSpark. Clean redesigns, in your own HTML.</span>
       <div class="ws-footer-links">
         <div class="ws-footer-contact">Contact: <a href="mailto:dcoleman.office@gmail.com">dcoleman.office@gmail.com</a> · <a href="tel:+15622945263">+1 562-294-5263</a></div>
-        <a href="#how-it-works">How it works</a>
-        <a href="#examples">Examples</a>
-        <a href="#demo">Demo</a>
+        <a href="index.html#how-it-works">How it works</a>
+        <a href="index.html#examples">Examples</a>
+        <a href="index.html#demo">Demo</a>
         <a href="contact.html">Contact</a>
 </div>
     </div>
