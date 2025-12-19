@@ -248,6 +248,7 @@
       }
     }
 
+    /* NOTE: .ws-pill kept in CSS (harmless) but pill HTML is removed */
     .ws-pill {
       display: inline-flex;
       align-items: center;
@@ -1189,6 +1190,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
+      align-items: center;
     }
 
     .ws-footer-links a {
@@ -1200,8 +1202,24 @@
       color: var(--ws-accent);
     }
 
-    /* Floating redesign button */
+    .ws-footer-contact {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      color: var(--ws-text-muted);
+    }
 
+    .ws-footer-contact a {
+      color: var(--ws-text-muted);
+      text-decoration: none;
+    }
+
+    .ws-footer-contact a:hover {
+      color: var(--ws-accent);
+    }
+
+    /* Floating redesign button (removed from HTML; styles can remain harmless) */
     .ws-floating-redesign {
       position: fixed;
       right: 18px;
@@ -1258,9 +1276,9 @@
         <a href="#how-it-works" class="ws-nav-link">How it works</a>
         <a href="#examples" class="ws-nav-link">Examples</a>
         <a href="#demo" class="ws-nav-link">Demo</a>
-        <a href="https://www.example2.com" class="ws-nav-link">Contact</a>
+        <a href="contact.html" class="ws-nav-link">Contact</a>
       </div>
-      <a href="https://www.placeholder.com" class="ws-nav-cta">Get started</a>
+      <a href="contact.html" class="ws-nav-cta">Get started</a>
     </nav>
   </div>
 </header>
@@ -1297,15 +1315,12 @@
 
       <!-- Center: main hero text -->
       <div class="ws-hero-center">
-        <div class="ws-pill">
-          <span class="ws-pill-dot"></span>
-          <span>Upgrade the way your website feels – not just how it looks</span>
-        </div>
+        <!-- 1) pill removed -->
 
         <div class="ws-hero-title-wrap">
           <div class="ws-hero-title-highlight-bar" aria-hidden="true"></div>
           <h1 class="ws-hero-title" id="hero-title">
-            Turn your good website<br>
+            Turn your website<br>
             into a <span class="ws-hero-highlight">great first impression.</span>
           </h1>
           <div class="ws-hero-cursor" aria-hidden="true"></div>
@@ -1316,7 +1331,7 @@
         </p>
 
         <div class="ws-hero-actions">
-          <a href="https://www.placeholder.com" class="ws-btn-primary">
+          <a href="contact.html" class="ws-btn-primary">
             <span>Get started</span>
           </a>
         </div>
@@ -1439,7 +1454,7 @@
         </div>
       </article>
 
-      <!-- Pair C (Visual balance, centered) -->
+      <!-- Pair C -->
       <article class="ws-layout-pair" data-variant="c" aria-label="Content layout example">
         <div class="ws-layout-before">
           <div class="ws-layout-label">Before</div>
@@ -1482,7 +1497,6 @@
 
     <div class="ws-placeholder ws-placeholder--carousel">
       Placeholder: future screenshot carousel or grid (before / after images of real WebSpark projects).
-      <!-- Example: insert a slider library here and feed it <img> tags of your redesigned pages. -->
     </div>
   </section>
 
@@ -1713,7 +1727,7 @@
     </div>
   </section>
 
-  <!-- FINAL CTA: full-height ribbon with animated shapes -->
+  <!-- FINAL CTA -->
   <section aria-labelledby="cta-title">
     <div class="ws-cta-final" id="ws-cta-final">
       <div class="ws-cta-final-inner">
@@ -1723,13 +1737,12 @@
         <p class="ws-cta-final-sub">
           Start with the page that matters most and let WebSpark show you the cleaner, more confident version of what you already built.
         </p>
-        <a href="https://www.placeholder.com" class="ws-btn-primary">
+        <a href="contact.html" class="ws-btn-primary">
           <span>Get started</span>
           <span class="ws-chevron">↗</span>
         </a>
       </div>
 
-      <!-- Abstract shapes that move with scroll -->
       <div class="ws-cta-shapes">
         <div class="ws-cta-shape circle"
              style="top: 25%; left: 45%; --rot: 0deg;"
@@ -1753,25 +1766,23 @@
   <footer class="ws-footer">
     <div class="ws-footer-inner">
       <span>© <span id="ws-year"></span> WebSpark. Clean redesigns, in your own HTML.</span>
+
+      <!-- 4) contacts added back -->
       <div class="ws-footer-links">
+        <span class="ws-footer-contact">
+          <a href="mailto:mcsite@web-spark.net">mcsite@web-spark.net</a>
+          <a href="tel:+18055551234">(805) 555-1234</a>
+        </span>
+
         <a href="#how-it-works">How it works</a>
         <a href="#examples">Examples</a>
         <a href="#demo">Demo</a>
-        <a href="https://www.example2.com">Contact</a>
-        <a href="https://example3.com">Reviews</a>
+        <a href="contact.html">Contact</a>
+        <!-- 3) reviews removed -->
       </div>
     </div>
   </footer>
 </main>
-
-<!-- Floating redesign button (behavior to be added later) -->
-<div class="ws-floating-redesign">
-  <button type="button" title="Cycle WebSpark homepage designs (coming soon)">
-    <span class="icon">🎛</span>
-    <span>Redesign this view</span>
-    <small>coming soon</small>
-  </button>
-</div>
 
 <script>
   // Year in footer
@@ -1784,12 +1795,10 @@
 
     if (!titleWrap) return;
 
-    // Step 1: selection highlight + cursor blink
     setTimeout(function () {
       titleWrap.classList.add('ws-hero-title-selected');
     }, 400);
 
-    // Step 2: swap hero font to Montserrat
     setTimeout(function () {
       document.documentElement.style.setProperty(
         '--ws-hero-font',
@@ -1797,7 +1806,6 @@
       );
     }, 1100);
 
-    // Step 3: fade out highlight and hide cursor so nothing gets "stuck"
     setTimeout(function () {
       titleWrap.classList.add('ws-hero-title-done');
       if (cursorEl) cursorEl.style.opacity = '0';
@@ -1838,7 +1846,6 @@
 
     function baseProgressFromRect(rect) {
       var vh = window.innerHeight || document.documentElement.clientHeight;
-      // 0 when CTA is below viewport, 1 when CTA top nears the upper part of viewport
       var start = vh;
       var end = vh * 0.2;
       var t = (start - rect.top) / (start - end);
@@ -1854,10 +1861,8 @@
 
       var progress;
       if (scrollingDown) {
-        // Never shrink while scrolling down
         progress = Math.max(lastProgress, base);
       } else {
-        // Allow shrink when scrolling up
         progress = base;
       }
 
