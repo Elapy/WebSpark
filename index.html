@@ -45,7 +45,6 @@
       -webkit-font-smoothing:antialiased;
     }
     a{ color:inherit; text-decoration:none; }
-    img{ max-width:100%; display:block; }
 
     .ws-page{
       max-width:1200px;
@@ -168,13 +167,13 @@
       max-width:1100px;
       margin:0 auto;
       display:grid;
-      grid-template-columns: minmax(0,1fr) minmax(0,min(520px,100%)) minmax(0,1fr);
+      grid-template-columns: minmax(0,1fr) minmax(0,min(480px,100%)) minmax(0,1fr);
       gap:24px;
       align-items:center;
       position:relative;
       overflow: visible;
-      isolation:isolate;
-      padding: 22px 10px;
+      isolation:isolate; /* creates a clean stacking context */
+      padding: 22px 10px; /* ensures floats don't sit against edges */
     }
 
     .ws-hero-side{
@@ -189,10 +188,11 @@
       max-width:320px;
     }
     .ws-hero-side-left .ws-hero-side-inner {
-      transform: translateY(120px) rotate(-2deg);
+      transform: translateY(80px) rotate(-2deg);
     }
+    
     .ws-hero-side-right .ws-hero-side-inner {
-      transform: translateY(-120px) rotate(3deg);
+      transform: translateY(-80px) rotate(3deg);
     }
 
     .ws-hero-center{
@@ -212,30 +212,7 @@
       .ws-hero-side-inner{ transform:none !important; }
     }
 
-    /* Hero title selection effect (JS-driven) */
-    .ws-hero-title-wrap{
-      position:relative;
-      display:inline-block;
-      isolation:isolate;
-    }
-    .ws-hero-title-highlight-bar{
-      position:absolute;
-      left:-8px;
-      right:-8px;
-      top:-6px;
-      bottom:-6px;
-      border-radius:10px;
-      background: rgba(80, 134, 255, 0.18);
-      opacity:0;
-      transform: scaleX(0.65);
-      transform-origin: center;
-      transition: opacity 0.18s ease-out, transform 0.35s ease-out;
-      z-index:0;
-      pointer-events:none;
-    }
     .ws-hero-title{
-      position:relative;
-      z-index:1;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-size: clamp(2.4rem, 3.2vw, 3rem);
       line-height:1.06;
@@ -243,37 +220,7 @@
       margin:0 0 14px;
       color:var(--ws-text-main);
       max-width:18ch;
-      user-select:text;
     }
-    .ws-hero-title.ws-title-selected{
-      font-family:"Rubik Glitch", "Montserrat", system-ui, sans-serif;
-      letter-spacing: 0.01em;
-    }
-    .ws-hero-title.ws-title-selected + .ws-hero-cursor{
-      opacity:1;
-      animation: ws-cursor-blink 0.25s step-end 0s 4;
-    }
-    .ws-title-selected ~ .ws-hero-title-highlight-bar,
-    .ws-hero-title-wrap.ws-title-selected .ws-hero-title-highlight-bar{
-      opacity:1;
-      transform: scaleX(1);
-    }
-    .ws-hero-cursor{
-      position:absolute;
-      right:-6px;
-      bottom:10px;
-      width:2px;
-      height: 1.1em;
-      background:#1e2947;
-      opacity:0;
-      z-index:2;
-      pointer-events:none;
-    }
-    @keyframes ws-cursor-blink{
-      0%, 50% { opacity: 1; }
-      50.1%, 100% { opacity: 0; }
-    }
-
     .ws-hero-highlight{
       color:var(--ws-accent);
       font-weight:600;
@@ -282,7 +229,7 @@
       font-size:0.88rem;
       line-height:1.7;
       color:var(--ws-text-muted);
-      max-width:36ch;
+      max-width:34ch;
       margin:0 0 20px;
     }
 
@@ -326,7 +273,6 @@
       justify-content:center;
       margin-top:4px;
     }
-    .ws-hero-meta strong{ font-weight:600; color: rgba(16,21,36,0.72); }
     .ws-hero-meta-divider{
       width:1px;
       height:16px;
@@ -410,19 +356,20 @@
     .ws-pane-thumbnail{ border-radius:10px; background:linear-gradient(135deg,#a8b8ff,#4e71d1); }
     .ws-pane-badge{ border-radius:999px;height:16px;background:#edf1ff;border:1px solid rgba(151,170,223,0.9); }
 
-    /* Selected overlays (static; NOT animated) */
+    /* Selected overlays (guaranteed visible) */
 
     .ws-hero-float{
       position:absolute;
-      z-index:999;
+      z-index:999; /* force top */
       pointer-events:none;
       opacity:1;
       display:block;
       overflow:visible;
     }
 
+    /* Safe, clearly-inside positions */
     .ws-hero-float.tl{
-      top: -8px;
+      top: -10px;
       left: 10px;
       transform: rotate(-4deg);
     }
@@ -466,7 +413,7 @@
     .ws-selection-handles .bm{ bottom:-7px; left: calc(50% - 7px); }
     .ws-selection-handles .br{ bottom:-7px; right:-7px; }
 
-    /* “Object” rendered purely in CSS (static) */
+    /* “Object” rendered purely in CSS (no images) */
     .ws-stock-object{
       width: 168px;
       height: 128px;
@@ -541,182 +488,9 @@
     .ws-section-sub{
       font-size:0.94rem;
       color:var(--ws-text-soft);
-      max-width:58ch;
+      max-width:48ch;
       margin:0;
     }
-
-    /* Examples (NOT the same themes as the demo section) */
-
-    .ws-examples-grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:14px;
-      margin-top:14px;
-    }
-    @media (min-width: 900px){
-      .ws-examples-grid{
-        grid-template-columns: 1fr 1fr;
-        gap:16px;
-      }
-    }
-
-    .ws-example-card{
-      border-radius: var(--ws-radius-lg);
-      background: var(--ws-surface);
-      border: 1px solid var(--ws-border-subtle);
-      box-shadow: 0 18px 30px rgba(10,22,60,0.06);
-      overflow:hidden;
-      display:grid;
-      grid-template-rows: auto 1fr;
-    }
-    .ws-example-top{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:12px 14px;
-      gap:12px;
-      border-bottom: 1px solid rgba(211,220,242,0.9);
-      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(249,251,255,0.96));
-    }
-    .ws-example-name{
-      font-size:0.9rem;
-      font-weight:600;
-      color: var(--ws-text-main);
-      letter-spacing: -0.01em;
-    }
-    .ws-example-pill{
-      font-size:0.76rem;
-      padding:4px 10px;
-      border-radius:999px;
-      background: rgba(17,64,166,0.06);
-      color: var(--ws-accent);
-      border: 1px solid rgba(163,182,230,0.55);
-      white-space:nowrap;
-    }
-
-    .ws-example-pair{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      padding:14px;
-      align-items:stretch;
-    }
-    @media (max-width: 520px){
-      .ws-example-pair{ grid-template-columns: 1fr; }
-    }
-
-    .ws-mini{
-      border-radius:14px;
-      border: 1px solid rgba(170,186,224,0.75);
-      overflow:hidden;
-      background:#fff;
-      position:relative;
-      min-height: 210px;
-    }
-    .ws-mini-head{
-      height: 18px;
-      background: rgba(239,244,255,0.9);
-      border-bottom: 1px solid rgba(211,220,242,0.9);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding: 0 10px;
-      font-size: 0.72rem;
-      color: var(--ws-text-muted);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-    .ws-mini-body{
-      padding: 10px;
-      display:grid;
-      gap: 8px;
-      height: calc(100% - 18px);
-    }
-
-    /* boring grayscale "before" */
-    .ws-mini.before{
-      filter: grayscale(1);
-      opacity: 0.92;
-      background: linear-gradient(180deg, #ffffff, #f2f4f9);
-    }
-    .ws-mini.before .ws-block{ background: rgba(170,178,198,0.55) !important; }
-    .ws-mini.before .ws-block.image{ background: rgba(170,178,198,0.38) !important; }
-    .ws-mini.before .ws-mini-body{ gap: 10px; }
-
-    /* after: theme variables per card */
-    .ws-example-card[data-theme="hotel"]{ --t1:#1d4ed8; --t2:#93c5fd; --t3:#0f172a; --tbg:#eef4ff; }
-    .ws-example-card[data-theme="fitness"]{ --t1:#16a34a; --t2:#86efac; --t3:#052e16; --tbg:#edfff3; }
-    .ws-example-card[data-theme="dentist"]{ --t1:#0ea5e9; --t2:#a5f3fc; --t3:#083344; --tbg:#ecfeff; }
-    .ws-example-card[data-theme="photo"]{ --t1:#a855f7; --t2:#f0abfc; --t3:#2e1065; --tbg:#fbf0ff; }
-
-    .ws-mini.after{
-      background: radial-gradient(circle at top left, rgba(255,255,255,0.95), var(--tbg));
-    }
-
-    .ws-block{
-      border-radius: 10px;
-      background: rgba(17,64,166,0.10);
-    }
-    .ws-block.small{ height: 16px; }
-    .ws-block.medium{ height: 22px; }
-    .ws-block.tall{ height: 52px; }
-    .ws-block.image{
-      height: 70px;
-      background: linear-gradient(135deg, rgba(17,64,166,0.15), rgba(83,132,255,0.22));
-    }
-
-    .ws-mini.after .ws-topbar{
-      height: 22px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--t1), var(--t2));
-    }
-    .ws-mini.after .ws-hero{
-      height: 74px;
-      border-radius: 14px;
-      background: radial-gradient(circle at 30% 35%, rgba(255,255,255,0.65), transparent 55%),
-                  linear-gradient(135deg, var(--t1), var(--t2));
-    }
-    .ws-mini.after .ws-title{
-      height: 12px;
-      width: 78%;
-      border-radius: 999px;
-      background: rgba(15,23,42,0.85);
-    }
-    .ws-mini.after .ws-subtitle{
-      height: 9px;
-      width: 64%;
-      border-radius: 999px;
-      background: rgba(15,23,42,0.35);
-    }
-    .ws-mini.after .ws-cta{
-      height: 20px;
-      width: 92px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--t1), var(--t2));
-      justify-self: start;
-    }
-    .ws-mini.after .ws-grid{
-      display:grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 8px;
-      align-items:stretch;
-    }
-    .ws-mini.after .ws-panel{
-      border-radius: 14px;
-      background: rgba(255,255,255,0.82);
-      border: 1px solid rgba(160,176,214,0.6);
-      padding: 10px;
-      display:grid;
-      gap: 8px;
-    }
-    .ws-mini.after .ws-card{
-      height: 54px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(241,245,255,0.85));
-      border: 1px solid rgba(160,176,214,0.55);
-    }
-
-    /* Placeholder blocks (general) */
 
     .ws-placeholder{
       border-radius:var(--ws-radius-lg);
@@ -730,6 +504,11 @@
       font-size:0.9rem;
       text-align:center;
     }
+    .ws-placeholder--carousel{
+      min-height:160px;
+      background-image: repeating-linear-gradient(-45deg, #f5f7ff 0, #f5f7ff 6px, #ffffff 6px, #ffffff 12px);
+    }
+    .ws-placeholder--visual{ min-height:220px; }
     .ws-placeholder--mini{ min-height:80px; font-size:0.8rem; }
 
     /* Interactive demos */
@@ -836,122 +615,36 @@
       user-select:none;
     }
 
-    /* Benefits blocks (fatter, but spacing controlled) */
+    /* Benefits blocks */
 
-    .ws-benefit-section{ margin:44px 0; }
+    .ws-benefit-section{ margin:60px 0; }
     .ws-benefit-layout{
       display:grid;
       grid-template-columns: minmax(0,1.1fr) minmax(0,1.1fr);
-      gap:28px;
-      align-items:stretch;
-      min-height: 420px;
+      gap:32px;
+      align-items:center;
+      min-height:380px;
     }
     @media (max-width:900px){
-      .ws-benefit-layout{ grid-template-columns: minmax(0,1fr); min-height:auto; gap:18px; }
-      .ws-benefit-section{ margin:34px 0; }
+      .ws-benefit-layout{ grid-template-columns: minmax(0,1fr); min-height:auto; }
     }
-
     .ws-benefit-text-block{
       font-size:0.94rem;
       color:var(--ws-text-soft);
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      padding: 10px 0;
+      max-width:44ch;
     }
     .ws-benefit-heading{
-      font-size:1.12rem;
-      font-weight:650;
-      margin:0 0 8px;
+      font-size:1.1rem;
+      font-weight:600;
+      margin:0 0 6px;
       color:var(--ws-text-main);
-      letter-spacing:-0.01em;
     }
     .ws-benefit-kicker{
       font-size:0.76rem;
       text-transform:uppercase;
       letter-spacing:0.18em;
       color:var(--ws-text-muted);
-      margin-bottom:6px;
-    }
-    .ws-benefit-lead{
-      margin:0 0 14px;
-      line-height:1.7;
-      max-width: 52ch;
-    }
-
-    .ws-benefit-points{
-      margin:0;
-      padding:0;
-      list-style:none;
-      display:grid;
-      gap:10px;
-      max-width: 56ch;
-    }
-    .ws-benefit-points li{
-      display:grid;
-      grid-template-columns: auto 1fr;
-      gap:10px;
-      align-items:start;
-      padding:10px 12px;
-      border-radius:14px;
-      background: rgba(255,255,255,0.8);
-      border: 1px solid rgba(211,220,242,0.9);
-      box-shadow: 0 10px 20px rgba(10,22,60,0.05);
-    }
-    .ws-benefit-icon{
-      width:28px;
-      height:28px;
-      border-radius:10px;
-      background: rgba(17,64,166,0.08);
-      border: 1px solid rgba(163,182,230,0.55);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color: var(--ws-accent);
-      font-weight:700;
-      font-size: 0.9rem;
-      margin-top: 1px;
-      flex: 0 0 auto;
-    }
-    .ws-benefit-point-title{
-      font-weight: 650;
-      color: rgba(16,21,36,0.92);
-      font-size: 0.92rem;
-      margin:0 0 2px;
-    }
-    .ws-benefit-point-text{
-      margin:0;
-      color: var(--ws-text-soft);
-      font-size: 0.88rem;
-      line-height: 1.6;
-    }
-
-    .ws-benefit-visual{
-      border-radius: var(--ws-radius-xl);
-      border: 1px solid rgba(170,186,224,0.75);
-      overflow:hidden;
-      position:relative;
-      background: #fff;
-      box-shadow: 0 18px 34px rgba(10,22,60,0.08);
-      min-height: 320px;
-      display:flex;
-      align-items:stretch;
-      justify-content:stretch;
-    }
-    .ws-benefit-visual img{
-      width:100%;
-      height:100%;
-      object-fit: cover;
-      filter: saturate(1.02) contrast(1.02);
-      transform: scale(1.01);
-    }
-    .ws-benefit-visual::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: radial-gradient(circle at 30% 18%, rgba(255,255,255,0.18), transparent 52%),
-                  linear-gradient(180deg, rgba(10,22,60,0.06), rgba(10,22,60,0.02));
-      pointer-events:none;
+      margin-bottom:4px;
     }
 
     /* How it works */
@@ -1204,14 +897,10 @@
       </div>
 
       <div class="ws-hero-center">
-        <div class="ws-hero-title-wrap" id="hero-title-wrap">
-          <div class="ws-hero-title-highlight-bar" aria-hidden="true"></div>
-          <h1 class="ws-hero-title" id="hero-title">
-            Turn your website<br>
-            into a <span class="ws-hero-highlight">great first impression.</span>
-          </h1>
-          <div class="ws-hero-cursor" aria-hidden="true"></div>
-        </div>
+        <h1 class="ws-hero-title" id="hero-title">
+          Turn your website<br>
+          into a <span class="ws-hero-highlight">great first impression.</span>
+        </h1>
 
         <p class="ws-hero-sub">
           WebSpark rebuilds an existing site into a cleaner, sharper, more trustworthy experience – in HTML that stays under your control.
@@ -1273,162 +962,11 @@
     <div class="ws-section-header">
       <div class="ws-section-kicker">Layout transformations</div>
       <h2 class="ws-section-title" id="examples-title">See how structure changes perception</h2>
-      <p class="ws-section-sub">
-        Same idea, radically clearer execution. These examples are intentionally bland on the left so the improvement reads instantly.
-      </p>
+      <p class="ws-section-sub">Spacing, hierarchy, and visual rhythm shape how a brand is perceived.</p>
     </div>
 
-    <div class="ws-examples-grid">
-      <!-- Theme A: Boutique Hotel -->
-      <article class="ws-example-card" data-theme="hotel" aria-label="Boutique hotel layout example">
-        <div class="ws-example-top">
-          <span class="ws-example-name">Boutique Hotel</span>
-          <span class="ws-example-pill">Before → After</span>
-        </div>
-        <div class="ws-example-pair">
-          <div class="ws-mini before">
-            <div class="ws-mini-head"><span>Before</span><span>layout</span></div>
-            <div class="ws-mini-body">
-              <div class="ws-block medium"></div>
-              <div class="ws-block small"></div>
-              <div class="ws-block small"></div>
-              <div class="ws-block image"></div>
-              <div class="ws-block tall"></div>
-            </div>
-          </div>
-
-          <div class="ws-mini after">
-            <div class="ws-mini-head"><span>After</span><span>hotel</span></div>
-            <div class="ws-mini-body">
-              <div class="ws-topbar"></div>
-              <div class="ws-hero"></div>
-              <div class="ws-panel">
-                <div class="ws-title"></div>
-                <div class="ws-subtitle"></div>
-                <div class="ws-cta"></div>
-              </div>
-              <div class="ws-grid">
-                <div class="ws-card"></div>
-                <div class="ws-card"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Theme B: Fitness Studio -->
-      <article class="ws-example-card" data-theme="fitness" aria-label="Fitness studio layout example">
-        <div class="ws-example-top">
-          <span class="ws-example-name">Fitness Studio</span>
-          <span class="ws-example-pill">Before → After</span>
-        </div>
-        <div class="ws-example-pair">
-          <div class="ws-mini before">
-            <div class="ws-mini-head"><span>Before</span><span>layout</span></div>
-            <div class="ws-mini-body">
-              <div class="ws-block medium"></div>
-              <div class="ws-block small"></div>
-              <div class="ws-block tall"></div>
-              <div class="ws-block small"></div>
-              <div class="ws-block image"></div>
-            </div>
-          </div>
-
-          <div class="ws-mini after">
-            <div class="ws-mini-head"><span>After</span><span>fitness</span></div>
-            <div class="ws-mini-body">
-              <div class="ws-topbar"></div>
-              <div class="ws-hero"></div>
-              <div class="ws-grid">
-                <div class="ws-panel">
-                  <div class="ws-title"></div>
-                  <div class="ws-subtitle"></div>
-                  <div class="ws-cta"></div>
-                </div>
-                <div class="ws-panel">
-                  <div class="ws-card"></div>
-                  <div class="ws-card"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Theme C: Dentist -->
-      <article class="ws-example-card" data-theme="dentist" aria-label="Dental clinic layout example">
-        <div class="ws-example-top">
-          <span class="ws-example-name">Dental Clinic</span>
-          <span class="ws-example-pill">Before → After</span>
-        </div>
-        <div class="ws-example-pair">
-          <div class="ws-mini before">
-            <div class="ws-mini-head"><span>Before</span><span>layout</span></div>
-            <div class="ws-mini-body">
-              <div class="ws-block medium"></div>
-              <div class="ws-block small"></div>
-              <div class="ws-block image"></div>
-              <div class="ws-block tall"></div>
-              <div class="ws-block small"></div>
-            </div>
-          </div>
-
-          <div class="ws-mini after">
-            <div class="ws-mini-head"><span>After</span><span>clinic</span></div>
-            <div class="ws-mini-body">
-              <div class="ws-topbar"></div>
-              <div class="ws-grid">
-                <div class="ws-panel">
-                  <div class="ws-hero"></div>
-                  <div class="ws-title"></div>
-                  <div class="ws-subtitle"></div>
-                </div>
-                <div class="ws-panel">
-                  <div class="ws-card"></div>
-                  <div class="ws-card"></div>
-                  <div class="ws-cta"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Theme D: Event Photography -->
-      <article class="ws-example-card" data-theme="photo" aria-label="Photography portfolio layout example">
-        <div class="ws-example-top">
-          <span class="ws-example-name">Event Photography</span>
-          <span class="ws-example-pill">Before → After</span>
-        </div>
-        <div class="ws-example-pair">
-          <div class="ws-mini before">
-            <div class="ws-mini-head"><span>Before</span><span>layout</span></div>
-            <div class="ws-mini-body">
-              <div class="ws-block medium"></div>
-              <div class="ws-block tall"></div>
-              <div class="ws-block small"></div>
-              <div class="ws-block small"></div>
-              <div class="ws-block image"></div>
-            </div>
-          </div>
-
-          <div class="ws-mini after">
-            <div class="ws-mini-head"><span>After</span><span>portfolio</span></div>
-            <div class="ws-mini-body">
-              <div class="ws-topbar"></div>
-              <div class="ws-hero"></div>
-              <div class="ws-grid">
-                <div class="ws-card"></div>
-                <div class="ws-panel">
-                  <div class="ws-title"></div>
-                  <div class="ws-subtitle"></div>
-                  <div class="ws-cta"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
+    <div class="ws-placeholder ws-placeholder--carousel">
+      Placeholder: future screenshot carousel or grid (before / after images).
     </div>
   </section>
 
@@ -1436,189 +974,62 @@
     <div class="ws-section-header">
       <div class="ws-section-kicker">Why it matters</div>
       <h2 class="ws-section-title" id="benefits-intro-title">Five outcomes every redesign aims for</h2>
-      <p class="ws-section-sub">
-        Clarity first. Stronger hierarchy, cleaner spacing, and a more confident first impression — without losing control of the code.
-      </p>
+      <p class="ws-section-sub">Clarity first. Better first impressions, better conversion paths, and cleaner structure.</p>
     </div>
   </section>
 
-  <!-- Benefit 1 -->
   <section class="ws-benefit-section" aria-labelledby="b1">
     <div class="ws-benefit-layout">
       <div class="ws-benefit-text-block">
         <div class="ws-benefit-kicker">Outcome 01</div>
         <h3 class="ws-benefit-heading" id="b1">Better first impressions</h3>
-        <p class="ws-benefit-lead">Make the first view instantly readable: what it is, who it’s for, and what to do next.</p>
-
-        <ul class="ws-benefit-points">
-          <li>
-            <div class="ws-benefit-icon">✓</div>
-            <div>
-              <div class="ws-benefit-point-title">Hero clarity</div>
-              <p class="ws-benefit-point-text">Clear headline + support line that reads in one glance.</p>
-            </div>
-          </li>
-          <li>
-            <div class="ws-benefit-icon">↗</div>
-            <div>
-              <div class="ws-benefit-point-title">One primary action</div>
-              <p class="ws-benefit-point-text">A single CTA that stays visually dominant across breakpoints.</p>
-            </div>
-          </li>
-        </ul>
+        <p>Make the first view instantly readable: what it is, who it’s for, and what to do next.</p>
       </div>
-
-      <div class="ws-benefit-visual" aria-hidden="true">
-        <img
-          src="https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?auto=format&fit=crop&w=1400&q=70"
-          alt=""
-          loading="lazy"
-        />
-      </div>
+      <div class="ws-placeholder ws-placeholder--visual">Placeholder: hero transformation visual.</div>
     </div>
   </section>
 
-  <!-- Benefit 2 -->
   <section class="ws-benefit-section" aria-labelledby="b2">
     <div class="ws-benefit-layout">
-      <div class="ws-benefit-visual" aria-hidden="true">
-        <img
-          src="https://images.unsplash.com/photo-1632354503256-8d1b77f0f9fd?auto=format&fit=crop&w=1400&q=70"
-          alt=""
-          loading="lazy"
-        />
-      </div>
-
+      <div class="ws-placeholder ws-placeholder--visual">Placeholder: funnel clarity visual.</div>
       <div class="ws-benefit-text-block">
         <div class="ws-benefit-kicker">Outcome 02</div>
         <h3 class="ws-benefit-heading" id="b2">More customers</h3>
-        <p class="ws-benefit-lead">Reduce friction so the next step is always obvious and always consistent.</p>
-
-        <ul class="ws-benefit-points">
-          <li>
-            <div class="ws-benefit-icon">→</div>
-            <div>
-              <div class="ws-benefit-point-title">Shorter path to contact</div>
-              <p class="ws-benefit-point-text">Less scanning, fewer choices, clearer route to inquiry.</p>
-            </div>
-          </li>
-          <li>
-            <div class="ws-benefit-icon">◎</div>
-            <div>
-              <div class="ws-benefit-point-title">Stronger hierarchy</div>
-              <p class="ws-benefit-point-text">Your best offer looks like the best offer — visually.</p>
-            </div>
-          </li>
-        </ul>
+        <p>Reduce friction so the next step is always obvious and always consistent.</p>
       </div>
     </div>
   </section>
 
-  <!-- Benefit 3 -->
   <section class="ws-benefit-section" aria-labelledby="b3">
     <div class="ws-benefit-layout">
       <div class="ws-benefit-text-block">
         <div class="ws-benefit-kicker">Outcome 03</div>
         <h3 class="ws-benefit-heading" id="b3">More trust</h3>
-        <p class="ws-benefit-lead">Consistent spacing and calmer typography signal credibility and stability.</p>
-
-        <ul class="ws-benefit-points">
-          <li>
-            <div class="ws-benefit-icon">▦</div>
-            <div>
-              <div class="ws-benefit-point-title">Consistency</div>
-              <p class="ws-benefit-point-text">Repeatable components that feel intentional, not improvised.</p>
-            </div>
-          </li>
-          <li>
-            <div class="ws-benefit-icon">∿</div>
-            <div>
-              <div class="ws-benefit-point-title">Less visual noise</div>
-              <p class="ws-benefit-point-text">Better rhythm and whitespace makes the site feel “real.”</p>
-            </div>
-          </li>
-        </ul>
+        <p>Consistent spacing and calmer typography signal credibility and stability.</p>
       </div>
-
-      <div class="ws-benefit-visual" aria-hidden="true">
-        <img
-          src="https://images.unsplash.com/photo-1681405985297-e861b4a0a70d?auto=format&fit=crop&w=1400&q=70"
-          alt=""
-          loading="lazy"
-        />
-      </div>
+      <div class="ws-placeholder ws-placeholder--visual">Placeholder: trust/clarity visual.</div>
     </div>
   </section>
 
-  <!-- Benefit 4 -->
   <section class="ws-benefit-section" aria-labelledby="b4">
     <div class="ws-benefit-layout">
-      <div class="ws-benefit-visual" aria-hidden="true">
-        <img
-          src="https://images.unsplash.com/photo-1525286116112-b59af11adad1?auto=format&fit=crop&w=1400&q=70"
-          alt=""
-          loading="lazy"
-        />
-      </div>
-
+      <div class="ws-placeholder ws-placeholder--visual">Placeholder: brand consistency visual.</div>
       <div class="ws-benefit-text-block">
         <div class="ws-benefit-kicker">Outcome 04</div>
         <h3 class="ws-benefit-heading" id="b4">Stronger brand</h3>
-        <p class="ws-benefit-lead">Keep identity, improve presentation: coherent components and consistent UI rhythm.</p>
-
-        <ul class="ws-benefit-points">
-          <li>
-            <div class="ws-benefit-icon">⟡</div>
-            <div>
-              <div class="ws-benefit-point-title">Deliberate style</div>
-              <p class="ws-benefit-point-text">A small set of rules that makes everything feel unified.</p>
-            </div>
-          </li>
-          <li>
-            <div class="ws-benefit-icon">◻</div>
-            <div>
-              <div class="ws-benefit-point-title">Clean components</div>
-              <p class="ws-benefit-point-text">Buttons, cards, and sections that look designed as a system.</p>
-            </div>
-          </li>
-        </ul>
+        <p>Keep identity, improve presentation: coherent components, consistent UI rhythm.</p>
       </div>
     </div>
   </section>
 
-  <!-- Benefit 5 -->
   <section class="ws-benefit-section" aria-labelledby="b5">
     <div class="ws-benefit-layout">
       <div class="ws-benefit-text-block">
         <div class="ws-benefit-kicker">Outcome 05</div>
         <h3 class="ws-benefit-heading" id="b5">More traffic</h3>
-        <p class="ws-benefit-lead">Clean structure and readable headings help both humans and search engines.</p>
-
-        <ul class="ws-benefit-points">
-          <li>
-            <div class="ws-benefit-icon">H</div>
-            <div>
-              <div class="ws-benefit-point-title">Readable structure</div>
-              <p class="ws-benefit-point-text">Clear headings and sections that are easy to parse.</p>
-            </div>
-          </li>
-          <li>
-            <div class="ws-benefit-icon">⌁</div>
-            <div>
-              <div class="ws-benefit-point-title">Faster scanning</div>
-              <p class="ws-benefit-point-text">Better hierarchy improves time-on-page and navigation confidence.</p>
-            </div>
-          </li>
-        </ul>
+        <p>Clean structure and readable headings help both humans and search engines.</p>
       </div>
-
-      <div class="ws-benefit-visual" aria-hidden="true">
-        <img
-          src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=1400&q=70"
-          alt=""
-          loading="lazy"
-        />
-      </div>
+      <div class="ws-placeholder ws-placeholder--visual">Placeholder: structure/SEO visual.</div>
     </div>
   </section>
 
@@ -1822,42 +1233,6 @@
 
         setIframeSrc(iframe, improved ? DEMO_FILES[which].after : DEMO_FILES[which].before);
       });
-    });
-  })();
-
-  // Hero "selection" + temporary font swap on load
-  (function heroSelectionEffect(){
-    const title = document.getElementById('hero-title');
-    const wrap = document.getElementById('hero-title-wrap');
-    if (!title || !wrap) return;
-
-    function selectElementText(el){
-      const selection = window.getSelection && window.getSelection();
-      if (!selection) return;
-      selection.removeAllRanges();
-      const range = document.createRange();
-      range.selectNodeContents(el);
-      selection.addRange(range);
-    }
-
-    window.addEventListener('load', () => {
-      // 1) add visual selection styling
-      wrap.classList.add('ws-title-selected');
-      title.classList.add('ws-title-selected');
-
-      // 2) try real browser selection (works in most browsers on load)
-      try { selectElementText(title); } catch(e) {}
-
-      // 3) clear it so nothing looks "stuck"
-      setTimeout(() => {
-        try {
-          const sel = window.getSelection && window.getSelection();
-          if (sel) sel.removeAllRanges();
-        } catch(e) {}
-
-        wrap.classList.remove('ws-title-selected');
-        title.classList.remove('ws-title-selected');
-      }, 1200);
     });
   })();
 
