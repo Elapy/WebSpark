@@ -27,17 +27,19 @@
       --ws-radius-pill: 999px;
       --ws-nav-height: 72px;
       --ws-hero-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      scroll-behavior: smooth;
 
       --ws-select-blue: #1a73e8;
       --ws-select-blue-soft: rgba(26, 115, 232, 0.18);
       --ws-select-handle: 8px;
 
       --ws-attn: #2f6bff;
-      --ws-attn-hover: #1c4ed6;
+      --ws-attn2: #7c5cff;
+
+      scroll-behavior: smooth;
     }
 
     * { box-sizing: border-box; }
+
     html, body {
       margin: 0;
       padding: 0;
@@ -46,7 +48,9 @@
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       -webkit-font-smoothing: antialiased;
     }
+
     body { min-height: 100vh; }
+
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; display: block; }
 
@@ -167,6 +171,7 @@
     }
 
     /* HERO */
+
     .ws-hero {
       padding: 40px 0 32px;
       min-height: calc(100vh - var(--ws-nav-height));
@@ -183,7 +188,7 @@
       grid-template-columns: minmax(0, 1fr) minmax(0, min(480px, 100%)) minmax(0, 1fr);
       gap: 24px;
       align-items: center;
-      position: relative;
+      position: relative; /* anchors the floating selection elements */
     }
 
     .ws-hero-side {
@@ -199,9 +204,9 @@
       max-width: 320px;
     }
 
-    /* Make the shift OBVIOUS */
-    .ws-hero-side-left .ws-hero-side-inner { transform: translateY(34px); }
-    .ws-hero-side-right .ws-hero-side-inner { transform: translateY(-34px); }
+    /* Your requested offset: before down, after up */
+    .ws-hero-side-left .ws-hero-side-inner { transform: translateY(32px); }
+    .ws-hero-side-right .ws-hero-side-inner { transform: translateY(-32px); }
 
     .ws-hero-center {
       text-align: center;
@@ -213,14 +218,27 @@
     }
 
     @media (max-width: 900px) {
-      .ws-hero { min-height: auto; padding-top: 32px; }
-      .ws-hero-shell { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+      .ws-hero {
+        min-height: auto;
+        padding-top: 32px;
+      }
+
+      .ws-hero-shell {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+      }
+
       .ws-hero-side { order: 2; }
       .ws-hero-center { order: 1; }
+
       .ws-hero-side-inner { transform: none !important; }
     }
 
-    .ws-hero-title-wrap { position: relative; display: inline-block; }
+    .ws-hero-title-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
     .ws-hero-title {
       font-family: var(--ws-hero-font);
       font-size: clamp(2.4rem, 3.2vw, 3rem);
@@ -241,7 +259,10 @@
       margin: 0 0 20px;
     }
 
-    .ws-hero-highlight { color: var(--ws-accent); font-weight: 600; }
+    .ws-hero-highlight {
+      color: var(--ws-accent);
+      font-weight: 600;
+    }
 
     .ws-hero-title-highlight-bar {
       position: absolute;
@@ -267,10 +288,18 @@
     }
 
     .ws-hero-title-selected .ws-hero-title-highlight-bar { width: 100%; }
-    .ws-hero-title-selected .ws-hero-cursor { opacity: 1; animation: ws-cursor-blink 0.25s step-end 0s 3; }
+
+    .ws-hero-title-selected .ws-hero-cursor {
+      opacity: 1;
+      animation: ws-cursor-blink 0.25s step-end 0s 3;
+    }
+
     .ws-hero-title-wrap.ws-hero-title-done .ws-hero-title-highlight-bar { opacity: 0; }
 
-    @keyframes ws-cursor-blink { 0%,50%{opacity:1;} 50.1%,100%{opacity:0;} }
+    @keyframes ws-cursor-blink {
+      0%, 50% { opacity: 1; }
+      50.1%, 100% { opacity: 0; }
+    }
 
     .ws-hero-actions {
       display: flex;
@@ -298,6 +327,11 @@
       transition: background 0.16s ease-out, transform 0.1s ease-out, box-shadow 0.16s ease-out;
     }
 
+    .ws-btn-primary span.ws-chevron {
+      font-size: 1.1rem;
+      transform: translateY(1px);
+    }
+
     .ws-btn-primary:hover {
       background: var(--ws-accent-hover);
       transform: translateY(-1px);
@@ -315,11 +349,25 @@
       margin-top: 4px;
     }
 
-    .ws-hero-meta strong { color: var(--ws-text-muted); font-weight: 500; }
-    .ws-hero-meta-divider { width: 1px; height: 16px; background: rgba(146, 161, 196, 0.7); }
-    .ws-hero-annotation { margin-top: 10px; font-size: 0.8rem; color: var(--ws-text-muted); }
+    .ws-hero-meta strong {
+      color: var(--ws-text-muted);
+      font-weight: 500;
+    }
+
+    .ws-hero-meta-divider {
+      width: 1px;
+      height: 16px;
+      background: rgba(146, 161, 196, 0.7);
+    }
+
+    .ws-hero-annotation {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: var(--ws-text-muted);
+    }
 
     /* Hero side visuals */
+
     .ws-hero-frame {
       border-radius: var(--ws-radius-xl);
       background: radial-gradient(circle at top left, #ffffff 0, #f4f6ff 42%, #e0e6f9 100%);
@@ -338,7 +386,14 @@
     }
 
     .ws-hero-dots { display: inline-flex; gap: 4px; }
-    .ws-hero-dot { width: 8px; height: 8px; border-radius: 999px; background: #e3e6f3; }
+
+    .ws-hero-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #e3e6f3;
+    }
+
     .ws-hero-dot:nth-child(1) { background: #ff7b7b; }
     .ws-hero-dot:nth-child(2) { background: #ffb86b; }
     .ws-hero-dot:nth-child(3) { background: #24d38b; }
@@ -371,7 +426,13 @@
     }
 
     .ws-pane--before .ws-pane-body { display: grid; gap: 6px; }
-    .ws-pane-line { height: 6px; border-radius: 999px; background: #d4ddef; }
+
+    .ws-pane-line {
+      height: 6px;
+      border-radius: 999px;
+      background: #d4ddef;
+    }
+
     .ws-pane-line:nth-child(1) { width: 80%; }
     .ws-pane-line:nth-child(2) { width: 60%; }
     .ws-pane-line:nth-child(3) { width: 76%; }
@@ -393,35 +454,72 @@
       gap: 6px;
     }
 
-    .ws-pane-main-title { height: 7px; border-radius: 999px; width: 80%; background: #21335e; opacity: 0.9; }
-    .ws-pane-main-sub { height: 5px; border-radius: 999px; width: 60%; background: #8594c2; }
-    .ws-pane-main-cta { margin-top: 4px; width: 56px; height: 16px; border-radius: 999px; background: #1140a6; opacity: 0.96; }
+    .ws-pane-main-title {
+      height: 7px;
+      border-radius: 999px;
+      width: 80%;
+      background: #21335e;
+      opacity: 0.9;
+    }
 
-    .ws-pane-card-side { display: grid; grid-template-rows: 1.2fr 1fr; gap: 6px; }
-    .ws-pane-thumbnail { border-radius: 10px; background: linear-gradient(135deg, #a8b8ff, #4e71d1); }
-    .ws-pane-badge { border-radius: 999px; height: 16px; background: #edf1ff; border: 1px solid rgba(151, 170, 223, 0.9); }
+    .ws-pane-main-sub {
+      height: 5px;
+      border-radius: 999px;
+      width: 60%;
+      background: #8594c2;
+    }
 
-    /* Selection-box floating elements (DISPERSED + visible on mobile) */
+    .ws-pane-main-cta {
+      margin-top: 4px;
+      width: 56px;
+      height: 16px;
+      border-radius: 999px;
+      background: #1140a6;
+      opacity: 0.96;
+    }
+
+    .ws-pane-card-side {
+      display: grid;
+      grid-template-rows: 1.2fr 1fr;
+      gap: 6px;
+    }
+
+    .ws-pane-thumbnail {
+      border-radius: 10px;
+      background: linear-gradient(135deg, #a8b8ff, #4e71d1);
+    }
+
+    .ws-pane-badge {
+      border-radius: 999px;
+      height: 16px;
+      background: #edf1ff;
+      border: 1px solid rgba(151, 170, 223, 0.9);
+    }
+
+    /* Selection-box floating elements (DISPERSED + RELIABLE) */
+
     .ws-hero-float {
       position: absolute;
-      z-index: 3;
+      z-index: 5;              /* above hero frames */
       pointer-events: none;
-      opacity: 0.96;
+      opacity: 0.98;
       filter: drop-shadow(0 18px 30px rgba(20, 32, 60, 0.14));
     }
-    .ws-hero-float.tl { top: -28px; left: -18px; transform: rotate(-4deg) translateY(4px); }
-    .ws-hero-float.br { bottom: -26px; right: -18px; transform: rotate(3.2deg) translateY(-2px); }
+
+    /* Avoid negative coordinates (builders sometimes clip) */
+    .ws-hero-float.tl { top: 6px; left: 10px; transform: rotate(-4deg) translateY(6px); }
+    .ws-hero-float.br { bottom: 10px; right: 12px; transform: rotate(3.2deg) translateY(-2px); }
 
     @media (max-width: 900px) {
-      .ws-hero-float.tl { top: -10px; left: -4px; transform: scale(0.75) rotate(-4deg); }
-      .ws-hero-float.br { bottom: -10px; right: -4px; transform: scale(0.75) rotate(3.2deg); }
+      .ws-hero-float.tl { top: 0px; left: 0px; transform: scale(0.76) rotate(-4deg); }
+      .ws-hero-float.br { bottom: 0px; right: 0px; transform: scale(0.76) rotate(3.2deg); }
     }
 
     .ws-selection {
       position: relative;
       border-radius: 14px;
       padding: 12px;
-      background: rgba(255,255,255,0.80);
+      background: rgba(255,255,255,0.82);
       backdrop-filter: blur(10px);
       border: 2px solid var(--ws-select-blue);
       box-shadow: 0 0 0 4px var(--ws-select-blue-soft), 0 18px 32px rgba(12, 24, 60, 0.10);
@@ -445,29 +543,54 @@
     .ws-selection-handles .bm { bottom: -6px; left: calc(50% - 6px); }
     .ws-selection-handles .br { bottom: -6px; right: -6px; }
 
+    /* "Stock PNG" replacement: pure CSS object (won't get blocked) */
     .ws-stock-object {
-      width: 148px;
-      height: 118px;
+      width: 152px;
+      height: 120px;
       border-radius: 10px;
       overflow: hidden;
-      background: rgba(245,247,255,0.9);
+      background:
+        radial-gradient(circle at 30% 35%, rgba(255,255,255,0.85), transparent 58%),
+        radial-gradient(circle at 75% 65%, rgba(255,255,255,0.55), transparent 60%),
+        linear-gradient(135deg, #cfdcff, #5a79de);
       border: 1px solid rgba(180, 195, 230, 0.9);
+      position: relative;
+    }
+    .ws-stock-object::before {
+      content: "";
+      position: absolute;
+      inset: 14px 18px 22px 18px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.78);
+      box-shadow: 0 0 0 1px rgba(40, 60, 110, 0.18);
+      transform: rotate(-1.2deg);
+    }
+    .ws-stock-object::after {
+      content: "";
+      position: absolute;
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: rgba(17,64,166,0.92);
+      left: 20px;
+      top: 32px;
+      box-shadow: 0 16px 26px rgba(10, 22, 60, 0.20);
+      transform: rotate(6deg);
     }
 
-    .ws-stock-object img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); }
-
     .ws-weird-text {
-      font-family: "Rubik Glitch", system-ui, sans-serif;
+      font-family: "Rubik Glitch", "Montserrat", system-ui, sans-serif;
       font-size: 64px;
       line-height: 0.9;
       letter-spacing: 0.02em;
-      color: rgba(16, 21, 36, 0.90);
+      color: rgba(16, 21, 36, 0.92);
       text-transform: lowercase;
       padding: 8px 10px;
       white-space: nowrap;
     }
 
     /* Sections */
+
     section { margin: 32px 0; }
 
     .ws-section-header {
@@ -500,13 +623,203 @@
       max-width: 48ch;
     }
 
-    /* INTERACTIVE DEMOS */
+    /* Static before/after gallery */
+
+    .ws-layout-gallery {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    @media (min-width: 900px) {
+      .ws-layout-gallery {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      }
+    }
+
+    .ws-layout-pair {
+      border-radius: var(--ws-radius-lg);
+      background: var(--ws-surface);
+      border: 1px solid var(--ws-border-subtle);
+      padding: 14px 14px 16px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 700px) {
+      .ws-layout-pair {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .ws-layout-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ws-text-muted);
+      margin-bottom: 6px;
+    }
+
+    .ws-layout-before,
+    .ws-layout-after {
+      border-radius: 14px;
+      padding: 10px;
+      background: var(--ws-surface-soft);
+      border: 1px dashed var(--ws-border-subtle);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ws-layout-after {
+      background: linear-gradient(145deg, #ffffff, #f2f5ff);
+      border-style: solid;
+      border-color: var(--ws-border-strong);
+    }
+
+    .ws-layout-before .mono-lines {
+      display: grid;
+      gap: 6px;
+    }
+
+    .ws-layout-before .mono-lines .line {
+      height: 6px;
+      border-radius: 999px;
+      background: #d5dde9;
+    }
+
+    .ws-layout-before .mono-lines .line:nth-child(1) { width: 90%; }
+    .ws-layout-before .mono-lines .line:nth-child(2) { width: 90%; }
+    .ws-layout-before .mono-lines .line:nth-child(3) { width: 90%; }
+    .ws-layout-before .mono-lines .line:nth-child(4) { width: 90%; }
+
+    .ws-layout-pair[data-variant="a"] .mono-lines .line:nth-child(3) { width: 70%; }
+    .ws-layout-pair[data-variant="b"] .mono-lines .line:nth-child(1) { width: 80%; }
+    .ws-layout-pair[data-variant="b"] .mono-lines .line:nth-child(4) { width: 60%; }
+    .ws-layout-pair[data-variant="c"] .mono-lines .line:nth-child(2) { width: 65%; }
+    .ws-layout-pair[data-variant="c"] .mono-lines .line:nth-child(3) { width: 50%; }
+
+    .ws-layout-after-grid {
+      display: grid;
+      gap: 6px;
+    }
+
+    .ws-layout-after-grid.a { grid-template-columns: 1.4fr 1fr; align-items: stretch; }
+    .ws-layout-after-grid.b { grid-template-columns: 1fr; }
+    .ws-layout-after-grid.c { grid-template-columns: 1.2fr 1fr; }
+
+    .ws-tile {
+      border-radius: 12px;
+      background: #ffffff;
+      border: 1px solid rgba(182, 196, 229, 0.9);
+      padding: 8px;
+      display: grid;
+      gap: 5px;
+    }
+
+    .ws-tile-title { height: 7px; border-radius: 999px; width: 70%; background: #283450; }
+    .ws-tile-sub { height: 5px; border-radius: 999px; width: 55%; background: #7f8bb2; }
+
+    .ws-tile-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4px;
+    }
+
+    .ws-block { border-radius: 8px; background: #e2e8ff; }
+    .ws-block.image { background: linear-gradient(135deg, #9faeff, #436bdf); }
+
+    .ws-block.small { height: 18px; }
+    .ws-block.medium { height: 24px; }
+    .ws-block.tall { height: 42px; }
+
+    .ws-layout-tag {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(17, 64, 166, 0.06);
+      color: var(--ws-accent);
+      font-weight: 500;
+    }
+
+    /* Placeholders */
+
+    .ws-placeholder {
+      border-radius: var(--ws-radius-lg);
+      border: 1px dashed var(--ws-border-subtle);
+      background: var(--ws-surface);
+      padding: 18px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ws-text-muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .ws-placeholder--carousel {
+      min-height: 160px;
+      background-image: repeating-linear-gradient(-45deg, #f5f7ff 0, #f5f7ff 6px, #ffffff 6px, #ffffff 12px);
+    }
+
+    .ws-placeholder--visual { min-height: 220px; }
+    .ws-placeholder--mini { min-height: 80px; font-size: 0.8rem; }
+
+    /* Benefit sections per outcome */
+
+    .ws-benefit-section { margin: 60px 0; }
+
+    .ws-benefit-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 32px;
+      align-items: center;
+      min-height: 380px;
+    }
+
+    .ws-benefit-text-block {
+      font-size: 0.94rem;
+      color: var(--ws-text-soft);
+      max-width: 44ch;
+    }
+
+    .ws-benefit-heading {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--ws-text-main);
+    }
+
+    .ws-benefit-kicker {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--ws-text-muted);
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 900px) {
+      .ws-benefit-layout {
+        grid-template-columns: minmax(0, 1fr);
+        min-height: auto;
+      }
+    }
+
+    /* Interactive demos (iframes) */
+
     .ws-demo-grid {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 18px;
     }
-    @media (max-width: 900px) { .ws-demo-grid { grid-template-columns: minmax(0, 1fr); } }
+
+    @media (max-width: 900px) {
+      .ws-demo-grid { grid-template-columns: minmax(0, 1fr); }
+    }
 
     .ws-demo-card {
       border-radius: var(--ws-radius-lg);
@@ -528,13 +841,13 @@
 
     .ws-demo-domain { font-weight: 500; color: var(--ws-text-main); }
 
-    /* Attention-grabbing button */
+    /* Attention button */
     .ws-demo-toggle {
       font-size: 0.82rem;
       padding: 7px 12px;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,0.35);
-      background: linear-gradient(135deg, var(--ws-attn), #7c5cff);
+      background: linear-gradient(135deg, var(--ws-attn), var(--ws-attn2));
       color: #fff;
       display: inline-flex;
       align-items: center;
@@ -592,6 +905,7 @@
       font-weight: 500;
       letter-spacing: 0.06em;
       text-transform: none;
+      white-space: nowrap;
     }
 
     .ws-demo-viewport {
@@ -611,7 +925,187 @@
       user-select: none;
     }
 
+    /* How it works */
+
+    .ws-how-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .ws-how-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    .ws-steps { display: grid; gap: 10px; }
+
+    .ws-step {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: var(--ws-surface);
+      border: 1px solid var(--ws-border-subtle);
+    }
+
+    .ws-step-index {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--ws-accent-soft);
+      color: var(--ws-accent);
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    .ws-step-title {
+      font-size: 0.96rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .ws-step-text {
+      font-size: 0.86rem;
+      color: var(--ws-text-soft);
+    }
+
+    .ws-how-note {
+      font-size: 0.82rem;
+      color: var(--ws-text-muted);
+      margin-top: 10px;
+    }
+
+    .ws-how-visual {
+      border-radius: var(--ws-radius-lg);
+      border: 1px solid var(--ws-border-subtle);
+      background: var(--ws-surface);
+      padding: 14px 14px 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .ws-how-track { display: grid; gap: 6px; }
+
+    .ws-track-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: var(--ws-surface-soft);
+    }
+
+    .ws-track-name { font-size: 0.84rem; color: var(--ws-text-soft); }
+
+    .ws-track-pill {
+      font-size: 0.8rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(17, 64, 166, 0.06);
+      color: var(--ws-accent);
+      font-weight: 500;
+    }
+
+    /* Final CTA (full-height-ish) */
+
+    .ws-cta-final {
+      margin-top: 40px;
+      border-radius: var(--ws-radius-xl);
+      background: #ffffff;
+      border: 1px solid var(--ws-border-strong);
+      min-height: calc(80vh - 40px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 18px 40px rgba(15, 32, 72, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ws-cta-final-inner {
+      position: relative;
+      z-index: 1;
+      padding: 22px 20px 26px;
+    }
+
+    .ws-cta-final-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--ws-text-main);
+    }
+
+    .ws-cta-final-sub {
+      font-size: 0.94rem;
+      color: var(--ws-text-soft);
+      max-width: 40ch;
+      margin: 0 auto 18px;
+    }
+
+    .ws-cta-final .ws-btn-primary { padding-inline: 26px; }
+
+    .ws-cta-final::before,
+    .ws-cta-final::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: radial-gradient(circle at center, rgba(17, 64, 166, 0.06), transparent 60%);
+      width: 420px;
+      height: 420px;
+      opacity: 0.8;
+    }
+
+    .ws-cta-final::before { top: -120px; left: -180px; }
+    .ws-cta-final::after { bottom: -140px; right: -200px; }
+
+    /* CTA animated shapes */
+
+    .ws-cta-shapes {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .ws-cta-shape {
+      position: absolute;
+      transform: translate(0, 0) rotate(var(--rot, 0deg));
+      opacity: 0.8;
+      transition: transform 0.05s linear;
+    }
+
+    .ws-cta-shape.circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: #ffcc70;
+    }
+
+    .ws-cta-shape.square {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      background: #7ad3ff;
+    }
+
+    .ws-cta-shape.triangle {
+      width: 0;
+      height: 0;
+      border-left: 11px solid transparent;
+      border-right: 11px solid transparent;
+      border-bottom: 20px solid #ff8ab3;
+    }
+
     /* Footer */
+
     footer.ws-footer {
       border-top: 1px solid rgba(191, 203, 225, 0.8);
       margin-top: 40px;
@@ -635,7 +1129,11 @@
       align-items: center;
     }
 
-    .ws-footer-links a { text-decoration: none; color: var(--ws-text-muted); }
+    .ws-footer-links a {
+      text-decoration: none;
+      color: var(--ws-text-muted);
+    }
+
     .ws-footer-links a:hover { color: var(--ws-accent); }
 
     .ws-footer-contact {
@@ -646,8 +1144,49 @@
       color: var(--ws-text-muted);
     }
 
-    .ws-footer-contact a { color: var(--ws-text-muted); text-decoration: none; }
+    .ws-footer-contact a { color: var(--ws-text-muted); }
     .ws-footer-contact a:hover { color: var(--ws-accent); }
+
+    /* Floating redesign button */
+
+    .ws-floating-redesign {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 30;
+    }
+
+    .ws-floating-redesign button {
+      border-radius: var(--ws-radius-pill);
+      padding: 8px 16px;
+      border: 1px solid rgba(129, 147, 193, 0.9);
+      background: rgba(246, 249, 255, 0.98);
+      box-shadow: 0 12px 24px rgba(22, 37, 80, 0.25);
+      font-size: 0.86rem;
+      font-weight: 500;
+      color: var(--ws-text-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, border-color 0.12s ease-out;
+    }
+
+    .ws-floating-redesign button span.icon { font-size: 1rem; }
+
+    .ws-floating-redesign button small {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ws-text-muted);
+    }
+
+    .ws-floating-redesign button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(14, 29, 68, 0.3);
+      border-color: var(--ws-accent);
+    }
   </style>
 </head>
 
@@ -672,11 +1211,11 @@
 </header>
 
 <main class="ws-page">
-
   <!-- HERO -->
   <section class="ws-hero" aria-labelledby="hero-title">
     <div class="ws-hero-shell">
 
+      <!-- Floating selection object top-left -->
       <div class="ws-hero-float tl" aria-hidden="true">
         <div class="ws-selection">
           <div class="ws-selection-handles" aria-hidden="true">
@@ -684,47 +1223,36 @@
             <span class="ml"></span><span class="mr"></span>
             <span class="bl"></span><span class="bm"></span><span class="br"></span>
           </div>
-
-          <div class="ws-stock-object">
-            <img alt="Object"
-                 src="data:image/svg+xml;utf8,
-                 <svg xmlns='http://www.w3.org/2000/svg' width='300' height='240' viewBox='0 0 300 240'>
-                   <defs>
-                     <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
-                       <stop offset='0' stop-color='%23cfdcff'/>
-                       <stop offset='1' stop-color='%235a79de'/>
-                     </linearGradient>
-                   </defs>
-                   <rect width='300' height='240' rx='22' fill='%23f5f7ff'/>
-                   <circle cx='88' cy='110' r='58' fill='url(%23g)' opacity='0.85'/>
-                   <rect x='140' y='64' width='120' height='120' rx='18' fill='%23ffffff' opacity='0.88'/>
-                   <path d='M70 170 C92 140, 114 140, 136 170' stroke='%231140a6' stroke-width='10' fill='none' stroke-linecap='round' opacity='0.9'/>
-                   <circle cx='214' cy='124' r='22' fill='%231140a6' opacity='0.85'/>
-                   <circle cx='214' cy='124' r='10' fill='%23ffffff' opacity='0.95'/>
-                 </svg>"/>
-          </div>
+          <div class="ws-stock-object" aria-hidden="true"></div>
         </div>
       </div>
 
+      <!-- Left: BEFORE visual -->
       <div class="ws-hero-side ws-hero-side-left" aria-hidden="true">
         <div class="ws-hero-side-inner">
           <div class="ws-hero-frame">
             <div class="ws-hero-frame-header">
               <div class="ws-hero-dots">
-                <span class="ws-hero-dot"></span><span class="ws-hero-dot"></span><span class="ws-hero-dot"></span>
+                <span class="ws-hero-dot"></span>
+                <span class="ws-hero-dot"></span>
+                <span class="ws-hero-dot"></span>
               </div>
               <div class="ws-hero-url">yourbrand.com/old</div>
             </div>
             <div class="ws-pane ws-pane--before">
               <div class="ws-pane-label">Before</div>
               <div class="ws-pane-body">
-                <div class="ws-pane-line"></div><div class="ws-pane-line"></div><div class="ws-pane-line"></div><div class="ws-pane-line"></div>
+                <div class="ws-pane-line"></div>
+                <div class="ws-pane-line"></div>
+                <div class="ws-pane-line"></div>
+                <div class="ws-pane-line"></div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
+      <!-- Center: main hero text -->
       <div class="ws-hero-center">
         <div class="ws-hero-title-wrap">
           <div class="ws-hero-title-highlight-bar" aria-hidden="true"></div>
@@ -756,12 +1284,15 @@
         </div>
       </div>
 
+      <!-- Right: AFTER visual -->
       <div class="ws-hero-side ws-hero-side-right" aria-hidden="true">
         <div class="ws-hero-side-inner">
           <div class="ws-hero-frame">
             <div class="ws-hero-frame-header">
               <div class="ws-hero-dots">
-                <span class="ws-hero-dot"></span><span class="ws-hero-dot"></span><span class="ws-hero-dot"></span>
+                <span class="ws-hero-dot"></span>
+                <span class="ws-hero-dot"></span>
+                <span class="ws-hero-dot"></span>
               </div>
               <div class="ws-hero-url">yourbrand.com/new</div>
             </div>
@@ -783,6 +1314,7 @@
         </div>
       </div>
 
+      <!-- Floating selection text bottom-right -->
       <div class="ws-hero-float br" aria-hidden="true">
         <div class="ws-selection">
           <div class="ws-selection-handles" aria-hidden="true">
@@ -797,18 +1329,236 @@
     </div>
   </section>
 
+  <!-- STATIC BEFORE / AFTER EXAMPLES -->
+  <section id="examples" aria-labelledby="examples-title">
+    <div class="ws-section-header">
+      <div class="ws-section-kicker">Layout transformations</div>
+      <h2 class="ws-section-title" id="examples-title">See how structure changes perception</h2>
+      <p class="ws-section-sub">
+        WebSpark focuses on spacing, hierarchy, and where your users’ eyes land first.
+        These simplified snapshots show how a “good enough” layout becomes a clearer, more intentional one.
+      </p>
+    </div>
+
+    <div class="ws-layout-gallery">
+      <!-- Pair A -->
+      <article class="ws-layout-pair" data-variant="a" aria-label="Homepage layout example">
+        <div class="ws-layout-before">
+          <div class="ws-layout-label">Before</div>
+          <div class="mono-lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
+        </div>
+        <div class="ws-layout-after">
+          <div class="ws-layout-label">After</div>
+          <div class="ws-layout-tag">Hero focus</div>
+          <div class="ws-layout-after-grid a">
+            <div class="ws-tile">
+              <div class="ws-tile-title"></div>
+              <div class="ws-tile-sub"></div>
+              <div class="ws-tile-row">
+                <div class="ws-block small"></div>
+                <div class="ws-block small"></div>
+                <div class="ws-block small"></div>
+              </div>
+            </div>
+            <div class="ws-tile">
+              <div class="ws-block image tall"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Pair B -->
+      <article class="ws-layout-pair" data-variant="b" aria-label="Services layout example">
+        <div class="ws-layout-before">
+          <div class="ws-layout-label">Before</div>
+          <div class="mono-lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
+        </div>
+        <div class="ws-layout-after">
+          <div class="ws-layout-label">After</div>
+          <div class="ws-layout-tag">Service clarity</div>
+          <div class="ws-layout-after-grid b">
+            <div class="ws-tile">
+              <div class="ws-tile-title"></div>
+              <div class="ws-tile-sub"></div>
+              <div class="ws-tile-row">
+                <div class="ws-block medium"></div>
+                <div class="ws-block medium"></div>
+                <div class="ws-block medium"></div>
+              </div>
+            </div>
+            <div class="ws-tile">
+              <div class="ws-block image tall"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Pair C -->
+      <article class="ws-layout-pair" data-variant="c" aria-label="Content layout example">
+        <div class="ws-layout-before">
+          <div class="ws-layout-label">Before</div>
+          <div class="mono-lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
+        </div>
+        <div class="ws-layout-after">
+          <div class="ws-layout-label">After</div>
+          <div class="ws-layout-tag">Visual balance</div>
+          <div class="ws-layout-after-grid c">
+            <div class="ws-tile">
+              <div class="ws-block image tall"></div>
+            </div>
+            <div class="ws-tile">
+              <div class="ws-tile-title"></div>
+              <div class="ws-tile-sub"></div>
+              <div class="ws-block small"></div>
+              <div class="ws-block small"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- REAL-PAGE PREVIEWS PLACEHOLDER -->
+  <section aria-labelledby="gallery-title">
+    <div class="ws-section-header">
+      <div class="ws-section-kicker">Real-page previews</div>
+      <h2 class="ws-section-title" id="gallery-title">Show your site before & after</h2>
+      <p class="ws-section-sub">
+        This area is reserved for actual screenshots of your pages once WebSpark has redesigned them.
+        For now, it’s a placeholder so we know exactly where that story will live.
+      </p>
+    </div>
+
+    <div class="ws-placeholder ws-placeholder--carousel">
+      Placeholder: future screenshot carousel or grid (before / after images of real WebSpark projects).
+    </div>
+  </section>
+
+  <!-- OUTCOMES INTRO -->
+  <section id="benefits" aria-labelledby="benefits-intro-title">
+    <div class="ws-section-header">
+      <div class="ws-section-kicker">Why it matters</div>
+      <h2 class="ws-section-title" id="benefits-intro-title">Five outcomes every redesign is aiming at</h2>
+      <p class="ws-section-sub">
+        WebSpark isn’t about adding more; it’s about removing noise so the right parts of your site stand out –
+        visually and financially.
+      </p>
+    </div>
+  </section>
+
+  <!-- Benefit 1 -->
+  <section class="ws-benefit-section" aria-labelledby="benefit-first-impressions">
+    <div class="ws-benefit-layout">
+      <div class="ws-benefit-text-block">
+        <div class="ws-benefit-kicker">Outcome 01</div>
+        <h3 class="ws-benefit-heading" id="benefit-first-impressions">Better first impressions</h3>
+        <p>
+          Your hero is the first five seconds of your brand. WebSpark rebuilds that first view so visitors
+          know exactly what you do and who it’s for, before they scroll.
+        </p>
+      </div>
+      <div class="ws-placeholder ws-placeholder--visual">
+        Placeholder: visual of a “before” hero vs a cleaner, higher-impact hero.
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefit 2 -->
+  <section class="ws-benefit-section" aria-labelledby="benefit-more-customers">
+    <div class="ws-benefit-layout">
+      <div class="ws-placeholder ws-placeholder--visual">
+        Placeholder: visual of a simple funnel (landing → contact) becoming more direct and focused.
+      </div>
+      <div class="ws-benefit-text-block">
+        <div class="ws-benefit-kicker">Outcome 02</div>
+        <h3 class="ws-benefit-heading" id="benefit-more-customers">More customers</h3>
+        <p>
+          Layout and copy are arranged so people always know the next step – whether it’s booking a call,
+          starting a trial, or sending an inquiry.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefit 3 -->
+  <section class="ws-benefit-section" aria-labelledby="benefit-more-trust">
+    <div class="ws-benefit-layout">
+      <div class="ws-benefit-text-block">
+        <div class="ws-benefit-kicker">Outcome 03</div>
+        <h3 class="ws-benefit-heading" id="benefit-more-trust">More trust</h3>
+        <p>
+          Calmer colors, better type, and consistent spacing signal that you’re established and reliable –
+          not experimental or thrown together.
+        </p>
+      </div>
+      <div class="ws-placeholder ws-placeholder--visual">
+        Placeholder: split visual showing a noisy, cluttered layout next to a calmer, more confident one.
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefit 4 -->
+  <section class="ws-benefit-section" aria-labelledby="benefit-stronger-brand">
+    <div class="ws-benefit-layout">
+      <div class="ws-placeholder ws-placeholder--visual">
+        Placeholder: visual with logo & brand color used sparsely but deliberately across a layout.
+      </div>
+      <div class="ws-benefit-text-block">
+        <div class="ws-benefit-kicker">Outcome 04</div>
+        <h3 class="ws-benefit-heading" id="benefit-stronger-brand">Stronger brand</h3>
+        <p>
+          We keep your logo and core palette, then architect layouts that make your brand feel intentional,
+          not template-driven.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefit 5 -->
+  <section class="ws-benefit-section" aria-labelledby="benefit-more-traffic">
+    <div class="ws-benefit-layout">
+      <div class="ws-benefit-text-block">
+        <div class="ws-benefit-kicker">Outcome 05</div>
+        <h3 class="ws-benefit-heading" id="benefit-more-traffic">More traffic (smarter SEO)</h3>
+        <p>
+          Clean HTML, clear headings, and accessible structure give search engines and humans an easier time
+          understanding your site.
+        </p>
+      </div>
+      <div class="ws-placeholder ws-placeholder--visual">
+        Placeholder: visual of heading structure / content blocks arranged for readability and SEO.
+      </div>
+    </div>
+  </section>
+
   <!-- INTERACTIVE DEMOS -->
   <section id="demo" aria-labelledby="demo-title">
     <div class="ws-section-header">
       <div class="ws-section-kicker">Live-style previews</div>
       <h2 class="ws-section-title" id="demo-title">Click to improve a layout</h2>
       <p class="ws-section-sub">
-        These are mini “page views” rendered as real HTML snapshots. The topic stays the same—only the design improves.
+        Before versions are intentionally messy, but toned down (lighter + grayscale) so your page doesn’t scream “scam.”
+        The topic stays the same — only the design improves.
       </p>
     </div>
 
     <div class="ws-demo-grid">
-      <!-- Demo 1: Coffee shop -->
+      <!-- Coffee -->
       <article class="ws-demo-card">
         <div class="ws-demo-topline">
           <span class="ws-demo-domain">Coffee Shop Site</span>
@@ -830,7 +1580,7 @@
         </div>
       </article>
 
-      <!-- Demo 2: Video game -->
+      <!-- Game -->
       <article class="ws-demo-card">
         <div class="ws-demo-topline">
           <span class="ws-demo-domain">Video Game Site</span>
@@ -854,6 +1604,103 @@
     </div>
   </section>
 
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works" aria-labelledby="how-title">
+    <div class="ws-section-header">
+      <div class="ws-section-kicker">Process</div>
+      <h2 class="ws-section-title" id="how-title">From your current site to cleaner HTML</h2>
+    </div>
+
+    <div class="ws-how-grid">
+      <div class="ws-steps" aria-label="How WebSpark works">
+        <article class="ws-step">
+          <div class="ws-step-index">1</div>
+          <div>
+            <div class="ws-step-title">You share your current site</div>
+            <div class="ws-step-text">
+              Point WebSpark at your existing pages or paste in the HTML you already have.
+            </div>
+          </div>
+        </article>
+
+        <article class="ws-step">
+          <div class="ws-step-index">2</div>
+          <div>
+            <div class="ws-step-title">We rebuild the layout</div>
+            <div class="ws-step-text">
+              WebSpark restructures your content into cleaner sections, better typography, and a stronger visual hierarchy.
+            </div>
+          </div>
+        </article>
+
+        <article class="ws-step">
+          <div class="ws-step-index">3</div>
+          <div>
+            <div class="ws-step-title">You keep full control</div>
+            <div class="ws-step-text">
+              You get back pure HTML/CSS – no lock-in, no surprise scripts, and no dependency on a visual builder.
+            </div>
+          </div>
+        </article>
+
+        <p class="ws-how-note">
+          WebSpark is about <strong>clarity</strong>, not complexity – the output is meant to be readable by both browsers and humans.
+        </p>
+      </div>
+
+      <aside class="ws-how-visual" aria-label="Example of transformation summary">
+        <div class="ws-section-kicker" style="font-size:0.72rem;">At a glance</div>
+        <div class="ws-how-track">
+          <div class="ws-track-item">
+            <span class="ws-track-name">Hero focus time</span>
+            <span class="ws-track-pill">From “?” to “Got it”</span>
+          </div>
+          <div class="ws-track-item">
+            <span class="ws-track-name">Primary CTA visibility</span>
+            <span class="ws-track-pill">Centered and consistent</span>
+          </div>
+          <div class="ws-track-item">
+            <span class="ws-track-name">Typography</span>
+            <span class="ws-track-pill">From default → Montserrat</span>
+          </div>
+          <div class="ws-track-item">
+            <span class="ws-track-name">Layout noise</span>
+            <span class="ws-track-pill">Reduced for trust</span>
+          </div>
+        </div>
+
+        <div class="ws-placeholder ws-placeholder--mini">
+          Placeholder: subtle process animation (e.g., steps flowing from “old HTML” to “clean WebSpark HTML”).
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section aria-labelledby="cta-title">
+    <div class="ws-cta-final" id="ws-cta-final">
+      <div class="ws-cta-final-inner">
+        <h2 class="ws-cta-final-title" id="cta-title">
+          Ready for your site to feel as good as it works?
+        </h2>
+        <p class="ws-cta-final-sub">
+          Start with the page that matters most and let WebSpark show you the cleaner, more confident version of what you already built.
+        </p>
+        <a href="contact.html" class="ws-btn-primary">
+          <span>Get started</span>
+          <span class="ws-chevron">↗</span>
+        </a>
+      </div>
+
+      <div class="ws-cta-shapes">
+        <div class="ws-cta-shape circle" style="top: 25%; left: 45%; --rot: 0deg;" data-x="-140" data-y="-80"></div>
+        <div class="ws-cta-shape square" style="top: 30%; left: 58%; --rot: 18deg;" data-x="120" data-y="-40"></div>
+        <div class="ws-cta-shape triangle" style="top: 55%; left: 40%; --rot: -8deg;" data-x="-110" data-y="110"></div>
+        <div class="ws-cta-shape circle" style="top: 65%; left: 60%; --rot: 0deg;" data-x="130" data-y="90"></div>
+      </div>
+    </div>
+  </section>
+
   <footer class="ws-footer">
     <div class="ws-footer-inner">
       <span>© <span id="ws-year"></span> WebSpark. Clean redesigns, in your own HTML.</span>
@@ -862,6 +1709,8 @@
           <a href="mailto:mcsite@web-spark.net">mcsite@web-spark.net</a>
           <a href="tel:+18055551234">(805) 555-1234</a>
         </span>
+        <a href="#how-it-works">How it works</a>
+        <a href="#examples">Examples</a>
         <a href="#demo">Demo</a>
         <a href="contact.html">Contact</a>
       </div>
@@ -869,15 +1718,29 @@
   </footer>
 </main>
 
+<!-- Floating redesign button (behavior to be added later) -->
+<div class="ws-floating-redesign">
+  <button type="button" title="Cycle WebSpark homepage designs (coming soon)">
+    <span class="icon">🎛</span>
+    <span>Redesign this view</span>
+    <small>coming soon</small>
+  </button>
+</div>
+
 <script>
+  // Year in footer
   document.getElementById('ws-year').textContent = new Date().getFullYear();
 
+  // Hero title selection animation (no pixelation)
   window.addEventListener('load', function () {
     var titleWrap = document.querySelector('.ws-hero-title-wrap');
     var cursorEl = document.querySelector('.ws-hero-cursor');
+
     if (!titleWrap) return;
 
-    setTimeout(function () { titleWrap.classList.add('ws-hero-title-selected'); }, 400);
+    setTimeout(function () {
+      titleWrap.classList.add('ws-hero-title-selected');
+    }, 400);
 
     setTimeout(function () {
       document.documentElement.style.setProperty(
@@ -892,10 +1755,7 @@
     }, 1600);
   });
 
-  // --- Mini-site HTMLs (4 total) ---
-  // BEFORE versions are intentionally bad, but now: lighter + grayscale (less scammy)
-  // We do that by: (1) using lighter colors, (2) applying filter: grayscale(...) on body wrapper.
-
+  // ---- Demo mini-sites via srcdoc ----
   var DEMOS = {
     coffee: {
       before: `
@@ -1221,12 +2081,12 @@
     iframe.setAttribute('srcdoc', html);
   }
 
-  function initDemos() {
+  (function initDemos() {
     var coffeeIframe = document.getElementById('iframe-coffee');
     var gameIframe = document.getElementById('iframe-game');
 
-    setIframeSrcdoc(coffeeIframe, DEMOS.coffee.before);
-    setIframeSrcdoc(gameIframe, DEMOS.game.before);
+    if (coffeeIframe) setIframeSrcdoc(coffeeIframe, DEMOS.coffee.before);
+    if (gameIframe) setIframeSrcdoc(gameIframe, DEMOS.game.before);
 
     var buttons = document.querySelectorAll('.ws-demo-toggle');
     buttons.forEach(function (btn) {
@@ -1247,9 +2107,57 @@
         setIframeSrcdoc(iframe, improved ? DEMOS[which].after : DEMOS[which].before);
       });
     });
-  }
+  })();
 
-  initDemos();
+  // Final CTA shapes scroll effect with monotonic expansion on scroll down
+  (function attachCTAParallax() {
+    var cta = document.getElementById('ws-cta-final');
+    if (!cta) return;
+    var shapes = cta.querySelectorAll('.ws-cta-shape');
+
+    var lastScrollY = window.scrollY;
+    var lastProgress = 0;
+
+    function baseProgressFromRect(rect) {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var start = vh;
+      var end = vh * 0.2;
+      var t = (start - rect.top) / (start - end);
+      return Math.max(0, Math.min(1, t));
+    }
+
+    function updateShapes() {
+      var rect = cta.getBoundingClientRect();
+      var base = baseProgressFromRect(rect);
+
+      var scrollY = window.scrollY;
+      var scrollingDown = scrollY >= lastScrollY;
+
+      var progress;
+      if (scrollingDown) {
+        progress = Math.max(lastProgress, base);
+      } else {
+        progress = base;
+      }
+
+      progress = Math.max(0, Math.min(1, progress));
+      lastProgress = progress;
+      lastScrollY = scrollY;
+
+      shapes.forEach(function (shape) {
+        var maxX = parseFloat(shape.getAttribute('data-x')) || 0;
+        var maxY = parseFloat(shape.getAttribute('data-y')) || 0;
+        var tx = maxX * progress;
+        var ty = maxY * progress;
+        var rot = getComputedStyle(shape).getPropertyValue('--rot') || '0deg';
+        shape.style.transform = 'translate(' + tx + 'px,' + ty + 'px) rotate(' + rot + ')';
+      });
+    }
+
+    window.addEventListener('scroll', updateShapes, { passive: true });
+    window.addEventListener('resize', updateShapes);
+    updateShapes();
+  })();
 </script>
 
 </body>
