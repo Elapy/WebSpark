@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Typography -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Rubik+Glitch&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -28,11 +28,14 @@
       --ws-nav-height: 72px;
       --ws-hero-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       scroll-behavior: smooth;
+
+      /* “selection box” theme */
+      --ws-select-blue: #1a73e8;
+      --ws-select-blue-soft: rgba(26, 115, 232, 0.18);
+      --ws-select-handle: 8px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
@@ -43,19 +46,11 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    body {
-      min-height: 100vh;
-    }
+    body { min-height: 100vh; }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
 
-    img {
-      max-width: 100%;
-      display: block;
-    }
+    img { max-width: 100%; display: block; }
 
     .ws-page {
       max-width: 1200px;
@@ -147,13 +142,8 @@
       transition: width 0.18s ease-out;
     }
 
-    .ws-nav-link:hover {
-      color: var(--ws-text-main);
-    }
-
-    .ws-nav-link:hover::after {
-      width: 18px;
-    }
+    .ws-nav-link:hover { color: var(--ws-text-main); }
+    .ws-nav-link:hover::after { width: 18px; }
 
     .ws-nav-cta {
       padding: 8px 16px;
@@ -163,11 +153,7 @@
       font-weight: 500;
       color: var(--ws-accent);
       background: #f3f6ff;
-      transition:
-        background 0.18s ease-out,
-        color 0.18s ease-out,
-        box-shadow 0.18s ease-out,
-        transform 0.1s ease-out;
+      transition: background 0.18s ease-out, color 0.18s ease-out, box-shadow 0.18s ease-out, transform 0.1s ease-out;
     }
 
     .ws-nav-cta:hover {
@@ -178,22 +164,17 @@
     }
 
     @media (max-width: 900px) {
-      .ws-header-inner {
-        gap: 14px;
-      }
-
-      .ws-nav-links {
-        display: none;
-      }
+      .ws-header-inner { gap: 14px; }
+      .ws-nav-links { display: none; }
     }
 
     /* HERO */
-
     .ws-hero {
       padding: 40px 0 32px;
       min-height: calc(100vh - var(--ws-nav-height));
       display: flex;
       align-items: center;
+      position: relative;
     }
 
     .ws-hero-shell {
@@ -204,25 +185,36 @@
       grid-template-columns: minmax(0, 1fr) minmax(0, min(480px, 100%)) minmax(0, 1fr);
       gap: 24px;
       align-items: center;
+      position: relative; /* for floating elements */
     }
 
     .ws-hero-side {
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
+      z-index: 1;
     }
 
     .ws-hero-side-inner {
       width: 100%;
       max-width: 320px;
-      margin-top: -32px; /* visuals slightly higher */
+      margin-top: -32px; /* default baseline */
     }
+
+    /* Your request:
+       - Before (left) a little DOWN => less negative margin
+       - After (right) a little UP => more negative margin */
+    .ws-hero-side-left .ws-hero-side-inner { margin-top: -16px; }
+    .ws-hero-side-right .ws-hero-side-inner { margin-top: -46px; }
 
     .ws-hero-center {
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      z-index: 2;
     }
 
     @media (max-width: 900px) {
@@ -230,44 +222,12 @@
         min-height: auto;
         padding-top: 32px;
       }
-
       .ws-hero-shell {
         grid-template-columns: minmax(0, 1fr);
       }
-
-      .ws-hero-side {
-        order: 2;
-      }
-
-      .ws-hero-center {
-        order: 1;
-      }
-
-      .ws-hero-side-inner {
-        margin-top: 0;
-      }
-    }
-
-    /* NOTE: .ws-pill kept in CSS (harmless) but pill HTML is removed */
-    .ws-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(17, 64, 166, 0.06);
-      color: var(--ws-text-soft);
-      font-size: 0.78rem;
-      font-weight: 500;
-      margin-bottom: 14px;
-    }
-
-    .ws-pill-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #14c38b;
-      box-shadow: 0 0 0 5px rgba(20, 195, 139, 0.15);
+      .ws-hero-side { order: 2; }
+      .ws-hero-center { order: 1; }
+      .ws-hero-side-inner { margin-top: 0 !important; }
     }
 
     .ws-hero-title-wrap {
@@ -290,7 +250,7 @@
     .ws-hero-sub {
       font-size: 0.88rem;
       line-height: 1.7;
-      color: var(--ws-text-muted); /* lighter gray */
+      color: var(--ws-text-muted);
       max-width: 34ch;
       margin: 0 0 20px;
     }
@@ -323,18 +283,12 @@
       opacity: 0;
     }
 
-    .ws-hero-title-selected .ws-hero-title-highlight-bar {
-      width: 100%;
-    }
-
+    .ws-hero-title-selected .ws-hero-title-highlight-bar { width: 100%; }
     .ws-hero-title-selected .ws-hero-cursor {
       opacity: 1;
       animation: ws-cursor-blink 0.25s step-end 0s 3;
     }
-
-    .ws-hero-title-wrap.ws-hero-title-done .ws-hero-title-highlight-bar {
-      opacity: 0;
-    }
+    .ws-hero-title-wrap.ws-hero-title-done .ws-hero-title-highlight-bar { opacity: 0; }
 
     @keyframes ws-cursor-blink {
       0%, 50% { opacity: 1; }
@@ -364,10 +318,7 @@
       border: none;
       box-shadow: 0 14px 30px rgba(15, 46, 112, 0.22);
       cursor: pointer;
-      transition:
-        background 0.16s ease-out,
-        transform 0.1s ease-out,
-        box-shadow 0.16s ease-out;
+      transition: background 0.16s ease-out, transform 0.1s ease-out, box-shadow 0.16s ease-out;
     }
 
     .ws-btn-primary span.ws-chevron {
@@ -383,7 +334,7 @@
 
     .ws-hero-meta {
       font-size: 0.8rem;
-      color: var(--ws-text-muted); /* lighter gray */
+      color: var(--ws-text-muted);
       display: flex;
       flex-wrap: wrap;
       gap: 16px;
@@ -393,7 +344,7 @@
     }
 
     .ws-hero-meta strong {
-      color: var(--ws-text-muted); /* no stronger color */
+      color: var(--ws-text-muted);
       font-weight: 500;
     }
 
@@ -406,11 +357,10 @@
     .ws-hero-annotation {
       margin-top: 10px;
       font-size: 0.8rem;
-      color: var(--ws-text-muted); /* lighter gray */
+      color: var(--ws-text-muted);
     }
 
     /* Hero side visuals */
-
     .ws-hero-frame {
       border-radius: var(--ws-radius-xl);
       background: radial-gradient(circle at top left, #ffffff 0, #f4f6ff 42%, #e0e6f9 100%);
@@ -428,10 +378,7 @@
       margin-bottom: 10px;
     }
 
-    .ws-hero-dots {
-      display: inline-flex;
-      gap: 4px;
-    }
+    .ws-hero-dots { display: inline-flex; gap: 4px; }
 
     .ws-hero-dot {
       width: 8px;
@@ -471,10 +418,7 @@
       margin-bottom: 8px;
     }
 
-    .ws-pane--before .ws-pane-body {
-      display: grid;
-      gap: 6px;
-    }
+    .ws-pane--before .ws-pane-body { display: grid; gap: 6px; }
 
     .ws-pane-line {
       height: 6px;
@@ -545,11 +489,130 @@
       border: 1px solid rgba(151, 170, 223, 0.9);
     }
 
-    /* Sections */
-
-    section {
-      margin: 32px 0;
+    /* --- Selection-box floating elements (Docs-style) --- */
+    .ws-hero-float {
+      position: absolute;
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.96;
+      filter: drop-shadow(0 18px 30px rgba(20, 32, 60, 0.14));
     }
+
+    .ws-hero-float.tl {
+      top: -22px;
+      left: -10px;
+      transform: rotate(-3deg);
+    }
+
+    .ws-hero-float.br {
+      bottom: -22px;
+      right: -12px;
+      transform: rotate(2.4deg);
+    }
+
+    @media (max-width: 900px) {
+      .ws-hero-float { display: none; } /* keep mobile clean */
+    }
+
+    .ws-selection {
+      position: relative;
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(255,255,255,0.80);
+      backdrop-filter: blur(10px);
+      border: 2px solid var(--ws-select-blue);
+      box-shadow:
+        0 0 0 4px var(--ws-select-blue-soft),
+        0 18px 32px rgba(12, 24, 60, 0.10);
+    }
+
+    /* 8 “handles” using one pseudo element + box-shadow clones */
+    .ws-selection::after {
+      content: "";
+      position: absolute;
+      width: var(--ws-select-handle);
+      height: var(--ws-select-handle);
+      background: #fff;
+      border: 2px solid var(--ws-select-blue);
+      border-radius: 3px;
+
+      /* top-left handle */
+      top: calc(-1 * (var(--ws-select-handle) / 2));
+      left: calc(-1 * (var(--ws-select-handle) / 2));
+
+      box-shadow:
+        /* top-middle */
+        calc(50% - (var(--ws-select-handle) / 2)) 0 0 0 #0000,
+        /* top-right */
+        calc(100% - (var(--ws-select-handle) / 2)) 0 0 0 #0000,
+
+        /* mid-left */
+        0 calc(50% - (var(--ws-select-handle) / 2)) 0 0 #0000,
+        /* mid-right */
+        calc(100% - (var(--ws-select-handle) / 2)) calc(50% - (var(--ws-select-handle) / 2)) 0 0 #0000,
+
+        /* bottom-left */
+        0 calc(100% - (var(--ws-select-handle) / 2)) 0 0 #0000,
+        /* bottom-middle */
+        calc(50% - (var(--ws-select-handle) / 2)) calc(100% - (var(--ws-select-handle) / 2)) 0 0 #0000,
+        /* bottom-right */
+        calc(100% - (var(--ws-select-handle) / 2)) calc(100% - (var(--ws-select-handle) / 2)) 0 0 #0000;
+    }
+
+    /* The box-shadow “clones” above need actual color/border too, so we duplicate via background painting trick */
+    .ws-selection-handles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .ws-selection-handles span {
+      position: absolute;
+      width: var(--ws-select-handle);
+      height: var(--ws-select-handle);
+      background: #fff;
+      border: 2px solid var(--ws-select-blue);
+      border-radius: 3px;
+    }
+
+    .ws-selection-handles .tl { top: -6px; left: -6px; }
+    .ws-selection-handles .tm { top: -6px; left: calc(50% - 6px); }
+    .ws-selection-handles .tr { top: -6px; right: -6px; }
+    .ws-selection-handles .ml { top: calc(50% - 6px); left: -6px; }
+    .ws-selection-handles .mr { top: calc(50% - 6px); right: -6px; }
+    .ws-selection-handles .bl { bottom: -6px; left: -6px; }
+    .ws-selection-handles .bm { bottom: -6px; left: calc(50% - 6px); }
+    .ws-selection-handles .br { bottom: -6px; right: -6px; }
+
+    .ws-stock-object {
+      width: 148px;
+      height: 118px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: rgba(245,247,255,0.9);
+      border: 1px solid rgba(180, 195, 230, 0.9);
+    }
+
+    .ws-stock-object img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+    }
+
+    .ws-weird-text {
+      font-family: "Rubik Glitch", system-ui, sans-serif;
+      font-size: 64px;
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      color: rgba(16, 21, 36, 0.90);
+      text-transform: lowercase;
+      padding: 8px 10px;
+      white-space: nowrap;
+    }
+
+    /* Sections */
+    section { margin: 32px 0; }
 
     .ws-section-header {
       display: flex;
@@ -582,7 +645,6 @@
     }
 
     /* Static before/after gallery */
-
     .ws-layout-gallery {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
@@ -590,9 +652,7 @@
     }
 
     @media (min-width: 900px) {
-      .ws-layout-gallery {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      }
+      .ws-layout-gallery { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
     }
 
     .ws-layout-pair {
@@ -606,9 +666,7 @@
     }
 
     @media (max-width: 700px) {
-      .ws-layout-pair {
-        grid-template-columns: minmax(0, 1fr);
-      }
+      .ws-layout-pair { grid-template-columns: minmax(0, 1fr); }
     }
 
     .ws-layout-label {
@@ -636,15 +694,9 @@
       border-color: var(--ws-border-strong);
     }
 
-    .ws-layout-before .mono-lines {
-      display: grid;
-      gap: 6px;
-    }
-
+    .ws-layout-before .mono-lines { display: grid; gap: 6px; }
     .ws-layout-before .mono-lines .line {
-      height: 6px;
-      border-radius: 999px;
-      background: #d5dde9;
+      height: 6px; border-radius: 999px; background: #d5dde9;
     }
 
     .ws-layout-before .mono-lines .line:nth-child(1) { width: 90%; }
@@ -658,23 +710,10 @@
     .ws-layout-pair[data-variant="c"] .mono-lines .line:nth-child(2) { width: 65%; }
     .ws-layout-pair[data-variant="c"] .mono-lines .line:nth-child(3) { width: 50%; }
 
-    .ws-layout-after-grid {
-      display: grid;
-      gap: 6px;
-    }
-
-    .ws-layout-after-grid.a {
-      grid-template-columns: 1.4fr 1fr;
-      align-items: stretch;
-    }
-
-    .ws-layout-after-grid.b {
-      grid-template-columns: 1fr;
-    }
-
-    .ws-layout-after-grid.c {
-      grid-template-columns: 1.2fr 1fr;
-    }
+    .ws-layout-after-grid { display: grid; gap: 6px; }
+    .ws-layout-after-grid.a { grid-template-columns: 1.4fr 1fr; align-items: stretch; }
+    .ws-layout-after-grid.b { grid-template-columns: 1fr; }
+    .ws-layout-after-grid.c { grid-template-columns: 1.2fr 1fr; }
 
     .ws-tile {
       border-radius: 12px;
@@ -685,19 +724,8 @@
       gap: 5px;
     }
 
-    .ws-tile-title {
-      height: 7px;
-      border-radius: 999px;
-      width: 70%;
-      background: #283450;
-    }
-
-    .ws-tile-sub {
-      height: 5px;
-      border-radius: 999px;
-      width: 55%;
-      background: #7f8bb2;
-    }
+    .ws-tile-title { height: 7px; border-radius: 999px; width: 70%; background: #283450; }
+    .ws-tile-sub { height: 5px; border-radius: 999px; width: 55%; background: #7f8bb2; }
 
     .ws-tile-row {
       display: grid;
@@ -705,26 +733,11 @@
       gap: 4px;
     }
 
-    .ws-block {
-      border-radius: 8px;
-      background: #e2e8ff;
-    }
-
-    .ws-block.image {
-      background: linear-gradient(135deg, #9faeff, #436bdf);
-    }
-
-    .ws-block.small {
-      height: 18px;
-    }
-
-    .ws-block.medium {
-      height: 24px;
-    }
-
-    .ws-block.tall {
-      height: 42px;
-    }
+    .ws-block { border-radius: 8px; background: #e2e8ff; }
+    .ws-block.image { background: linear-gradient(135deg, #9faeff, #436bdf); }
+    .ws-block.small { height: 18px; }
+    .ws-block.medium { height: 24px; }
+    .ws-block.tall { height: 42px; }
 
     .ws-layout-tag {
       position: absolute;
@@ -739,7 +752,6 @@
     }
 
     /* Placeholders */
-
     .ws-placeholder {
       border-radius: var(--ws-radius-lg);
       border: 1px dashed var(--ws-border-subtle);
@@ -755,29 +767,14 @@
 
     .ws-placeholder--carousel {
       min-height: 160px;
-      background-image: repeating-linear-gradient(
-        -45deg,
-        #f5f7ff 0,
-        #f5f7ff 6px,
-        #ffffff 6px,
-        #ffffff 12px
-      );
+      background-image: repeating-linear-gradient(-45deg,#f5f7ff 0,#f5f7ff 6px,#ffffff 6px,#ffffff 12px);
     }
 
-    .ws-placeholder--visual {
-      min-height: 220px;
-    }
+    .ws-placeholder--visual { min-height: 220px; }
+    .ws-placeholder--mini { min-height: 80px; font-size: 0.8rem; }
 
-    .ws-placeholder--mini {
-      min-height: 80px;
-      font-size: 0.8rem;
-    }
-
-    /* Benefit sections per outcome */
-
-    .ws-benefit-section {
-      margin: 60px 0;
-    }
+    /* Benefit sections */
+    .ws-benefit-section { margin: 60px 0; }
 
     .ws-benefit-layout {
       display: grid;
@@ -809,25 +806,17 @@
     }
 
     @media (max-width: 900px) {
-      .ws-benefit-layout {
-        grid-template-columns: minmax(0, 1fr);
-        min-height: auto;
-      }
+      .ws-benefit-layout { grid-template-columns: minmax(0, 1fr); min-height: auto; }
     }
 
     /* Interactive demos */
-
     .ws-demo-grid {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 18px;
     }
 
-    @media (max-width: 900px) {
-      .ws-demo-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
+    @media (max-width: 900px) { .ws-demo-grid { grid-template-columns: minmax(0, 1fr); } }
 
     .ws-demo-card {
       border-radius: var(--ws-radius-lg);
@@ -846,10 +835,7 @@
       color: var(--ws-text-soft);
     }
 
-    .ws-demo-domain {
-      font-weight: 500;
-      color: var(--ws-text-main);
-    }
+    .ws-demo-domain { font-weight: 500; color: var(--ws-text-main); }
 
     .ws-demo-toggle {
       font-size: 0.8rem;
@@ -863,9 +849,7 @@
       cursor: pointer;
     }
 
-    .ws-demo-toggle span.icon {
-      font-size: 1rem;
-    }
+    .ws-demo-toggle span.icon { font-size: 1rem; }
 
     .ws-demo-layout {
       border-radius: 14px;
@@ -890,75 +874,27 @@
       margin-bottom: 6px;
     }
 
-    .ws-demo-layout-inner {
-      display: grid;
-      gap: 6px;
-      min-height: 260px;
-    }
-
-    /* demo shapes (still placeholders) */
+    .ws-demo-layout-inner { display: grid; gap: 6px; min-height: 260px; }
 
     .ws-demo-layout[data-variant="blog"] .hero-bar,
     .ws-demo-layout[data-variant="grid"] .hero-bar,
     .ws-demo-layout[data-variant="service"] .hero-bar {
-      height: 22px;
-      border-radius: 12px;
-      background: #dbe1f2;
-      width: 80%;
+      height: 22px; border-radius: 12px; background: #dbe1f2; width: 80%;
     }
 
-    .ws-demo-layout[data-variant="blog"] .hero-strip {
-      height: 90px;
-      border-radius: 12px;
-      background: #e2e8ff;
-    }
+    .ws-demo-layout[data-variant="blog"] .hero-strip { height: 90px; border-radius: 12px; background: #e2e8ff; }
 
-    .ws-demo-layout[data-variant="blog"] .cols {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 6px;
-    }
+    .ws-demo-layout[data-variant="blog"] .cols { display: grid; grid-template-columns: 1.4fr 1fr; gap: 6px; }
+    .ws-demo-layout[data-variant="blog"] .col-block { height: 70px; border-radius: 10px; background: #dde4f7; }
 
-    .ws-demo-layout[data-variant="blog"] .col-block {
-      height: 70px;
-      border-radius: 10px;
-      background: #dde4f7;
-    }
+    .ws-demo-layout[data-variant="grid"] .thumb-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; }
+    .ws-demo-layout[data-variant="grid"] .thumb { height: 90px; border-radius: 10px; background: #e1e6f7; }
 
-    .ws-demo-layout[data-variant="grid"] .thumb-row {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 5px;
-    }
+    .ws-demo-layout[data-variant="service"] .sub-bar { height: 6px; border-radius: 999px; background: #cbd4ed; width: 55%; }
+    .ws-demo-layout[data-variant="service"] .service-row { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 6px; }
+    .ws-demo-layout[data-variant="service"] .service-card { height: 90px; border-radius: 12px; background: #e2e8f7; }
 
-    .ws-demo-layout[data-variant="grid"] .thumb {
-      height: 90px;
-      border-radius: 10px;
-      background: #e1e6f7;
-    }
-
-    .ws-demo-layout[data-variant="service"] .sub-bar {
-      height: 6px;
-      border-radius: 999px;
-      background: #cbd4ed;
-      width: 55%;
-    }
-
-    .ws-demo-layout[data-variant="service"] .service-row {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 6px;
-    }
-
-    .ws-demo-layout[data-variant="service"] .service-card {
-      height: 90px;
-      border-radius: 12px;
-      background: #e2e8f7;
-    }
-
-    .ws-demo-layout[data-variant="blog"].is-improved .hero-strip {
-      background: linear-gradient(135deg, #99affe, #3f68d7);
-    }
+    .ws-demo-layout[data-variant="blog"].is-improved .hero-strip { background: linear-gradient(135deg, #99affe, #3f68d7); }
 
     .ws-demo-layout[data-variant="grid"].is-improved .thumb:nth-child(1),
     .ws-demo-layout[data-variant="grid"].is-improved .thumb:nth-child(2) {
@@ -970,7 +906,6 @@
     }
 
     /* How it works */
-
     .ws-how-grid {
       display: grid;
       grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
@@ -978,16 +913,9 @@
       align-items: start;
     }
 
-    @media (max-width: 900px) {
-      .ws-how-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
+    @media (max-width: 900px) { .ws-how-grid { grid-template-columns: minmax(0, 1fr); } }
 
-    .ws-steps {
-      display: grid;
-      gap: 10px;
-    }
+    .ws-steps { display: grid; gap: 10px; }
 
     .ws-step {
       display: grid;
@@ -1013,16 +941,8 @@
       font-weight: 600;
     }
 
-    .ws-step-title {
-      font-size: 0.96rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .ws-step-text {
-      font-size: 0.86rem;
-      color: var(--ws-text-soft);
-    }
+    .ws-step-title { font-size: 0.96rem; font-weight: 600; margin-bottom: 4px; }
+    .ws-step-text { font-size: 0.86rem; color: var(--ws-text-soft); }
 
     .ws-how-note {
       font-size: 0.82rem;
@@ -1039,10 +959,7 @@
       gap: 10px;
     }
 
-    .ws-how-track {
-      display: grid;
-      gap: 6px;
-    }
+    .ws-how-track { display: grid; gap: 6px; }
 
     .ws-track-item {
       display: flex;
@@ -1053,11 +970,7 @@
       background: var(--ws-surface-soft);
     }
 
-    .ws-track-name {
-      font-size: 0.84rem;
-      color: var(--ws-text-soft);
-    }
-
+    .ws-track-name { font-size: 0.84rem; color: var(--ws-text-soft); }
     .ws-track-pill {
       font-size: 0.8rem;
       padding: 3px 8px;
@@ -1067,8 +980,7 @@
       font-weight: 500;
     }
 
-    /* Final CTA (full-height-ish) */
-
+    /* Final CTA */
     .ws-cta-final {
       margin-top: 40px;
       border-radius: var(--ws-radius-xl);
@@ -1084,11 +996,7 @@
       overflow: hidden;
     }
 
-    .ws-cta-final-inner {
-      position: relative;
-      z-index: 1;
-      padding: 22px 20px 26px;
-    }
+    .ws-cta-final-inner { position: relative; z-index: 1; padding: 22px 20px 26px; }
 
     .ws-cta-final-title {
       font-size: 1.8rem;
@@ -1105,9 +1013,7 @@
       margin: 0 auto 18px;
     }
 
-    .ws-cta-final .ws-btn-primary {
-      padding-inline: 26px;
-    }
+    .ws-cta-final .ws-btn-primary { padding-inline: 26px; }
 
     .ws-cta-final::before,
     .ws-cta-final::after {
@@ -1120,24 +1026,10 @@
       opacity: 0.8;
     }
 
-    .ws-cta-final::before {
-      top: -120px;
-      left: -180px;
-    }
+    .ws-cta-final::before { top: -120px; left: -180px; }
+    .ws-cta-final::after { bottom: -140px; right: -200px; }
 
-    .ws-cta-final::after {
-      bottom: -140px;
-      right: -200px;
-    }
-
-    /* CTA animated shapes */
-
-    .ws-cta-shapes {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
+    .ws-cta-shapes { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 
     .ws-cta-shape {
       position: absolute;
@@ -1146,30 +1038,16 @@
       transition: transform 0.05s linear;
     }
 
-    .ws-cta-shape.circle {
-      width: 26px;
-      height: 26px;
-      border-radius: 999px;
-      background: #ffcc70;
-    }
-
-    .ws-cta-shape.square {
-      width: 20px;
-      height: 20px;
-      border-radius: 6px;
-      background: #7ad3ff;
-    }
-
+    .ws-cta-shape.circle { width: 26px; height: 26px; border-radius: 999px; background: #ffcc70; }
+    .ws-cta-shape.square { width: 20px; height: 20px; border-radius: 6px; background: #7ad3ff; }
     .ws-cta-shape.triangle {
-      width: 0;
-      height: 0;
+      width: 0; height: 0;
       border-left: 11px solid transparent;
       border-right: 11px solid transparent;
       border-bottom: 20px solid #ff8ab3;
     }
 
     /* Footer */
-
     footer.ws-footer {
       border-top: 1px solid rgba(191, 203, 225, 0.8);
       margin-top: 40px;
@@ -1193,14 +1071,8 @@
       align-items: center;
     }
 
-    .ws-footer-links a {
-      text-decoration: none;
-      color: var(--ws-text-muted);
-    }
-
-    .ws-footer-links a:hover {
-      color: var(--ws-accent);
-    }
+    .ws-footer-links a { text-decoration: none; color: var(--ws-text-muted); }
+    .ws-footer-links a:hover { color: var(--ws-accent); }
 
     .ws-footer-contact {
       display: inline-flex;
@@ -1210,60 +1082,12 @@
       color: var(--ws-text-muted);
     }
 
-    .ws-footer-contact a {
-      color: var(--ws-text-muted);
-      text-decoration: none;
-    }
-
-    .ws-footer-contact a:hover {
-      color: var(--ws-accent);
-    }
-
-    /* Floating redesign button (removed from HTML; styles can remain harmless) */
-    .ws-floating-redesign {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 30;
-    }
-
-    .ws-floating-redesign button {
-      border-radius: var(--ws-radius-pill);
-      padding: 8px 16px;
-      border: 1px solid rgba(129, 147, 193, 0.9);
-      background: rgba(246, 249, 255, 0.98);
-      box-shadow: 0 12px 24px rgba(22, 37, 80, 0.25);
-      font-size: 0.86rem;
-      font-weight: 500;
-      color: var(--ws-text-soft);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      backdrop-filter: blur(12px);
-      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, border-color 0.12s ease-out;
-    }
-
-    .ws-floating-redesign button span.icon {
-      font-size: 1rem;
-    }
-
-    .ws-floating-redesign button small {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--ws-text-muted);
-    }
-
-    .ws-floating-redesign button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 32px rgba(14, 29, 68, 0.3);
-      border-color: var(--ws-accent);
-    }
+    .ws-footer-contact a { color: var(--ws-text-muted); text-decoration: none; }
+    .ws-footer-contact a:hover { color: var(--ws-accent); }
   </style>
 </head>
-<body>
 
+<body>
 <header class="ws-header">
   <div class="ws-header-inner">
     <a href="#" class="ws-logo">
@@ -1287,6 +1111,37 @@
   <!-- HERO -->
   <section class="ws-hero" aria-labelledby="hero-title">
     <div class="ws-hero-shell">
+
+      <!-- Floating TL object w/ selection box -->
+      <div class="ws-hero-float tl" aria-hidden="true">
+        <div class="ws-selection">
+          <div class="ws-selection-handles" aria-hidden="true">
+            <span class="tl"></span><span class="tm"></span><span class="tr"></span>
+            <span class="ml"></span><span class="mr"></span>
+            <span class="bl"></span><span class="bm"></span><span class="br"></span>
+          </div>
+
+          <div class="ws-stock-object">
+            <!-- Replace this src later with any real “stock png” you like -->
+            <img alt="Object"
+                 src="data:image/svg+xml;utf8,
+                 <svg xmlns='http://www.w3.org/2000/svg' width='300' height='240' viewBox='0 0 300 240'>
+                   <defs>
+                     <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+                       <stop offset='0' stop-color='%23cfdcff'/>
+                       <stop offset='1' stop-color='%235a79de'/>
+                     </linearGradient>
+                   </defs>
+                   <rect width='300' height='240' rx='22' fill='%23f5f7ff'/>
+                   <circle cx='88' cy='110' r='58' fill='url(%23g)' opacity='0.85'/>
+                   <rect x='140' y='64' width='120' height='120' rx='18' fill='%23ffffff' opacity='0.88'/>
+                   <path d='M70 170 C92 140, 114 140, 136 170' stroke='%231140a6' stroke-width='10' fill='none' stroke-linecap='round' opacity='0.9'/>
+                   <circle cx='214' cy='124' r='22' fill='%231140a6' opacity='0.85'/>
+                   <circle cx='214' cy='124' r='10' fill='%23ffffff' opacity='0.95'/>
+                 </svg>"/>
+          </div>
+        </div>
+      </div>
 
       <!-- Left: BEFORE visual -->
       <div class="ws-hero-side ws-hero-side-left" aria-hidden="true">
@@ -1313,10 +1168,8 @@
         </div>
       </div>
 
-      <!-- Center: main hero text -->
+      <!-- Center hero -->
       <div class="ws-hero-center">
-        <!-- 1) pill removed -->
-
         <div class="ws-hero-title-wrap">
           <div class="ws-hero-title-highlight-bar" aria-hidden="true"></div>
           <h1 class="ws-hero-title" id="hero-title">
@@ -1377,6 +1230,19 @@
         </div>
       </div>
 
+      <!-- Floating BR weird text w/ selection box -->
+      <div class="ws-hero-float br" aria-hidden="true">
+        <div class="ws-selection">
+          <div class="ws-selection-handles" aria-hidden="true">
+            <span class="tl"></span><span class="tm"></span><span class="tr"></span>
+            <span class="ml"></span><span class="mr"></span>
+            <span class="bl"></span><span class="bm"></span><span class="br"></span>
+          </div>
+
+          <div class="ws-weird-text">text</div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1392,15 +1258,11 @@
     </div>
 
     <div class="ws-layout-gallery">
-      <!-- Pair A -->
       <article class="ws-layout-pair" data-variant="a" aria-label="Homepage layout example">
         <div class="ws-layout-before">
           <div class="ws-layout-label">Before</div>
           <div class="mono-lines">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
+            <div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div>
           </div>
         </div>
         <div class="ws-layout-after">
@@ -1411,27 +1273,19 @@
               <div class="ws-tile-title"></div>
               <div class="ws-tile-sub"></div>
               <div class="ws-tile-row">
-                <div class="ws-block small"></div>
-                <div class="ws-block small"></div>
-                <div class="ws-block small"></div>
+                <div class="ws-block small"></div><div class="ws-block small"></div><div class="ws-block small"></div>
               </div>
             </div>
-            <div class="ws-tile">
-              <div class="ws-block image tall"></div>
-            </div>
+            <div class="ws-tile"><div class="ws-block image tall"></div></div>
           </div>
         </div>
       </article>
 
-      <!-- Pair B -->
       <article class="ws-layout-pair" data-variant="b" aria-label="Services layout example">
         <div class="ws-layout-before">
           <div class="ws-layout-label">Before</div>
           <div class="mono-lines">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
+            <div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div>
           </div>
         </div>
         <div class="ws-layout-after">
@@ -1442,36 +1296,26 @@
               <div class="ws-tile-title"></div>
               <div class="ws-tile-sub"></div>
               <div class="ws-tile-row">
-                <div class="ws-block medium"></div>
-                <div class="ws-block medium"></div>
-                <div class="ws-block medium"></div>
+                <div class="ws-block medium"></div><div class="ws-block medium"></div><div class="ws-block medium"></div>
               </div>
             </div>
-            <div class="ws-tile">
-              <div class="ws-block image tall"></div>
-            </div>
+            <div class="ws-tile"><div class="ws-block image tall"></div></div>
           </div>
         </div>
       </article>
 
-      <!-- Pair C -->
       <article class="ws-layout-pair" data-variant="c" aria-label="Content layout example">
         <div class="ws-layout-before">
           <div class="ws-layout-label">Before</div>
           <div class="mono-lines">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
+            <div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div>
           </div>
         </div>
         <div class="ws-layout-after">
           <div class="ws-layout-label">After</div>
           <div class="ws-layout-tag">Visual balance</div>
           <div class="ws-layout-after-grid c">
-            <div class="ws-tile">
-              <div class="ws-block image tall"></div>
-            </div>
+            <div class="ws-tile"><div class="ws-block image tall"></div></div>
             <div class="ws-tile">
               <div class="ws-tile-title"></div>
               <div class="ws-tile-sub"></div>
@@ -1484,7 +1328,6 @@
     </div>
   </section>
 
-  <!-- REAL-PAGE PREVIEWS PLACEHOLDER -->
   <section aria-labelledby="gallery-title">
     <div class="ws-section-header">
       <div class="ws-section-kicker">Real-page previews</div>
@@ -1500,7 +1343,6 @@
     </div>
   </section>
 
-  <!-- OUTCOMES INTRO -->
   <section id="benefits" aria-labelledby="benefits-intro-title">
     <div class="ws-section-header">
       <div class="ws-section-kicker">Why it matters</div>
@@ -1512,7 +1354,6 @@
     </div>
   </section>
 
-  <!-- Benefit 1 -->
   <section class="ws-benefit-section" aria-labelledby="benefit-first-impressions">
     <div class="ws-benefit-layout">
       <div class="ws-benefit-text-block">
@@ -1529,7 +1370,6 @@
     </div>
   </section>
 
-  <!-- Benefit 2 -->
   <section class="ws-benefit-section" aria-labelledby="benefit-more-customers">
     <div class="ws-benefit-layout">
       <div class="ws-placeholder ws-placeholder--visual">
@@ -1546,7 +1386,6 @@
     </div>
   </section>
 
-  <!-- Benefit 3 -->
   <section class="ws-benefit-section" aria-labelledby="benefit-more-trust">
     <div class="ws-benefit-layout">
       <div class="ws-benefit-text-block">
@@ -1563,7 +1402,6 @@
     </div>
   </section>
 
-  <!-- Benefit 4 -->
   <section class="ws-benefit-section" aria-labelledby="benefit-stronger-brand">
     <div class="ws-benefit-layout">
       <div class="ws-placeholder ws-placeholder--visual">
@@ -1580,7 +1418,6 @@
     </div>
   </section>
 
-  <!-- Benefit 5 -->
   <section class="ws-benefit-section" aria-labelledby="benefit-more-traffic">
     <div class="ws-benefit-layout">
       <div class="ws-benefit-text-block">
@@ -1597,7 +1434,6 @@
     </div>
   </section>
 
-  <!-- INTERACTIVE DEMOS -->
   <section id="demo" aria-labelledby="demo-title">
     <div class="ws-section-header">
       <div class="ws-section-kicker">Live-style previews</div>
@@ -1609,7 +1445,6 @@
     </div>
 
     <div class="ws-demo-grid">
-      <!-- Demo 1 -->
       <article class="ws-demo-card">
         <div class="ws-demo-topline">
           <span class="ws-demo-domain">Example layout A</span>
@@ -1631,7 +1466,6 @@
         </div>
       </article>
 
-      <!-- Demo 2 -->
       <article class="ws-demo-card">
         <div class="ws-demo-topline">
           <span class="ws-demo-domain">Example layout B</span>
@@ -1655,7 +1489,6 @@
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
   <section id="how-it-works" aria-labelledby="how-title">
     <div class="ws-section-header">
       <div class="ws-section-kicker">Process</div>
@@ -1727,7 +1560,6 @@
     </div>
   </section>
 
-  <!-- FINAL CTA -->
   <section aria-labelledby="cta-title">
     <div class="ws-cta-final" id="ws-cta-final">
       <div class="ws-cta-final-inner">
@@ -1744,21 +1576,10 @@
       </div>
 
       <div class="ws-cta-shapes">
-        <div class="ws-cta-shape circle"
-             style="top: 25%; left: 45%; --rot: 0deg;"
-             data-x="-140" data-y="-80"></div>
-
-        <div class="ws-cta-shape square"
-             style="top: 30%; left: 58%; --rot: 18deg;"
-             data-x="120" data-y="-40"></div>
-
-        <div class="ws-cta-shape triangle"
-             style="top: 55%; left: 40%; --rot: -8deg;"
-             data-x="-110" data-y="110"></div>
-
-        <div class="ws-cta-shape circle"
-             style="top: 65%; left: 60%; --rot: 0deg;"
-             data-x="130" data-y="90"></div>
+        <div class="ws-cta-shape circle" style="top: 25%; left: 45%; --rot: 0deg;" data-x="-140" data-y="-80"></div>
+        <div class="ws-cta-shape square" style="top: 30%; left: 58%; --rot: 18deg;" data-x="120" data-y="-40"></div>
+        <div class="ws-cta-shape triangle" style="top: 55%; left: 40%; --rot: -8deg;" data-x="-110" data-y="110"></div>
+        <div class="ws-cta-shape circle" style="top: 65%; left: 60%; --rot: 0deg;" data-x="130" data-y="90"></div>
       </div>
     </div>
   </section>
@@ -1767,7 +1588,6 @@
     <div class="ws-footer-inner">
       <span>© <span id="ws-year"></span> WebSpark. Clean redesigns, in your own HTML.</span>
 
-      <!-- 4) contacts added back -->
       <div class="ws-footer-links">
         <span class="ws-footer-contact">
           <a href="mailto:mcsite@web-spark.net">mcsite@web-spark.net</a>
@@ -1778,7 +1598,6 @@
         <a href="#examples">Examples</a>
         <a href="#demo">Demo</a>
         <a href="contact.html">Contact</a>
-        <!-- 3) reviews removed -->
       </div>
     </div>
   </footer>
@@ -1823,14 +1642,10 @@
 
         var improved = layout.classList.toggle('is-improved');
         var label = layout.querySelector('.ws-demo-label');
-        if (label) {
-          label.textContent = improved ? 'After' : 'Before';
-        }
+        if (label) label.textContent = improved ? 'After' : 'Before';
 
         var textSpan = btn.querySelector('span:nth-child(2)');
-        if (textSpan) {
-          textSpan.textContent = improved ? 'Back to before' : 'Click to improve';
-        }
+        if (textSpan) textSpan.textContent = improved ? 'Back to before' : 'Click to improve';
       });
     });
   })();
@@ -1859,13 +1674,7 @@
       var scrollY = window.scrollY;
       var scrollingDown = scrollY >= lastScrollY;
 
-      var progress;
-      if (scrollingDown) {
-        progress = Math.max(lastProgress, base);
-      } else {
-        progress = base;
-      }
-
+      var progress = scrollingDown ? Math.max(lastProgress, base) : base;
       progress = Math.max(0, Math.min(1, progress));
       lastProgress = progress;
       lastScrollY = scrollY;
