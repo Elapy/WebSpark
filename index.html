@@ -81,7 +81,6 @@
       text-transform:uppercase;
       color:var(--ws-accent);
     }
-    /* Logo now references assets/logo.jpg */
     .ws-logo-mark{
       width:32px; height:32px;
       border-radius:14px;
@@ -210,6 +209,7 @@
       margin:0 0 14px;
       color:var(--ws-text-main);
       max-width:18ch;
+      position:relative;
     }
     .ws-hero-highlight{ color:var(--ws-accent); font-weight:600; }
 
@@ -267,30 +267,30 @@
       background:rgba(146,161,196,0.7);
     }
 
-    /* HERO “bad font -> selected highlight -> normal” (applies to title, sub, meta) */
-    .ws-hero-anim-target{ position:relative; }
-    body.ws-hero-badfont .ws-hero-anim-target{
+    /* Headline-only “bad font -> selection highlight -> normal” */
+    body.ws-hl-badfont #hero-title{
       font-family: Arial, Helvetica, sans-serif !important;
       letter-spacing: 0 !important;
     }
-    .ws-hero-select-overlay{
+    .ws-hl-select-overlay{
       position:absolute;
-      left:-10px; right:-10px;
+      left:-12px; right:-12px;
       top:50%;
-      height:1.15em;
+      height:1.1em;
       transform: translateY(-50%);
       border-radius:10px;
       background: rgba(26,115,232,0.18);
       box-shadow: 0 0 0 2px rgba(26,115,232,0.55);
       opacity:0;
       pointer-events:none;
+      z-index:-1;
     }
-    body.ws-hero-selecting .ws-hero-select-overlay{
+    body.ws-hl-selecting .ws-hl-select-overlay{
       opacity:1;
-      animation: wsHeroSelect 980ms ease forwards;
+      animation: wsHLSelect 980ms ease forwards;
     }
-    @keyframes wsHeroSelect{
-      0%{ opacity:0; transform: translateY(-50%) scaleX(0.72); }
+    @keyframes wsHLSelect{
+      0%{ opacity:0; transform: translateY(-50%) scaleX(0.70); }
       18%{ opacity:1; transform: translateY(-50%) scaleX(1); }
       75%{ opacity:1; }
       100%{ opacity:0; transform: translateY(-50%) scaleX(1.02); }
@@ -506,24 +506,121 @@
       margin:0;
     }
 
-    .ws-placeholder{
-      border-radius:var(--ws-radius-lg);
-      border:1px dashed var(--ws-border-subtle);
-      background:var(--ws-surface);
-      padding:18px 16px;
+    /* “See how structure changes perception” — bring back the before/after blocks (no text inside, just bubbles) */
+    .ws-scp{
+      border-radius:var(--ws-radius-xl);
+      border:1px solid var(--ws-border-subtle);
+      background: #fff;
+      box-shadow:0 18px 40px rgba(10,22,60,0.06);
+      padding:14px;
+    }
+    .ws-scp-grid{
+      display:grid;
+      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+      gap:14px;
+      align-items:stretch;
+    }
+    @media (max-width:900px){
+      .ws-scp-grid{ grid-template-columns:minmax(0,1fr); }
+    }
+    .ws-scp-card{
+      border-radius:18px;
+      border:1px solid rgba(174,186,215,0.7);
+      background: radial-gradient(circle at top left, #ffffff 0, #f6f8ff 42%, #e6ecfb 100%);
+      padding:12px;
+      display:grid;
+      gap:10px;
+      overflow:hidden;
+      position:relative;
+    }
+    .ws-scp-row{
+      display:grid;
+      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+      gap:10px;
+      align-items:stretch;
+    }
+    .ws-scp-pane{
+      border-radius:14px;
+      border:1px solid rgba(164,179,218,0.75);
+      background:#fff;
+      padding:10px;
+      overflow:hidden;
+      position:relative;
+      min-height:180px;
+    }
+    .ws-scp-pane.before{
+      filter: grayscale(1);
+      opacity:0.85;
+      background: linear-gradient(145deg,#ffffff,#f6f7fb);
+    }
+    .ws-scp-bubbles{
+      display:grid;
+      gap:8px;
+    }
+    .ws-b{
+      height:10px;
+      border-radius:999px;
+      background:#d7dfef;
+    }
+    .ws-b.lg{ height:14px; }
+    .ws-b.sm{ height:8px; opacity:0.95; }
+    .ws-b.r1{ width:92%; }
+    .ws-b.r2{ width:84%; }
+    .ws-b.r3{ width:78%; }
+    .ws-b.r4{ width:70%; }
+    .ws-b.r5{ width:64%; }
+    .ws-b.r6{ width:88%; }
+    .ws-b.r7{ width:74%; }
+
+    .ws-scp-pane.after{
+      background: linear-gradient(145deg,#ffffff,#eef2ff);
+    }
+    .ws-scp-after-grid{
+      display:grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap:10px;
+      align-items:stretch;
+    }
+    .ws-scp-after-left{
+      border-radius:12px;
+      border:1px solid rgba(164,179,218,0.75);
+      background: linear-gradient(135deg, rgba(17,64,166,0.10), rgba(124,92,255,0.06));
+      padding:10px;
+      display:grid;
+      gap:8px;
+    }
+    .ws-scp-cta{
+      width:76px;height:18px;border-radius:999px;background:#1140a6;
+      box-shadow:0 12px 22px rgba(17,64,166,0.20);
+    }
+    .ws-scp-after-right{
+      display:grid;
+      gap:8px;
+    }
+    .ws-scp-cardlet{
+      border-radius:12px;
+      border:1px solid rgba(164,179,218,0.75);
+      background:#fff;
+      padding:10px;
+      display:grid;
+      gap:6px;
+    }
+    .ws-scp-tagbar{
+      position:absolute;
+      top:10px;
+      left:10px;
+      right:10px;
       display:flex;
-      align-items:center;
-      justify-content:center;
-      color:var(--ws-text-muted);
-      font-size:0.9rem;
-      text-align:center;
+      gap:6px;
+      opacity:0.95;
+      pointer-events:none;
     }
-    .ws-placeholder--carousel{
-      min-height:160px;
-      background-image: repeating-linear-gradient(-45deg, #f5f7ff 0, #f5f7ff 6px, #ffffff 6px, #ffffff 12px);
+    .ws-scp-dot{
+      width:8px;height:8px;border-radius:999px;background:#e3e6f3;
     }
-    .ws-placeholder--visual{ min-height:260px; }
-    .ws-placeholder--mini{ min-height:80px; font-size:0.8rem; }
+    .ws-scp-dot:nth-child(1){ background:#ff7b7b; }
+    .ws-scp-dot:nth-child(2){ background:#ffb86b; }
+    .ws-scp-dot:nth-child(3){ background:#24d38b; }
 
     /* Interactive demos */
 
@@ -629,7 +726,7 @@
       user-select:none;
     }
 
-    /* Benefits blocks (kept “fatter” without expanding overall section spacing too much) */
+    /* Benefits blocks */
 
     .ws-benefit-section{ margin:44px 0; }
     .ws-benefit-layout{
@@ -741,6 +838,11 @@
       position:relative;
       overflow:hidden;
     }
+    .ws-v1-before{
+      filter: grayscale(1);
+      opacity:0.85;
+      background: linear-gradient(145deg,#ffffff,#f6f7fb);
+    }
     .ws-v1-before .line{ height:6px; border-radius:999px; background:#d7dfef; opacity:0.95; }
     .ws-v1-before .line:nth-child(1){ width:92%; }
     .ws-v1-before .line:nth-child(2){ width:88%; }
@@ -775,7 +877,7 @@
     .ws-v1-after .card .h{ height:7px; border-radius:999px; width:70%; background:#1c2b56; opacity:0.88; }
     .ws-v1-after .card .l{ height:6px; border-radius:999px; width:90%; background:#9aa7cf; opacity:0.9; }
 
-    /* Visual 02: Conversion path — recreate “two pages + curved transfer” with this aspect ratio */
+    /* Visual 02: Conversion path — dot ping-pongs, line connects to page edges */
     .ws-v2-canvas{
       position:relative;
       width:100%;
@@ -890,7 +992,7 @@
     .ws-v3-row .l{ height:6px;border-radius:999px;background:#7e8dbb;opacity:0.9; width:60%; }
     .ws-v3-row .r{ height:16px;border-radius:999px;background:#1140a6;opacity:0.92; width:52px; }
 
-    /* Visual 04: Brand consistency — no animation now */
+    /* Visual 04: Brand consistency — no animation */
     .ws-v4-wrap{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -1028,73 +1130,68 @@
       white-space:nowrap;
     }
 
-    /* Restored “At a glance” animated box (shimmer + flowing progress) */
+    /* Restored original “At a glance” concept: page icon -> loading bar -> page icon */
     .ws-atglance{
       border-radius:14px;
       border:1px dashed rgba(189,199,227,0.9);
       background: var(--ws-surface-soft);
       padding:12px;
-      display:grid;
-      gap:8px;
       overflow:hidden;
-      position:relative;
     }
-    .ws-atglance::before{
-      content:"";
-      position:absolute;
-      top:0; left:-60%;
-      width:60%;
-      height:100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.65), transparent);
-      transform: skewX(-18deg);
-      animation: wsShimmer 2200ms ease-in-out infinite;
-      opacity:0.9;
-      pointer-events:none;
-    }
-    @keyframes wsShimmer{
-      0%{ left:-70%; opacity:0.0; }
-      15%{ opacity:0.9; }
-      55%{ opacity:0.9; }
-      100%{ left:120%; opacity:0.0; }
-    }
-    .ws-at-row{
+    .ws-atglance-row{
       border-radius:12px;
       border:1px solid rgba(164,179,218,0.65);
       background:#fff;
       padding:10px;
-      display:flex;
+      display:grid;
+      grid-template-columns: auto minmax(0,1fr) auto;
       align-items:center;
-      justify-content:space-between;
       gap:10px;
+    }
+    .ws-at-page{
+      width:36px;
+      height:28px;
+      border-radius:10px;
+      border:1px solid rgba(164,179,218,0.75);
+      background: linear-gradient(145deg,#ffffff,#f1f4ff);
       position:relative;
       overflow:hidden;
+      box-shadow:0 10px 18px rgba(10,22,60,0.06);
     }
-    .ws-at-row .l{
-      height:6px;border-radius:999px;background:#7e8dbb;opacity:0.9;width:58%;
-    }
-    .ws-at-row .r{
-      height:16px;border-radius:999px;background:#1140a6;opacity:0.9;width:52px;
-      position:relative;
-      overflow:hidden;
-    }
-    .ws-at-row .r::after{
+    .ws-at-page::after{
       content:"";
       position:absolute;
-      inset:0;
-      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.55), rgba(255,255,255,0));
-      transform: translateX(-120%);
-      animation: wsChipSweep 1800ms ease-in-out infinite;
+      left:7px; right:7px;
+      top:7px;
+      height:6px;
+      border-radius:999px;
+      background:#9aa7cf;
       opacity:0.9;
+      box-shadow: 0 9px 0 #c9d2ea;
     }
-    .ws-at-row:nth-child(2) .r{ background:#7c5cff; }
-    .ws-at-row:nth-child(2) .r::after{ animation-delay: 240ms; }
-    .ws-at-row:nth-child(3) .r{ background:#1140a6; opacity:0.86; }
-    .ws-at-row:nth-child(3) .r::after{ animation-delay: 480ms; }
-    @keyframes wsChipSweep{
-      0%{ transform: translateX(-120%); opacity:0.0; }
-      20%{ opacity:0.9; }
-      55%{ opacity:0.9; }
-      100%{ transform: translateX(120%); opacity:0.0; }
+    .ws-at-bar{
+      height:12px;
+      border-radius:999px;
+      border:1px solid rgba(17,64,166,0.14);
+      background: rgba(17,64,166,0.06);
+      position:relative;
+      overflow:hidden;
+    }
+    .ws-at-fill{
+      position:absolute;
+      top:0; left:-35%;
+      height:100%;
+      width:35%;
+      border-radius:999px;
+      background: linear-gradient(135deg, rgba(47,107,255,0.88), rgba(124,92,255,0.76));
+      box-shadow:0 10px 18px rgba(47,107,255,0.18);
+      animation: wsLoadSweep 1900ms ease-in-out infinite;
+    }
+    @keyframes wsLoadSweep{
+      0%{ left:-35%; opacity:0.6; }
+      35%{ opacity:1; }
+      70%{ opacity:1; }
+      100%{ left:110%; opacity:0.6; }
     }
 
     /* Final CTA */
@@ -1225,7 +1322,7 @@
   </style>
 </head>
 
-<body class="ws-hero-badfont">
+<body class="ws-hl-badfont">
 <header class="ws-header">
   <div class="ws-header-inner">
     <a href="#" class="ws-logo">
@@ -1284,14 +1381,13 @@
       </div>
 
       <div class="ws-hero-center">
-        <h1 class="ws-hero-title ws-hero-anim-target" id="hero-title">
-          <span class="ws-hero-select-overlay" aria-hidden="true"></span>
+        <h1 class="ws-hero-title" id="hero-title">
+          <span class="ws-hl-select-overlay" aria-hidden="true"></span>
           Turn your website<br>
           into a <span class="ws-hero-highlight">great first impression.</span>
         </h1>
 
-        <p class="ws-hero-sub ws-hero-anim-target" id="ws-hero-sub">
-          <span class="ws-hero-select-overlay" aria-hidden="true"></span>
+        <p class="ws-hero-sub">
           WebSpark rebuilds an existing site into a cleaner, sharper, more trustworthy experience – in HTML that stays under your control.
         </p>
 
@@ -1299,8 +1395,7 @@
           <a href="contact.html" class="ws-btn-primary">Get started</a>
         </div>
 
-        <div class="ws-hero-meta ws-hero-anim-target" id="ws-hero-meta">
-          <span class="ws-hero-select-overlay" aria-hidden="true"></span>
+        <div class="ws-hero-meta">
           <span><strong>Cleaner layouts</strong> without rebuilding from scratch.</span>
           <span class="ws-hero-meta-divider"></span>
           <span>Keep the content. Upgrade the presentation.</span>
@@ -1348,7 +1443,6 @@
     </div>
   </section>
 
-  <!-- Restored Examples section to original placeholder version -->
   <section id="examples" aria-labelledby="examples-title">
     <div class="ws-section-header">
       <div class="ws-section-kicker">Layout transformations</div>
@@ -1356,8 +1450,96 @@
       <p class="ws-section-sub">Spacing, hierarchy, and visual rhythm shape how a brand is perceived.</p>
     </div>
 
-    <div class="ws-placeholder ws-placeholder--carousel">
-      Placeholder: future screenshot carousel or grid (before / after images).
+    <!-- Restored: before/after mini examples (rectangular bubbles only) -->
+    <div class="ws-scp">
+      <div class="ws-scp-grid">
+
+        <div class="ws-scp-card" aria-hidden="true">
+          <div class="ws-scp-tagbar">
+            <span class="ws-scp-dot"></span><span class="ws-scp-dot"></span><span class="ws-scp-dot"></span>
+          </div>
+
+          <div class="ws-scp-row">
+            <div class="ws-scp-pane before">
+              <div class="ws-scp-bubbles">
+                <div class="ws-b lg r1"></div>
+                <div class="ws-b r6"></div>
+                <div class="ws-b r2"></div>
+                <div class="ws-b r3"></div>
+                <div class="ws-b r5"></div>
+                <div class="ws-b sm r7"></div>
+              </div>
+            </div>
+
+            <div class="ws-scp-pane after">
+              <div class="ws-scp-after-grid">
+                <div class="ws-scp-after-left">
+                  <div class="ws-b lg r2" style="background:#1d2a55; opacity:0.90;"></div>
+                  <div class="ws-b r1" style="background:#9aa7cf; opacity:0.9;"></div>
+                  <div class="ws-b r3" style="background:#9aa7cf; opacity:0.9;"></div>
+                  <div class="ws-scp-cta"></div>
+                </div>
+                <div class="ws-scp-after-right">
+                  <div class="ws-scp-cardlet">
+                    <div class="ws-b lg r4" style="background:#1d2a55; opacity:0.86;"></div>
+                    <div class="ws-b r6" style="background:#9aa7cf;"></div>
+                    <div class="ws-b r3" style="background:#9aa7cf;"></div>
+                  </div>
+                  <div class="ws-scp-cardlet">
+                    <div class="ws-b lg r5" style="background:#1d2a55; opacity:0.86;"></div>
+                    <div class="ws-b r2" style="background:#9aa7cf;"></div>
+                    <div class="ws-b r7" style="background:#9aa7cf;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ws-scp-card" aria-hidden="true">
+          <div class="ws-scp-tagbar">
+            <span class="ws-scp-dot"></span><span class="ws-scp-dot"></span><span class="ws-scp-dot"></span>
+          </div>
+
+          <div class="ws-scp-row">
+            <div class="ws-scp-pane before">
+              <div class="ws-scp-bubbles">
+                <div class="ws-b lg r2"></div>
+                <div class="ws-b r3"></div>
+                <div class="ws-b r5"></div>
+                <div class="ws-b r1"></div>
+                <div class="ws-b r4"></div>
+                <div class="ws-b sm r6"></div>
+              </div>
+            </div>
+
+            <div class="ws-scp-pane after">
+              <div class="ws-scp-after-grid">
+                <div class="ws-scp-after-left" style="background: linear-gradient(135deg, rgba(124,92,255,0.10), rgba(17,64,166,0.06));">
+                  <div class="ws-b lg r1" style="background:#1d2a55; opacity:0.90;"></div>
+                  <div class="ws-b r2" style="background:#9aa7cf; opacity:0.9;"></div>
+                  <div class="ws-b r6" style="background:#9aa7cf; opacity:0.9;"></div>
+                  <div class="ws-scp-cta" style="background:#7c5cff;"></div>
+                </div>
+                <div class="ws-scp-after-right">
+                  <div class="ws-scp-cardlet">
+                    <div class="ws-b lg r2" style="background:#1d2a55; opacity:0.86;"></div>
+                    <div class="ws-b r5" style="background:#9aa7cf;"></div>
+                    <div class="ws-b r7" style="background:#9aa7cf;"></div>
+                  </div>
+                  <div class="ws-scp-cardlet">
+                    <div class="ws-b lg r3" style="background:#1d2a55; opacity:0.86;"></div>
+                    <div class="ws-b r6" style="background:#9aa7cf;"></div>
+                    <div class="ws-b r4" style="background:#9aa7cf;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -1375,7 +1557,7 @@
         <div class="ws-benefit-kicker">Outcome 01</div>
         <h3 class="ws-benefit-heading" id="b1">Better first impressions</h3>
         <p class="ws-benefit-p">Make the first view instantly readable: what it is, who it’s for, and what to do next.</p>
-        <ul class="ws-benefit-bullets">
+        <ul class="ws-benefit-bullets>
           <li>Clear headline + short supporting line</li>
           <li>Primary action looks consistent and “official”</li>
           <li>Less noise, more focus</li>
@@ -1443,14 +1625,15 @@
                 </linearGradient>
               </defs>
 
-              <!-- Curved “transfer” path between the two page rectangles -->
+              <!-- Start/end near the PAGE EDGES (not centers) -->
               <path id="ws-transfer-path" class="bgPath"
-                    d="M 140 70 C 290 40, 330 210, 470 190" />
+                    d="M 235 78 C 325 40, 360 210, 368 184" />
               <path class="fgPath"
-                    d="M 140 70 C 290 40, 330 210, 470 190" stroke="url(#wsFlow2)"/>
+                    d="M 235 78 C 325 40, 360 210, 368 184" stroke="url(#wsFlow2)"/>
 
+              <!-- Ping-pong along the path (0 -> 1 -> 0) -->
               <circle r="9" fill="#1140a6" opacity="0.95">
-                <animateMotion dur="2.8s" repeatCount="indefinite" keySplines="0.42 0 0.58 1" calcMode="spline">
+                <animateMotion dur="2.6s" repeatCount="indefinite" keyTimes="0;0.5;1" keyPoints="0;1;0" calcMode="linear">
                   <mpath href="#ws-transfer-path"/>
                 </animateMotion>
               </circle>
@@ -1720,12 +1903,14 @@
           </div>
         </div>
 
-        <!-- Restored animated “At a glance” box -->
         <div class="ws-atglance" aria-hidden="true">
-          <div class="ws-at-row"><div class="l"></div><div class="r"></div></div>
-          <div class="ws-at-row"><div class="l"></div><div class="r"></div></div>
-          <div class="ws-at-row"><div class="l"></div><div class="r"></div></div>
+          <div class="ws-atglance-row">
+            <div class="ws-at-page"></div>
+            <div class="ws-at-bar"><div class="ws-at-fill"></div></div>
+            <div class="ws-at-page"></div>
+          </div>
         </div>
+
       </aside>
     </div>
   </section>
@@ -1811,18 +1996,14 @@
     });
   })();
 
-  // Hero “bad font -> selection -> normal” (no initial flash of the good font)
-  (function heroTypeSelect(){
-    // starts as bad font because body has ws-hero-badfont already in HTML
+  // Headline-only highlight effect (starts bad font, then "selected", then normal)
+  (function headlineSelect(){
+    const body = document.body;
     requestAnimationFrame(() => {
       setTimeout(() => {
-        document.body.classList.add('ws-hero-selecting');
-        setTimeout(() => {
-          document.body.classList.remove('ws-hero-badfont');  // switch to normal font
-        }, 360);
-        setTimeout(() => {
-          document.body.classList.remove('ws-hero-selecting');
-        }, 1040);
+        body.classList.add('ws-hl-selecting');
+        setTimeout(() => { body.classList.remove('ws-hl-badfont'); }, 340);
+        setTimeout(() => { body.classList.remove('ws-hl-selecting'); }, 1040);
       }, 160);
     });
   })();
