@@ -190,32 +190,32 @@
     /* HERO */
 
     .ws-hero {
-      padding: 40px 0 32px;
-      min-height: calc(100vh - var(--ws-nav-height));
-      display: flex;
-      align-items: center;
-    }
+  padding: 32px 0 32px;
+  min-height: calc(100vh - var(--ws-nav-height));
+  display: flex;
+  align-items: flex-start;
+}
 
     .ws-hero-shell {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 320px minmax(0, 1fr) 320px;
-      align-items: center;
-      justify-items: center;
-      column-gap: 24px;
-      row-gap: 24px;
-    }
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  /* True centering: flexible side gutters, fixed-ish center */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 560px) minmax(0, 1fr);
+  align-items: start;
+  justify-items: center;
+  column-gap: 24px;
+  row-gap: 24px;
+}
 
     .ws-hero-side {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex: 0 0 320px;
-      width: 320px;
-      max-width: 320px;
-    }
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 320px;
+}
 
     .ws-hero-side-left { grid-column: 1; }
     .ws-hero-center { grid-column: 2; }
@@ -225,7 +225,7 @@
     .ws-hero-side-inner {
       width: 100%;
       max-width: 320px;
-      margin-top: -32px; /* visuals slightly higher */
+      margin-top: 0; /* aligned to top */
     }
 
     .ws-hero-center {
@@ -233,7 +233,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-          max-width: 520px; width: 100%;x;
+          max-width: 520px;
+      width: 100%;
       margin: 0 auto;
     }
 
@@ -362,7 +363,6 @@
       box-shadow: 0 0 0 4px rgba(255,255,255,0.07);
       flex: 0 0 auto;
     }
-}
 
     .ws-hero-highlight {
       color: var(--ws-accent);
@@ -1240,20 +1240,23 @@
     /* Footer */
 
     footer.ws-footer {
-      border-top: 1px solid rgba(191, 203, 225, 0.8);
-      margin-top: 40px;
-      padding-top: 16px;
-      font-size: 0.78rem;
-      color: var(--ws-text-muted);
-    }
+  border-top: 1px solid rgba(191, 203, 225, 0.8);
+  margin-top: 40px;
+  padding: 16px 0 28px;
+  font-size: 0.78rem;
+  color: var(--ws-text-muted);
+}
 
     .ws-footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
     .ws-footer-links {
       display: flex;
