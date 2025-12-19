@@ -32,6 +32,9 @@
       --ws-select-blue: #1a73e8;
       --ws-select-blue-soft: rgba(26, 115, 232, 0.18);
       --ws-select-handle: 8px;
+
+      --ws-attn: #2f6bff;
+      --ws-attn-hover: #1c4ed6;
     }
 
     * { box-sizing: border-box; }
@@ -194,11 +197,11 @@
     .ws-hero-side-inner {
       width: 100%;
       max-width: 320px;
-      margin-top: -32px;
     }
 
-    .ws-hero-side-left .ws-hero-side-inner { margin-top: -16px; }
-    .ws-hero-side-right .ws-hero-side-inner { margin-top: -46px; }
+    /* Make the shift OBVIOUS */
+    .ws-hero-side-left .ws-hero-side-inner { transform: translateY(34px); }
+    .ws-hero-side-right .ws-hero-side-inner { transform: translateY(-34px); }
 
     .ws-hero-center {
       text-align: center;
@@ -211,10 +214,10 @@
 
     @media (max-width: 900px) {
       .ws-hero { min-height: auto; padding-top: 32px; }
-      .ws-hero-shell { grid-template-columns: minmax(0, 1fr); }
+      .ws-hero-shell { grid-template-columns: minmax(0, 1fr); gap: 18px; }
       .ws-hero-side { order: 2; }
       .ws-hero-center { order: 1; }
-      .ws-hero-side-inner { margin-top: 0 !important; }
+      .ws-hero-side-inner { transform: none !important; }
     }
 
     .ws-hero-title-wrap { position: relative; display: inline-block; }
@@ -368,7 +371,6 @@
     }
 
     .ws-pane--before .ws-pane-body { display: grid; gap: 6px; }
-
     .ws-pane-line { height: 6px; border-radius: 999px; background: #d4ddef; }
     .ws-pane-line:nth-child(1) { width: 80%; }
     .ws-pane-line:nth-child(2) { width: 60%; }
@@ -399,11 +401,21 @@
     .ws-pane-thumbnail { border-radius: 10px; background: linear-gradient(135deg, #a8b8ff, #4e71d1); }
     .ws-pane-badge { border-radius: 999px; height: 16px; background: #edf1ff; border: 1px solid rgba(151, 170, 223, 0.9); }
 
-    /* Selection-box floating elements */
-    .ws-hero-float { position: absolute; z-index: 3; pointer-events: none; opacity: 0.96; filter: drop-shadow(0 18px 30px rgba(20, 32, 60, 0.14)); }
-    .ws-hero-float.tl { top: -22px; left: -10px; transform: rotate(-3deg); }
-    .ws-hero-float.br { bottom: -22px; right: -12px; transform: rotate(2.4deg); }
-    @media (max-width: 900px) { .ws-hero-float { display: none; } }
+    /* Selection-box floating elements (DISPERSED + visible on mobile) */
+    .ws-hero-float {
+      position: absolute;
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.96;
+      filter: drop-shadow(0 18px 30px rgba(20, 32, 60, 0.14));
+    }
+    .ws-hero-float.tl { top: -28px; left: -18px; transform: rotate(-4deg) translateY(4px); }
+    .ws-hero-float.br { bottom: -26px; right: -18px; transform: rotate(3.2deg) translateY(-2px); }
+
+    @media (max-width: 900px) {
+      .ws-hero-float.tl { top: -10px; left: -4px; transform: scale(0.75) rotate(-4deg); }
+      .ws-hero-float.br { bottom: -10px; right: -4px; transform: scale(0.75) rotate(3.2deg); }
+    }
 
     .ws-selection {
       position: relative;
@@ -424,7 +436,6 @@
       border: 2px solid var(--ws-select-blue);
       border-radius: 3px;
     }
-
     .ws-selection-handles .tl { top: -6px; left: -6px; }
     .ws-selection-handles .tm { top: -6px; left: calc(50% - 6px); }
     .ws-selection-handles .tr { top: -6px; right: -6px; }
@@ -489,123 +500,7 @@
       max-width: 48ch;
     }
 
-    /* Static before/after (unchanged section) */
-    .ws-layout-gallery { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
-    @media (min-width: 900px) { .ws-layout-gallery { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
-
-    .ws-layout-pair {
-      border-radius: var(--ws-radius-lg);
-      background: var(--ws-surface);
-      border: 1px solid var(--ws-border-subtle);
-      padding: 14px 14px 16px;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 10px;
-    }
-
-    @media (max-width: 700px) { .ws-layout-pair { grid-template-columns: minmax(0, 1fr); } }
-
-    .ws-layout-label {
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ws-text-muted);
-      margin-bottom: 6px;
-    }
-
-    .ws-layout-before,
-    .ws-layout-after {
-      border-radius: 14px;
-      padding: 10px;
-      background: var(--ws-surface-soft);
-      border: 1px dashed var(--ws-border-subtle);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .ws-layout-after {
-      background: linear-gradient(145deg, #ffffff, #f2f5ff);
-      border-style: solid;
-      border-color: var(--ws-border-strong);
-    }
-
-    .ws-layout-before .mono-lines { display: grid; gap: 6px; }
-    .ws-layout-before .mono-lines .line { height: 6px; border-radius: 999px; background: #d5dde9; }
-    .ws-layout-before .mono-lines .line:nth-child(1) { width: 90%; }
-    .ws-layout-before .mono-lines .line:nth-child(2) { width: 90%; }
-    .ws-layout-before .mono-lines .line:nth-child(3) { width: 90%; }
-    .ws-layout-before .mono-lines .line:nth-child(4) { width: 90%; }
-
-    .ws-layout-pair[data-variant="a"] .mono-lines .line:nth-child(3) { width: 70%; }
-    .ws-layout-pair[data-variant="b"] .mono-lines .line:nth-child(1) { width: 80%; }
-    .ws-layout-pair[data-variant="b"] .mono-lines .line:nth-child(4) { width: 60%; }
-    .ws-layout-pair[data-variant="c"] .mono-lines .line:nth-child(2) { width: 65%; }
-    .ws-layout-pair[data-variant="c"] .mono-lines .line:nth-child(3) { width: 50%; }
-
-    .ws-layout-after-grid { display: grid; gap: 6px; }
-    .ws-layout-after-grid.a { grid-template-columns: 1.4fr 1fr; align-items: stretch; }
-    .ws-layout-after-grid.b { grid-template-columns: 1fr; }
-    .ws-layout-after-grid.c { grid-template-columns: 1.2fr 1fr; }
-
-    .ws-tile { border-radius: 12px; background: #ffffff; border: 1px solid rgba(182, 196, 229, 0.9); padding: 8px; display: grid; gap: 5px; }
-    .ws-tile-title { height: 7px; border-radius: 999px; width: 70%; background: #283450; }
-    .ws-tile-sub { height: 5px; border-radius: 999px; width: 55%; background: #7f8bb2; }
-
-    .ws-tile-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
-    .ws-block { border-radius: 8px; background: #e2e8ff; }
-    .ws-block.image { background: linear-gradient(135deg, #9faeff, #436bdf); }
-    .ws-block.small { height: 18px; }
-    .ws-block.medium { height: 24px; }
-    .ws-block.tall { height: 42px; }
-
-    .ws-layout-tag {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      font-size: 0.7rem;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(17, 64, 166, 0.06);
-      color: var(--ws-accent);
-      font-weight: 500;
-    }
-
-    /* Placeholders */
-    .ws-placeholder {
-      border-radius: var(--ws-radius-lg);
-      border: 1px dashed var(--ws-border-subtle);
-      background: var(--ws-surface);
-      padding: 18px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--ws-text-muted);
-      font-size: 0.9rem;
-      text-align: center;
-    }
-    .ws-placeholder--carousel {
-      min-height: 160px;
-      background-image: repeating-linear-gradient(-45deg,#f5f7ff 0,#f5f7ff 6px,#ffffff 6px,#ffffff 12px);
-    }
-    .ws-placeholder--visual { min-height: 220px; }
-    .ws-placeholder--mini { min-height: 80px; font-size: 0.8rem; }
-
-    /* Benefit sections */
-    .ws-benefit-section { margin: 60px 0; }
-    .ws-benefit-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-      gap: 32px;
-      align-items: center;
-      min-height: 380px;
-    }
-    .ws-benefit-text-block { font-size: 0.94rem; color: var(--ws-text-soft); max-width: 44ch; }
-    .ws-benefit-heading { font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; color: var(--ws-text-main); }
-    .ws-benefit-kicker { font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ws-text-muted); margin-bottom: 4px; }
-    @media (max-width: 900px) { .ws-benefit-layout { grid-template-columns: minmax(0, 1fr); min-height: auto; } }
-
-    /* INTERACTIVE DEMOS (UPDATED) */
+    /* INTERACTIVE DEMOS */
     .ws-demo-grid {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -633,25 +528,28 @@
 
     .ws-demo-domain { font-weight: 500; color: var(--ws-text-main); }
 
+    /* Attention-grabbing button */
     .ws-demo-toggle {
-      font-size: 0.8rem;
-      padding: 6px 10px;
+      font-size: 0.82rem;
+      padding: 7px 12px;
       border-radius: 999px;
-      border: 1px solid var(--ws-border-subtle);
-      background: #f5f7ff;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: linear-gradient(135deg, var(--ws-attn), #7c5cff);
+      color: #fff;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       cursor: pointer;
-      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, border-color 0.12s ease-out;
+      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, filter 0.12s ease-out;
       user-select: none;
       white-space: nowrap;
+      box-shadow: 0 14px 26px rgba(47, 107, 255, 0.22);
     }
 
     .ws-demo-toggle:hover {
       transform: translateY(-1px);
-      box-shadow: 0 10px 20px rgba(18, 30, 70, 0.10);
-      border-color: rgba(17, 64, 166, 0.35);
+      filter: brightness(1.02);
+      box-shadow: 0 18px 34px rgba(47, 107, 255, 0.30);
     }
 
     .ws-demo-toggle span.icon { font-size: 1rem; }
@@ -706,148 +604,11 @@
 
     .ws-demo-iframe {
       width: 100%;
-      height: 300px;          /* “peek into the page” */
+      height: 300px;
       border: 0;
       display: block;
-      pointer-events: none;   /* NON-interactable */
+      pointer-events: none;
       user-select: none;
-    }
-
-    /* How it works */
-    .ws-how-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
-      gap: 18px;
-      align-items: start;
-    }
-    @media (max-width: 900px) { .ws-how-grid { grid-template-columns: minmax(0, 1fr); } }
-
-    .ws-steps { display: grid; gap: 10px; }
-
-    .ws-step {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      gap: 10px;
-      align-items: start;
-      padding: 10px 12px;
-      border-radius: 14px;
-      background: var(--ws-surface);
-      border: 1px solid var(--ws-border-subtle);
-    }
-
-    .ws-step-index {
-      width: 24px;
-      height: 24px;
-      border-radius: 999px;
-      background: var(--ws-accent-soft);
-      color: var(--ws-accent);
-      font-size: 0.82rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-    }
-
-    .ws-step-title { font-size: 0.96rem; font-weight: 600; margin-bottom: 4px; }
-    .ws-step-text { font-size: 0.86rem; color: var(--ws-text-soft); }
-
-    .ws-how-note { font-size: 0.82rem; color: var(--ws-text-muted); margin-top: 10px; }
-
-    .ws-how-visual {
-      border-radius: var(--ws-radius-lg);
-      border: 1px solid var(--ws-border-subtle);
-      background: var(--ws-surface);
-      padding: 14px 14px 16px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .ws-how-track { display: grid; gap: 6px; }
-
-    .ws-track-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 6px 8px;
-      border-radius: 10px;
-      background: var(--ws-surface-soft);
-    }
-
-    .ws-track-name { font-size: 0.84rem; color: var(--ws-text-soft); }
-    .ws-track-pill {
-      font-size: 0.8rem;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(17, 64, 166, 0.06);
-      color: var(--ws-accent);
-      font-weight: 500;
-    }
-
-    /* Final CTA */
-    .ws-cta-final {
-      margin-top: 40px;
-      border-radius: var(--ws-radius-xl);
-      background: #ffffff;
-      border: 1px solid var(--ws-border-strong);
-      min-height: calc(80vh - 40px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      box-shadow: 0 18px 40px rgba(15, 32, 72, 0.08);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .ws-cta-final-inner { position: relative; z-index: 1; padding: 22px 20px 26px; }
-
-    .ws-cta-final-title {
-      font-size: 1.8rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 10px;
-      color: var(--ws-text-main);
-    }
-
-    .ws-cta-final-sub {
-      font-size: 0.94rem;
-      color: var(--ws-text-soft);
-      max-width: 40ch;
-      margin: 0 auto 18px;
-    }
-
-    .ws-cta-final .ws-btn-primary { padding-inline: 26px; }
-
-    .ws-cta-final::before,
-    .ws-cta-final::after {
-      content: "";
-      position: absolute;
-      border-radius: 999px;
-      background: radial-gradient(circle at center, rgba(17, 64, 166, 0.06), transparent 60%);
-      width: 420px;
-      height: 420px;
-      opacity: 0.8;
-    }
-
-    .ws-cta-final::before { top: -120px; left: -180px; }
-    .ws-cta-final::after { bottom: -140px; right: -200px; }
-
-    .ws-cta-shapes { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
-
-    .ws-cta-shape {
-      position: absolute;
-      transform: translate(0, 0) rotate(var(--rot, 0deg));
-      opacity: 0.8;
-      transition: transform 0.05s linear;
-    }
-
-    .ws-cta-shape.circle { width: 26px; height: 26px; border-radius: 999px; background: #ffcc70; }
-    .ws-cta-shape.square { width: 20px; height: 20px; border-radius: 6px; background: #7ad3ff; }
-    .ws-cta-shape.triangle {
-      width: 0; height: 0;
-      border-left: 11px solid transparent;
-      border-right: 11px solid transparent;
-      border-bottom: 20px solid #ff8ab3;
     }
 
     /* Footer */
@@ -1036,198 +797,7 @@
     </div>
   </section>
 
-  <!-- STATIC BEFORE / AFTER EXAMPLES -->
-  <section id="examples" aria-labelledby="examples-title">
-    <div class="ws-section-header">
-      <div class="ws-section-kicker">Layout transformations</div>
-      <h2 class="ws-section-title" id="examples-title">See how structure changes perception</h2>
-      <p class="ws-section-sub">
-        WebSpark focuses on spacing, hierarchy, and where your users’ eyes land first.
-        These simplified snapshots show how a “good enough” layout becomes a clearer, more intentional one.
-      </p>
-    </div>
-
-    <div class="ws-layout-gallery">
-      <article class="ws-layout-pair" data-variant="a" aria-label="Homepage layout example">
-        <div class="ws-layout-before">
-          <div class="ws-layout-label">Before</div>
-          <div class="mono-lines">
-            <div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div>
-          </div>
-        </div>
-        <div class="ws-layout-after">
-          <div class="ws-layout-label">After</div>
-          <div class="ws-layout-tag">Hero focus</div>
-          <div class="ws-layout-after-grid a">
-            <div class="ws-tile">
-              <div class="ws-tile-title"></div>
-              <div class="ws-tile-sub"></div>
-              <div class="ws-tile-row">
-                <div class="ws-block small"></div><div class="ws-block small"></div><div class="ws-block small"></div>
-              </div>
-            </div>
-            <div class="ws-tile"><div class="ws-block image tall"></div></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="ws-layout-pair" data-variant="b" aria-label="Services layout example">
-        <div class="ws-layout-before">
-          <div class="ws-layout-label">Before</div>
-          <div class="mono-lines">
-            <div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div>
-          </div>
-        </div>
-        <div class="ws-layout-after">
-          <div class="ws-layout-label">After</div>
-          <div class="ws-layout-tag">Service clarity</div>
-          <div class="ws-layout-after-grid b">
-            <div class="ws-tile">
-              <div class="ws-tile-title"></div>
-              <div class="ws-tile-sub"></div>
-              <div class="ws-tile-row">
-                <div class="ws-block medium"></div><div class="ws-block medium"></div><div class="ws-block medium"></div>
-              </div>
-            </div>
-            <div class="ws-tile"><div class="ws-block image tall"></div></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="ws-layout-pair" data-variant="c" aria-label="Content layout example">
-        <div class="ws-layout-before">
-          <div class="ws-layout-label">Before</div>
-          <div class="mono-lines">
-            <div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div>
-          </div>
-        </div>
-        <div class="ws-layout-after">
-          <div class="ws-layout-label">After</div>
-          <div class="ws-layout-tag">Visual balance</div>
-          <div class="ws-layout-after-grid c">
-            <div class="ws-tile"><div class="ws-block image tall"></div></div>
-            <div class="ws-tile">
-              <div class="ws-tile-title"></div>
-              <div class="ws-tile-sub"></div>
-              <div class="ws-block small"></div>
-              <div class="ws-block small"></div>
-            </div>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- REAL-PAGE PREVIEWS PLACEHOLDER -->
-  <section aria-labelledby="gallery-title">
-    <div class="ws-section-header">
-      <div class="ws-section-kicker">Real-page previews</div>
-      <h2 class="ws-section-title" id="gallery-title">Show your site before & after</h2>
-      <p class="ws-section-sub">
-        This area is reserved for actual screenshots of your pages once WebSpark has redesigned them.
-        For now, it’s a placeholder so we know exactly where that story will live.
-      </p>
-    </div>
-
-    <div class="ws-placeholder ws-placeholder--carousel">
-      Placeholder: future screenshot carousel or grid (before / after images of real WebSpark projects).
-    </div>
-  </section>
-
-  <!-- OUTCOMES INTRO -->
-  <section id="benefits" aria-labelledby="benefits-intro-title">
-    <div class="ws-section-header">
-      <div class="ws-section-kicker">Why it matters</div>
-      <h2 class="ws-section-title" id="benefits-intro-title">Five outcomes every redesign is aiming at</h2>
-      <p class="ws-section-sub">
-        WebSpark isn’t about adding more; it’s about removing noise so the right parts of your site stand out –
-        visually and financially.
-      </p>
-    </div>
-  </section>
-
-  <!-- Benefit sections (unchanged) -->
-  <section class="ws-benefit-section" aria-labelledby="benefit-first-impressions">
-    <div class="ws-benefit-layout">
-      <div class="ws-benefit-text-block">
-        <div class="ws-benefit-kicker">Outcome 01</div>
-        <h3 class="ws-benefit-heading" id="benefit-first-impressions">Better first impressions</h3>
-        <p>
-          Your hero is the first five seconds of your brand. WebSpark rebuilds that first view so visitors
-          know exactly what you do and who it’s for, before they scroll.
-        </p>
-      </div>
-      <div class="ws-placeholder ws-placeholder--visual">
-        Placeholder: visual of a “before” hero vs a cleaner, higher-impact hero.
-      </div>
-    </div>
-  </section>
-
-  <section class="ws-benefit-section" aria-labelledby="benefit-more-customers">
-    <div class="ws-benefit-layout">
-      <div class="ws-placeholder ws-placeholder--visual">
-        Placeholder: visual of a simple funnel (landing → contact) becoming more direct and focused.
-      </div>
-      <div class="ws-benefit-text-block">
-        <div class="ws-benefit-kicker">Outcome 02</div>
-        <h3 class="ws-benefit-heading" id="benefit-more-customers">More customers</h3>
-        <p>
-          Layout and copy are arranged so people always know the next step – whether it’s booking a call,
-          starting a trial, or sending an inquiry.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="ws-benefit-section" aria-labelledby="benefit-more-trust">
-    <div class="ws-benefit-layout">
-      <div class="ws-benefit-text-block">
-        <div class="ws-benefit-kicker">Outcome 03</div>
-        <h3 class="ws-benefit-heading" id="benefit-more-trust">More trust</h3>
-        <p>
-          Calmer colors, better type, and consistent spacing signal that you’re established and reliable –
-          not experimental or thrown together.
-        </p>
-      </div>
-      <div class="ws-placeholder ws-placeholder--visual">
-        Placeholder: split visual showing a noisy, cluttered layout next to a calmer, more confident one.
-      </div>
-    </div>
-  </section>
-
-  <section class="ws-benefit-section" aria-labelledby="benefit-stronger-brand">
-    <div class="ws-benefit-layout">
-      <div class="ws-placeholder ws-placeholder--visual">
-        Placeholder: visual with logo & brand color used sparsely but deliberately across a layout.
-      </div>
-      <div class="ws-benefit-text-block">
-        <div class="ws-benefit-kicker">Outcome 04</div>
-        <h3 class="ws-benefit-heading" id="benefit-stronger-brand">Stronger brand</h3>
-        <p>
-          We keep your logo and core palette, then architect layouts that make your brand feel intentional,
-          not template-driven.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="ws-benefit-section" aria-labelledby="benefit-more-traffic">
-    <div class="ws-benefit-layout">
-      <div class="ws-benefit-text-block">
-        <div class="ws-benefit-kicker">Outcome 05</div>
-        <h3 class="ws-benefit-heading" id="benefit-more-traffic">More traffic (smarter SEO)</h3>
-        <p>
-          Clean HTML, clear headings, and accessible structure give search engines and humans an easier time
-          understanding your site.
-        </p>
-      </div>
-      <div class="ws-placeholder ws-placeholder--visual">
-        Placeholder: visual of heading structure / content blocks arranged for readability and SEO.
-      </div>
-    </div>
-  </section>
-
-  <!-- INTERACTIVE DEMOS (NOW REAL MINI-SITES) -->
+  <!-- INTERACTIVE DEMOS -->
   <section id="demo" aria-labelledby="demo-title">
     <div class="ws-section-header">
       <div class="ws-section-kicker">Live-style previews</div>
@@ -1255,13 +825,7 @@
           </div>
 
           <div class="ws-demo-viewport">
-            <iframe
-              class="ws-demo-iframe"
-              id="iframe-coffee"
-              title="Coffee demo preview"
-              sandbox
-              referrerpolicy="no-referrer"
-            ></iframe>
+            <iframe class="ws-demo-iframe" id="iframe-coffee" title="Coffee demo preview" sandbox referrerpolicy="no-referrer"></iframe>
           </div>
         </div>
       </article>
@@ -1283,111 +847,10 @@
           </div>
 
           <div class="ws-demo-viewport">
-            <iframe
-              class="ws-demo-iframe"
-              id="iframe-game"
-              title="Game demo preview"
-              sandbox
-              referrerpolicy="no-referrer"
-            ></iframe>
+            <iframe class="ws-demo-iframe" id="iframe-game" title="Game demo preview" sandbox referrerpolicy="no-referrer"></iframe>
           </div>
         </div>
       </article>
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section id="how-it-works" aria-labelledby="how-title">
-    <div class="ws-section-header">
-      <div class="ws-section-kicker">Process</div>
-      <h2 class="ws-section-title" id="how-title">From your current site to cleaner HTML</h2>
-    </div>
-
-    <div class="ws-how-grid">
-      <div class="ws-steps" aria-label="How WebSpark works">
-        <article class="ws-step">
-          <div class="ws-step-index">1</div>
-          <div>
-            <div class="ws-step-title">You share your current site</div>
-            <div class="ws-step-text">
-              Point WebSpark at your existing pages or paste in the HTML you already have.
-            </div>
-          </div>
-        </article>
-
-        <article class="ws-step">
-          <div class="ws-step-index">2</div>
-          <div>
-            <div class="ws-step-title">We rebuild the layout</div>
-            <div class="ws-step-text">
-              WebSpark restructures your content into cleaner sections, better typography, and a stronger visual hierarchy.
-            </div>
-          </div>
-        </article>
-
-        <article class="ws-step">
-          <div class="ws-step-index">3</div>
-          <div>
-            <div class="ws-step-title">You keep full control</div>
-            <div class="ws-step-text">
-              You get back pure HTML/CSS – no lock-in, no surprise scripts, and no dependency on a visual builder.
-            </div>
-          </div>
-        </article>
-
-        <p class="ws-how-note">
-          WebSpark is about <strong>clarity</strong>, not complexity – the output is meant to be readable by both browsers and humans.
-        </p>
-      </div>
-
-      <aside class="ws-how-visual" aria-label="Example of transformation summary">
-        <div class="ws-section-kicker" style="font-size:0.72rem;">At a glance</div>
-        <div class="ws-how-track">
-          <div class="ws-track-item">
-            <span class="ws-track-name">Hero focus time</span>
-            <span class="ws-track-pill">From “?” to “Got it”</span>
-          </div>
-          <div class="ws-track-item">
-            <span class="ws-track-name">Primary CTA visibility</span>
-            <span class="ws-track-pill">Centered and consistent</span>
-          </div>
-          <div class="ws-track-item">
-            <span class="ws-track-name">Typography</span>
-            <span class="ws-track-pill">From default → Montserrat</span>
-          </div>
-          <div class="ws-track-item">
-            <span class="ws-track-name">Layout noise</span>
-            <span class="ws-track-pill">Reduced for trust</span>
-          </div>
-        </div>
-
-        <div class="ws-placeholder ws-placeholder--mini">
-          Placeholder: subtle process animation (e.g., steps flowing from “old HTML” to “clean WebSpark HTML”).
-        </div>
-      </aside>
-    </div>
-  </section>
-
-  <!-- FINAL CTA -->
-  <section aria-labelledby="cta-title">
-    <div class="ws-cta-final" id="ws-cta-final">
-      <div class="ws-cta-final-inner">
-        <h2 class="ws-cta-final-title" id="cta-title">Ready for your site to feel as good as it works?</h2>
-        <p class="ws-cta-final-sub">
-          Start with the page that matters most and let WebSpark show you the cleaner, more confident version of what you already built.
-        </p>
-        <a href="contact.html" class="ws-btn-primary">
-          <span>Get started</span>
-          <span class="ws-chevron">↗</span>
-        </a>
-      </div>
-
-      <div class="ws-cta-shapes">
-        <div class="ws-cta-shape circle" style="top: 25%; left: 45%; --rot: 0deg;" data-x="-140" data-y="-80"></div>
-        <div class="ws-cta-shape square" style="top: 30%; left: 58%; --rot: 18deg;" data-x="120" data-y="-40"></div>
-        <div class="ws-cta-shape triangle" style="top: 55%; left: 40%; --rot: -8deg;" data-x="-110" data-y="110"></div>
-        <div class="ws-cta-shape circle" style="top: 65%; left: 60%; --rot: 0deg;" data-x="130" data-y="90"></div>
-      </div>
     </div>
   </section>
 
@@ -1399,8 +862,6 @@
           <a href="mailto:mcsite@web-spark.net">mcsite@web-spark.net</a>
           <a href="tel:+18055551234">(805) 555-1234</a>
         </span>
-        <a href="#how-it-works">How it works</a>
-        <a href="#examples">Examples</a>
         <a href="#demo">Demo</a>
         <a href="contact.html">Contact</a>
       </div>
@@ -1409,10 +870,8 @@
 </main>
 
 <script>
-  // Year in footer
   document.getElementById('ws-year').textContent = new Date().getFullYear();
 
-  // Hero title selection animation
   window.addEventListener('load', function () {
     var titleWrap = document.querySelector('.ws-hero-title-wrap');
     var cursorEl = document.querySelector('.ws-hero-cursor');
@@ -1434,9 +893,8 @@
   });
 
   // --- Mini-site HTMLs (4 total) ---
-  // Coffee shop: before + after
-  // Video game: before + after
-  // Rendered in iframes via srcdoc, and iframe is pointer-events:none (non-interactive)
+  // BEFORE versions are intentionally bad, but now: lighter + grayscale (less scammy)
+  // We do that by: (1) using lighter colors, (2) applying filter: grayscale(...) on body wrapper.
 
   var DEMOS = {
     coffee: {
@@ -1448,47 +906,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bean Barn Coffee</title>
 <style>
-  html,body{margin:0;height:100%;font-family: "Comic Sans MS", "Brush Script MT", cursive;background:#ffff00;}
-  .wrap{padding:8px;}
-  .top{display:flex;gap:6px;align-items:center;justify-content:space-between;background:#00ff00;border:6px dotted #ff00ff;padding:6px;}
-  .logo{font-size:26px;font-weight:900;color:#ff0000;text-shadow:2px 2px 0 #000;}
-  .nav a{color:#0000ff;text-decoration:underline;font-weight:900;margin-left:6px;background:#fff;padding:2px 4px;}
-  .hero{margin-top:8px;border:5px dashed #000;background:#ff00ff;color:#000;padding:8px;}
-  h1{margin:0;font-size:28px;letter-spacing:2px;}
-  .cta{margin-top:6px;display:inline-block;background:#000;color:#0f0;padding:8px 10px;border:4px ridge #fff;font-weight:900;}
-  .grid{margin-top:10px;display:grid;grid-template-columns: 1fr 1fr;gap:8px;}
-  .card{background:#fff;border:4px double #000;padding:6px;}
-  .badimg{height:62px;background: repeating-linear-gradient(45deg,#000 0 6px,#fff 6px 12px);margin-bottom:6px;}
-  .price{font-size:22px;color:#ff0000;font-weight:900;}
-  .footer{margin-top:10px;background:#00ffff;border-top:6px solid #000;padding:6px;font-weight:900;}
-  .marq{display:block;background:#000;color:#ff0;padding:4px;margin-top:6px;}
+  html,body{margin:0;height:100%;font-family: Arial, sans-serif;background:#f7f7f7;}
+  body{filter: grayscale(1) brightness(1.10) contrast(0.92);}
+  .wrap{padding:10px;}
+  .top{display:flex;gap:6px;align-items:center;justify-content:space-between;background:#f0f0f0;border:3px dotted #b9b9b9;padding:8px;}
+  .logo{font-size:22px;font-weight:900;color:#222;letter-spacing:1px;}
+  .nav a{color:#444;text-decoration:underline;font-weight:700;margin-left:6px;background:#fff;padding:2px 6px;border:1px solid #cfcfcf;}
+  .hero{margin-top:10px;border:3px dashed #bcbcbc;background:#fafafa;color:#222;padding:10px;}
+  h1{margin:0;font-size:22px;letter-spacing:1px;}
+  .cta{margin-top:8px;display:inline-block;background:#ffffff;color:#222;padding:8px 10px;border:2px solid #cfcfcf;font-weight:800;}
+  .grid{margin-top:12px;display:grid;grid-template-columns: 1fr 1fr;gap:10px;}
+  .card{background:#fff;border:2px double #cfcfcf;padding:8px;}
+  .badimg{height:62px;background: repeating-linear-gradient(45deg,#e6e6e6 0 6px,#fafafa 6px 12px);margin-bottom:8px;}
+  .price{font-size:18px;color:#333;font-weight:900;}
+  .footer{margin-top:12px;background:#f0f0f0;border-top:3px solid #cfcfcf;padding:8px;font-weight:700;color:#333;}
 </style>
 </head>
 <body>
   <div class="wrap">
     <div class="top">
-      <div class="logo">BEAN BARN COFFEE!!!</div>
+      <div class="logo">BEAN BARN COFFEE</div>
       <div class="nav">
-        <a href="#">HOME</a><a href="#">MENU</a><a href="#">BUY</a><a href="#">??</a>
+        <a href="#">HOME</a><a href="#">MENU</a><a href="#">BUY</a><a href="#">INFO</a>
       </div>
     </div>
 
     <div class="hero">
-      <h1>BEST COFFEE IN TOWN!!!!</h1>
-      <div>We have coffee. We have more coffee. Come now. The vibes are… coffee.</div>
-      <div class="cta">CLICK HERE TO ORDER (maybe)</div>
-      <span class="marq">FREE WIFI!!! FREE WIFI!!! FREE WIFI!!!</span>
+      <h1>BEST COFFEE IN TOWN</h1>
+      <div style="margin-top:6px;">Coffee. Pastries. Wi-Fi. (Layout… not great.)</div>
+      <div class="cta">ORDER (kind of)</div>
     </div>
 
     <div class="grid">
       <div class="card">
         <div class="badimg"></div>
-        <div><b>Latte??</b> maybe milk maybe coffee</div>
+        <div><b>Latte</b> maybe milk maybe coffee</div>
         <div class="price">$??</div>
       </div>
       <div class="card">
         <div class="badimg"></div>
-        <div><b>Cold Brew</b> 1000% STRONG</div>
+        <div><b>Cold Brew</b> “very strong”</div>
         <div class="price">$9.99</div>
       </div>
       <div class="card">
@@ -1504,7 +961,7 @@
     </div>
 
     <div class="footer">
-      LOCATION: ??? • HOURS: yes • PHONE: 555-COFFEE • Follow us: @beanbarn(??)
+      LOCATION: ??? • HOURS: yes • PHONE: 555-COFFEE
     </div>
   </div>
 </body>
@@ -1520,22 +977,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#fbf7f1;
-    --ink:#1e1b16;
-    --muted:#6b6258;
-    --card:#ffffff;
-    --accent:#7b4a2a;
-    --accent2:#d9b38c;
-    --line:rgba(30,27,22,.14);
-    --shadow:0 18px 40px rgba(30,27,22,.10);
-    --r:18px;
+    --bg:#fbf7f1; --ink:#1e1b16; --muted:#6b6258; --card:#ffffff;
+    --accent:#7b4a2a; --line:rgba(30,27,22,.14); --shadow:0 18px 40px rgba(30,27,22,.10); --r:18px;
   }
   html,body{margin:0;height:100%;background: radial-gradient(circle at top, #ffffff 0, var(--bg) 56%, #f0e6d8 100%);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;}
   .wrap{padding:14px;}
-  .top{
-    display:flex;align-items:center;justify-content:space-between;gap:12px;
-    padding:10px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.7);backdrop-filter: blur(10px);
-  }
+  .top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.7);backdrop-filter: blur(10px);}
   .brand{display:flex;align-items:center;gap:10px;}
   .mark{width:28px;height:28px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#2c1b12);box-shadow:0 10px 20px rgba(123,74,42,.25);}
   .name{font-family:Fraunces,serif;font-weight:700;letter-spacing:.02em;}
@@ -1547,11 +994,7 @@
   h1{margin:6px 0 8px;font-family:Fraunces,serif;font-size:26px;line-height:1.05;}
   .sub{color:var(--muted);font-size:13.5px;line-height:1.55;max-width:44ch;}
   .actions{margin-top:10px;display:flex;gap:10px;align-items:center;}
-  .btn{
-    display:inline-flex;align-items:center;gap:8px;
-    padding:9px 12px;border-radius:999px;border:1px solid rgba(123,74,42,.28);
-    background:#fff;color:var(--ink);font-weight:600;font-size:13px;
-  }
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;border:1px solid rgba(123,74,42,.28);background:#fff;color:var(--ink);font-weight:600;font-size:13px;}
   .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
   .chips{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;}
   .chip{font-size:12px;color:var(--muted);padding:6px 10px;border-radius:999px;border:1px solid rgba(30,27,22,.12);background:rgba(255,255,255,.6);}
@@ -1563,9 +1006,7 @@
   .item b{display:block;font-size:13px;}
   .item span{display:block;font-size:12px;color:var(--muted);margin-top:2px;}
   .price{font-weight:700;color:var(--accent);}
-  .side{
-    border-radius:var(--r);border:1px solid var(--line);background:linear-gradient(135deg,#fff, #f6ebdc);padding:12px;display:grid;gap:10px;
-  }
+  .side{border-radius:var(--r);border:1px solid var(--line);background:linear-gradient(135deg,#fff, #f6ebdc);padding:12px;display:grid;gap:10px;}
   .photo{height:88px;border-radius:14px;background:linear-gradient(135deg,#d9b38c,#7b4a2a);position:relative;overflow:hidden;}
   .photo:after{content:"";position:absolute;inset:-40px;background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 60%);}
   .info{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:12px;}
@@ -1629,47 +1070,46 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEON RAIDERS 9</title>
+<title>Neon Raiders IX</title>
 <style>
-  html,body{margin:0;height:100%;background:#000;color:#fff;font-family:Impact, Haettenschweiler, "Arial Black", sans-serif;}
-  .wrap{padding:8px;}
-  .bar{background:#ff0000;padding:8px;border-bottom:6px solid #00ffff;}
-  .title{font-size:30px;letter-spacing:3px;}
-  .sub{font-size:12px;color:#000;background:#00ff00;display:inline-block;padding:2px 6px;margin-top:4px;}
-  .hero{margin-top:8px;border:6px groove #ff00ff;background:linear-gradient(45deg,#111,#444,#111);padding:8px;}
-  .grid{display:grid;grid-template-columns: 1fr 1fr 1fr;gap:6px;margin-top:8px;}
-  .tile{background:#111;border:3px dashed #00ff00;padding:6px;}
-  .tile h3{margin:0 0 6px;font-size:16px;color:#ff0;}
-  .tile p{margin:0;font-size:12px;color:#ccc;}
-  .bigbtn{margin-top:8px;background:#ff0;color:#000;padding:10px;border:5px double #fff;text-align:center;font-weight:900;}
-  .spam{margin-top:6px;font-size:10px;color:#ff0;}
-  .mar{display:block;background:#00ffff;color:#000;padding:4px;margin-top:6px;font-weight:900;}
+  html,body{margin:0;height:100%;font-family: Arial, sans-serif;background:#f5f5f5;color:#222;}
+  body{filter: grayscale(1) brightness(1.10) contrast(0.92);}
+  .wrap{padding:10px;}
+  .bar{background:#ededed;padding:10px;border-bottom:3px solid #cfcfcf;}
+  .title{font-size:22px;letter-spacing:2px;font-weight:900;}
+  .sub{font-size:12px;color:#333;background:#ffffff;display:inline-block;padding:2px 6px;margin-top:6px;border:1px solid #d9d9d9;}
+  .hero{margin-top:10px;border:3px dashed #c0c0c0;background:#fafafa;padding:10px;}
+  .bigbtn{margin-top:10px;background:#ffffff;color:#222;padding:10px;border:2px solid #cfcfcf;text-align:center;font-weight:900;}
+  .grid{display:grid;grid-template-columns: 1fr 1fr 1fr;gap:10px;margin-top:12px;}
+  .tile{background:#ffffff;border:2px dotted #cfcfcf;padding:8px;}
+  .tile h3{margin:0 0 6px;font-size:14px;}
+  .tile p{margin:0;font-size:12px;color:#555;}
+  .spam{margin-top:10px;font-size:10px;color:#666;}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="bar">
-    <div class="title">NEON RAIDERS 9</div>
-    <div class="sub">BEST GAME EVER!!! (probably)</div>
+    <div class="title">NEON RAIDERS IX</div>
+    <div class="sub">Download • Shop • Patch • ???</div>
   </div>
 
   <div class="hero">
-    <div style="font-size:18px;">WELCOME PLAYER!!!!!!!!</div>
-    <div style="font-size:12px;color:#ff0;">press start to be amazing. also buy stuff.</div>
-    <div class="bigbtn">DOWNLOAD NOW!!!</div>
-    <span class="mar">NEW UPDATE!!! NEW UPDATE!!! NEW UPDATE!!!</span>
+    <div style="font-size:16px;font-weight:900;">WELCOME PLAYER</div>
+    <div style="font-size:12px;color:#555;margin-top:6px;">This layout is messy. The game is still the same.</div>
+    <div class="bigbtn">DOWNLOAD NOW</div>
   </div>
 
   <div class="grid">
-    <div class="tile"><h3>GUNS</h3><p>lots of guns. pew pew. very gun.</p></div>
-    <div class="tile"><h3>SKINS</h3><p>buy skins. you need them. maybe.</p></div>
-    <div class="tile"><h3>RANKED</h3><p>toxic mode. show skill.</p></div>
-    <div class="tile"><h3>LORE</h3><p>?? lots of words somewhere</p></div>
-    <div class="tile"><h3>PATCH</h3><p>we changed stuff. good luck</p></div>
-    <div class="tile"><h3>SHOP</h3><p>shop shop shop shop shop</p></div>
+    <div class="tile"><h3>GUNS</h3><p>lots of guns. pew pew.</p></div>
+    <div class="tile"><h3>SKINS</h3><p>buy skins. maybe.</p></div>
+    <div class="tile"><h3>RANKED</h3><p>toxic mode.</p></div>
+    <div class="tile"><h3>LORE</h3><p>words somewhere</p></div>
+    <div class="tile"><h3>PATCH</h3><p>we changed stuff</p></div>
+    <div class="tile"><h3>SHOP</h3><p>shop shop shop</p></div>
   </div>
 
-  <div class="spam">*system requirements: yes. *refunds: no. *support: maybe.</div>
+  <div class="spam">system requirements: yes • support: maybe</div>
 </div>
 </body>
 </html>
@@ -1684,161 +1124,47 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#070815;
-    --bg2:#0b0d24;
-    --ink:#e9ecff;
-    --muted:#b7bddb;
-    --line:rgba(233,236,255,.16);
-    --neon:#7c5cff;
-    --neon2:#22f6d2;
-    --danger:#ff3d7f;
-    --shadow:0 18px 42px rgba(0,0,0,.45);
-    --r:18px;
+    --bg:#070815; --bg2:#0b0d24; --ink:#e9ecff; --muted:#b7bddb; --line:rgba(233,236,255,.16);
+    --neon:#7c5cff; --neon2:#22f6d2; --danger:#ff3d7f; --shadow:0 18px 42px rgba(0,0,0,.45); --r:18px;
   }
   html,body{margin:0;height:100%;background: radial-gradient(circle at top, var(--bg2) 0, var(--bg) 58%, #050512 100%);color:var(--ink);font-family:"Space Grotesk",system-ui,-apple-system,Segoe UI,sans-serif;}
   .wrap{padding:14px;}
-  .top{
-    display:flex;align-items:center;justify-content:space-between;gap:12px;
-    border:1px solid var(--line);border-radius:999px;
-    padding:10px 12px;background:rgba(10,11,30,.55);backdrop-filter: blur(12px);
-  }
+  .top{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:999px;padding:10px 12px;background:rgba(10,11,30,.55);backdrop-filter: blur(12px);}
   .brand{display:flex;align-items:center;gap:10px;}
-  .mark{
-    width:28px;height:28px;border-radius:10px;
-    background: conic-gradient(from 230deg, var(--neon), var(--danger), var(--neon2), var(--neon));
-    box-shadow: 0 0 0 6px rgba(124,92,255,.12), 0 18px 30px rgba(0,0,0,.35);
-  }
+  .mark{width:28px;height:28px;border-radius:10px;background: conic-gradient(from 230deg, var(--neon), var(--danger), var(--neon2), var(--neon));box-shadow: 0 0 0 6px rgba(124,92,255,.12), 0 18px 30px rgba(0,0,0,.35);}
   .name{font-weight:700;letter-spacing:.04em;}
   .nav{display:flex;gap:10px;color:var(--muted);font-size:13px;}
   .nav span{padding:6px 10px;border-radius:999px;border:1px solid transparent;}
   .nav span:nth-child(1){border-color:rgba(124,92,255,.25);background:rgba(124,92,255,.10);color:var(--ink);}
-  .hero{
-    margin-top:12px;border-radius:var(--r);
-    border:1px solid var(--line);
-    background:
-      radial-gradient(circle at 20% 30%, rgba(124,92,255,.26), transparent 55%),
-      radial-gradient(circle at 80% 45%, rgba(34,246,210,.16), transparent 55%),
-      linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-    box-shadow: var(--shadow);
-    padding:14px;
-    position:relative;
-    overflow:hidden;
-  }
-  .hero:after{
-    content:"";
-    position:absolute;
-    inset:-80px;
-    background: repeating-linear-gradient(90deg, rgba(233,236,255,.04) 0 1px, transparent 1px 14px);
-    transform: rotate(-8deg);
-    opacity:.6;
-    pointer-events:none;
-  }
-  .kicker{
-    position:relative;
-    z-index:1;
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size:12px;
-    color:var(--muted);
-    letter-spacing:.12em;
-    text-transform:uppercase;
-  }
+  .hero{margin-top:12px;border-radius:var(--r);border:1px solid var(--line);
+    background: radial-gradient(circle at 20% 30%, rgba(124,92,255,.26), transparent 55%),
+              radial-gradient(circle at 80% 45%, rgba(34,246,210,.16), transparent 55%),
+              linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    box-shadow: var(--shadow);padding:14px;position:relative;overflow:hidden;}
+  .hero:after{content:"";position:absolute;inset:-80px;background: repeating-linear-gradient(90deg, rgba(233,236,255,.04) 0 1px, transparent 1px 14px);transform: rotate(-8deg);opacity:.6;pointer-events:none;}
+  .kicker{position:relative;z-index:1;display:inline-flex;align-items:center;gap:10px;font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;font-size:12px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;}
   .dot{width:8px;height:8px;border-radius:999px;background:var(--neon2);box-shadow:0 0 0 6px rgba(34,246,210,.16);}
-  h1{
-    position:relative;
-    z-index:1;
-    margin:8px 0 8px;
-    font-size:28px;
-    line-height:1.02;
-    letter-spacing:-.02em;
-  }
-  .sub{
-    position:relative;
-    z-index:1;
-    color:var(--muted);
-    font-size:13.5px;
-    line-height:1.55;
-    max-width:48ch;
-  }
-  .actions{
-    position:relative;
-    z-index:1;
-    margin-top:12px;
-    display:flex;
-    gap:10px;
-    align-items:center;
-    flex-wrap:wrap;
-  }
-  .btn{
-    display:inline-flex;align-items:center;gap:8px;
-    padding:9px 12px;border-radius:999px;
-    border:1px solid rgba(233,236,255,.18);
-    background:rgba(255,255,255,.06);
-    color:var(--ink);
-    font-weight:600;
-    font-size:13px;
-  }
-  .btn.primary{
-    background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(255,61,127,.85));
-    border-color: rgba(255,255,255,.18);
-    box-shadow: 0 12px 26px rgba(124,92,255,.22);
-  }
+  h1{position:relative;z-index:1;margin:8px 0 8px;font-size:28px;line-height:1.02;letter-spacing:-.02em;}
+  .sub{position:relative;z-index:1;color:var(--muted);font-size:13.5px;line-height:1.55;max-width:48ch;}
+  .actions{position:relative;z-index:1;margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;border:1px solid rgba(233,236,255,.18);background:rgba(255,255,255,.06);color:var(--ink);font-weight:600;font-size:13px;}
+  .btn.primary{background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(255,61,127,.85));border-color: rgba(255,255,255,.18);box-shadow: 0 12px 26px rgba(124,92,255,.22);}
   .pillrow{position:relative;z-index:1;margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;}
-  .pill{
-    font-size:12px;color:var(--muted);
-    padding:6px 10px;border-radius:999px;
-    border:1px solid rgba(233,236,255,.14);
-    background:rgba(10,11,30,.45);
-  }
-  .grid{
-    position:relative;z-index:1;
-    margin-top:12px;
-    display:grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap:12px;
-  }
-  .panel{
-    border-radius:var(--r);
-    border:1px solid rgba(233,236,255,.14);
-    background:rgba(10,11,30,.45);
-    padding:12px;
-  }
-  .panel h2{
-    margin:0 0 8px;
-    font-size:13px;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    color:var(--muted);
-    font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  }
+  .pill{font-size:12px;color:var(--muted);padding:6px 10px;border-radius:999px;border:1px solid rgba(233,236,255,.14);background:rgba(10,11,30,.45);}
+  .grid{position:relative;z-index:1;margin-top:12px;display:grid;grid-template-columns: 1.2fr 1fr;gap:12px;}
+  .panel{border-radius:var(--r);border:1px solid rgba(233,236,255,.14);background:rgba(10,11,30,.45);padding:12px;}
+  .panel h2{margin:0 0 8px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;}
   .feat{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid rgba(233,236,255,.10);}
   .feat:first-of-type{border-top:none;}
   .feat b{display:block;font-size:13px;}
   .feat span{display:block;font-size:12px;color:var(--muted);margin-top:2px;}
-  .tag{
-    font-size:12px;
-    padding:5px 8px;border-radius:999px;
-    border:1px solid rgba(34,246,210,.35);
-    background:rgba(34,246,210,.08);
-    color:var(--ink);
-    white-space:nowrap;
-  }
-  .art{
-    height:92px;border-radius:14px;
-    background:
+  .tag{font-size:12px;padding:5px 8px;border-radius:999px;border:1px solid rgba(34,246,210,.35);background:rgba(34,246,210,.08);color:var(--ink);white-space:nowrap;}
+  .art{height:92px;border-radius:14px;background:
       radial-gradient(circle at 30% 30%, rgba(255,61,127,.55), transparent 55%),
       radial-gradient(circle at 65% 55%, rgba(34,246,210,.40), transparent 60%),
       linear-gradient(135deg, rgba(124,92,255,.55), rgba(10,11,30,.60));
-    position:relative;
-    overflow:hidden;
-  }
-  .art:before{
-    content:"";
-    position:absolute;inset:-20px;
-    background: radial-gradient(circle at 40% 40%, rgba(255,255,255,.14), transparent 55%);
-  }
+    position:relative;overflow:hidden;}
+  .art:before{content:"";position:absolute;inset:-20px;background: radial-gradient(circle at 40% 40%, rgba(255,255,255,.14), transparent 55%);}
 </style>
 </head>
 <body>
@@ -1892,7 +1218,6 @@
   };
 
   function setIframeSrcdoc(iframe, html) {
-    // Use srcdoc directly; no scripts inside mini pages needed.
     iframe.setAttribute('srcdoc', html);
   }
 
@@ -1909,7 +1234,6 @@
         var which = btn.getAttribute('data-demo');
         var layout = document.getElementById('demo-' + which);
         var iframe = document.getElementById('iframe-' + which);
-
         if (!layout || !iframe || !DEMOS[which]) return;
 
         var improved = layout.classList.toggle('is-improved');
@@ -1926,50 +1250,6 @@
   }
 
   initDemos();
-
-  // Final CTA shapes scroll effect with monotonic expansion on scroll down
-  (function attachCTAParallax() {
-    var cta = document.getElementById('ws-cta-final');
-    if (!cta) return;
-    var shapes = cta.querySelectorAll('.ws-cta-shape');
-
-    var lastScrollY = window.scrollY;
-    var lastProgress = 0;
-
-    function baseProgressFromRect(rect) {
-      var vh = window.innerHeight || document.documentElement.clientHeight;
-      var start = vh;
-      var end = vh * 0.2;
-      var t = (start - rect.top) / (start - end);
-      return Math.max(0, Math.min(1, t));
-    }
-
-    function updateShapes() {
-      var rect = cta.getBoundingClientRect();
-      var base = baseProgressFromRect(rect);
-
-      var scrollY = window.scrollY;
-      var scrollingDown = scrollY >= lastScrollY;
-
-      var progress = scrollingDown ? Math.max(lastProgress, base) : base;
-      progress = Math.max(0, Math.min(1, progress));
-      lastProgress = progress;
-      lastScrollY = scrollY;
-
-      shapes.forEach(function (shape) {
-        var maxX = parseFloat(shape.getAttribute('data-x')) || 0;
-        var maxY = parseFloat(shape.getAttribute('data-y')) || 0;
-        var tx = maxX * progress;
-        var ty = maxY * progress;
-        var rot = getComputedStyle(shape).getPropertyValue('--rot') || '0deg';
-        shape.style.transform = 'translate(' + tx + 'px,' + ty + 'px) rotate(' + rot + ')';
-      });
-    }
-
-    window.addEventListener('scroll', updateShapes, { passive: true });
-    window.addEventListener('resize', updateShapes);
-    updateShapes();
-  })();
 </script>
 
 </body>
