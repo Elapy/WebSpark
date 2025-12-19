@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neon Raiders IX</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#070815; --bg2:#0b0d24; --ink:#e9ecff; --muted:#b7bddb; --line:rgba(233,236,255,.16);
+    --neon:#7c5cff; --neon2:#22f6d2; --danger:#ff3d7f; --shadow:0 18px 42px rgba(0,0,0,.45); --r:18px;
+  }
+  html,body{margin:0;height:100%;background: radial-gradient(circle at top, var(--bg2) 0, var(--bg) 58%, #050512 100%);color:var(--ink);font-family:"Space Grotesk",system-ui,-apple-system,Segoe UI,sans-serif;}
+  .wrap{padding:14px;}
+  .top{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:999px;padding:10px 12px;background:rgba(10,11,30,.55);backdrop-filter: blur(12px);}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .mark{width:28px;height:28px;border-radius:10px;background: conic-gradient(from 230deg, var(--neon), var(--danger), var(--neon2), var(--neon));box-shadow: 0 0 0 6px rgba(124,92,255,.12), 0 18px 30px rgba(0,0,0,.35);}
+  .name{font-weight:700;letter-spacing:.04em;}
+  .nav{display:flex;gap:10px;color:var(--muted);font-size:13px;}
+  .nav span{padding:6px 10px;border-radius:999px;border:1px solid transparent;}
+  .nav span:nth-child(1){border-color:rgba(124,92,255,.25);background:rgba(124,92,255,.10);color:var(--ink);}
+  .hero{margin-top:12px;border-radius:var(--r);border:1px solid var(--line);
+    background: radial-gradient(circle at 20% 30%, rgba(124,92,255,.26), transparent 55%),
+              radial-gradient(circle at 80% 45%, rgba(34,246,210,.16), transparent 55%),
+              linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    box-shadow: var(--shadow);padding:14px;position:relative;overflow:hidden;}
+  .hero:after{content:"";position:absolute;inset:-80px;background: repeating-linear-gradient(90deg, rgba(233,236,255,.04) 0 1px, transparent 1px 14px);transform: rotate(-8deg);opacity:.6;pointer-events:none;}
+  .kicker{position:relative;z-index:1;display:inline-flex;align-items:center;gap:10px;font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;font-size:12px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;}
+  .dot{width:8px;height:8px;border-radius:999px;background:var(--neon2);box-shadow:0 0 0 6px rgba(34,246,210,.16);}
+  h1{position:relative;z-index:1;margin:8px 0 8px;font-size:28px;line-height:1.02;letter-spacing:-.02em;}
+  .sub{position:relative;z-index:1;color:var(--muted);font-size:13.5px;line-height:1.55;max-width:48ch;}
+  .actions{position:relative;z-index:1;margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;border:1px solid rgba(233,236,255,.18);background:rgba(255,255,255,.06);color:var(--ink);font-weight:600;font-size:13px;}
+  .btn.primary{background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(255,61,127,.85));border-color: rgba(255,255,255,.18);box-shadow: 0 12px 26px rgba(124,92,255,.22);}
+  .pillrow{position:relative;z-index:1;margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;}
+  .pill{font-size:12px;color:var(--muted);padding:6px 10px;border-radius:999px;border:1px solid rgba(233,236,255,.14);background:rgba(10,11,30,.45);}
+  .grid{position:relative;z-index:1;margin-top:12px;display:grid;grid-template-columns: 1.2fr 1fr;gap:12px;}
+  .panel{border-radius:var(--r);border:1px solid rgba(233,236,255,.14);background:rgba(10,11,30,.45);padding:12px;}
+  .panel h2{margin:0 0 8px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;}
+  .feat{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid rgba(233,236,255,.10);}
+  .feat:first-of-type{border-top:none;}
+  .feat b{display:block;font-size:13px;}
+  .feat span{display:block;font-size:12px;color:var(--muted);margin-top:2px;}
+  .tag{font-size:12px;padding:5px 8px;border-radius:999px;border:1px solid rgba(34,246,210,.35);background:rgba(34,246,210,.08);color:var(--ink);white-space:nowrap;}
+  .art{height:92px;border-radius:14px;background:
+      radial-gradient(circle at 30% 30%, rgba(255,61,127,.55), transparent 55%),
+      radial-gradient(circle at 65% 55%, rgba(34,246,210,.40), transparent 60%),
+      linear-gradient(135deg, rgba(124,92,255,.55), rgba(10,11,30,.60));
+    position:relative;overflow:hidden;}
+  .art:before{content:"";position:absolute;inset:-20px;background: radial-gradient(circle at 40% 40%, rgba(255,255,255,.14), transparent 55%);}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div class="name">Neon Raiders IX</div>
+      </div>
+      <div class="nav" aria-hidden="true">
+        <span>Overview</span><span>Patch</span><span>Shop</span>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="kicker"><span class="dot"></span>Season 3 • Ranked Reset • New Map</div>
+      <h1>Fast fights. Clean movement.<br>Neon chaos—controlled.</h1>
+      <div class="sub">A competitive arena shooter built for crisp aim, readable chaos, and a progression loop that respects your time.</div>
+
+      <div class="actions">
+        <div class="btn primary">Download free</div>
+        <div class="btn">Watch trailer</div>
+        <div class="btn">Patch notes</div>
+      </div>
+
+      <div class="pillrow" aria-hidden="true">
+        <div class="pill">120 FPS ready</div>
+        <div class="pill">Ranked + Casual</div>
+        <div class="pill">Cosmetics only</div>
+      </div>
+
+      <div class="grid">
+        <div class="panel">
+          <h2>What’s new</h2>
+          <div class="feat"><div><b>New Map: “Shatterline”</b><span>vertical lanes • neon sightlines</span></div><div class="tag">Live now</div></div>
+          <div class="feat"><div><b>Weapon tuning</b><span>less random spray • more skill</span></div><div class="tag">Balance</div></div>
+          <div class="feat"><div><b>Ranked rewards</b><span>earn skins by play—not pay</span></div><div class="tag">Season 3</div></div>
+        </div>
+
+        <div class="panel">
+          <h2>Visual</h2>
+          <div class="art" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
