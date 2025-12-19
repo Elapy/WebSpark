@@ -81,20 +81,15 @@
       text-transform:uppercase;
       color:var(--ws-accent);
     }
+    /* Logo now references assets/logo.jpg */
     .ws-logo-mark{
       width:32px; height:32px;
       border-radius:14px;
-      background: conic-gradient(from 210deg, #1140a6, #5384ff, #8ba8ff, #1140a6);
-      position:relative;
       overflow:hidden;
-    }
-    .ws-logo-mark::after{
-      content:"";
-      position:absolute;
-      inset:6px;
-      border-radius:10px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.88), rgba(255,255,255,0.4));
-      box-shadow:0 0 0 1px rgba(72,101,162,0.2);
+      display:block;
+      object-fit:cover;
+      box-shadow:0 0 0 1px rgba(72,101,162,0.22);
+      background:#fff;
     }
 
     .ws-nav{
@@ -187,8 +182,8 @@
       width:100%;
       max-width:320px;
     }
-    .ws-hero-side-left .ws-hero-side-inner { transform: translateY(80px) rotate(-2deg); }
-    .ws-hero-side-right .ws-hero-side-inner { transform: translateY(-80px) rotate(3deg); }
+    .ws-hero-side-left .ws-hero-side-inner { transform: translateY(96px) rotate(-2deg); }
+    .ws-hero-side-right .ws-hero-side-inner { transform: translateY(-96px) rotate(3deg); }
 
     .ws-hero-center{
       text-align:center;
@@ -216,56 +211,7 @@
       color:var(--ws-text-main);
       max-width:18ch;
     }
-    .ws-hero-highlight{
-      color:var(--ws-accent);
-      font-weight:600;
-      position:relative;
-      display:inline-block;
-      border-radius:10px;
-      padding:2px 6px;
-    }
-
-    /* Text-selection “pop” (restored) */
-    .ws-hero-highlight::before{
-      content:"";
-      position:absolute;
-      inset:-2px -4px;
-      border-radius:12px;
-      background: rgba(26,115,232,0.16);
-      opacity:0;
-      transform: scaleX(0.72);
-      transform-origin:left center;
-    }
-    .ws-hero-highlight.ws-selected{
-      font-family:"Rubik Glitch","Montserrat",system-ui,sans-serif;
-      color: rgba(16,21,36,0.92);
-      text-transform: lowercase;
-      letter-spacing:0.02em;
-    }
-    .ws-hero-highlight.ws-selected::before{
-      opacity:1;
-      transform: scaleX(1);
-      transition: transform 520ms ease, opacity 220ms ease;
-    }
-    .ws-hero-select-flash{
-      position:absolute;
-      inset:-10px -14px;
-      border-radius:16px;
-      border:2px solid var(--ws-select-blue);
-      box-shadow: 0 0 0 5px var(--ws-select-blue-soft);
-      opacity:0;
-      pointer-events:none;
-    }
-    .ws-hero-highlight.ws-selected .ws-hero-select-flash{
-      opacity:1;
-      animation: wsSelectFade 1100ms ease forwards;
-    }
-    @keyframes wsSelectFade{
-      0%{ opacity:0; transform: translateY(6px) scale(0.98); }
-      18%{ opacity:1; transform: translateY(0) scale(1); }
-      70%{ opacity:1; }
-      100%{ opacity:0; transform: translateY(-4px) scale(1.01); }
-    }
+    .ws-hero-highlight{ color:var(--ws-accent); font-weight:600; }
 
     .ws-hero-sub{
       font-size:0.88rem;
@@ -321,6 +267,35 @@
       background:rgba(146,161,196,0.7);
     }
 
+    /* HERO “bad font -> selected highlight -> normal” (applies to title, sub, meta) */
+    .ws-hero-anim-target{ position:relative; }
+    body.ws-hero-badfont .ws-hero-anim-target{
+      font-family: Arial, Helvetica, sans-serif !important;
+      letter-spacing: 0 !important;
+    }
+    .ws-hero-select-overlay{
+      position:absolute;
+      left:-10px; right:-10px;
+      top:50%;
+      height:1.15em;
+      transform: translateY(-50%);
+      border-radius:10px;
+      background: rgba(26,115,232,0.18);
+      box-shadow: 0 0 0 2px rgba(26,115,232,0.55);
+      opacity:0;
+      pointer-events:none;
+    }
+    body.ws-hero-selecting .ws-hero-select-overlay{
+      opacity:1;
+      animation: wsHeroSelect 980ms ease forwards;
+    }
+    @keyframes wsHeroSelect{
+      0%{ opacity:0; transform: translateY(-50%) scaleX(0.72); }
+      18%{ opacity:1; transform: translateY(-50%) scaleX(1); }
+      75%{ opacity:1; }
+      100%{ opacity:0; transform: translateY(-50%) scaleX(1.02); }
+    }
+
     /* Side frames */
 
     .ws-hero-frame{
@@ -370,19 +345,12 @@
       margin-bottom:8px;
     }
 
-    /* Make BEFORE intentionally bland */
-    .ws-pane--before .ws-pane-body{
-      display:grid;
-      gap:7px;
-      padding:2px 0 4px;
-    }
-    .ws-pane-line{ height:6px; border-radius:999px; background:#d4ddef; opacity:0.85; }
-    .ws-pane-line:nth-child(1){ width:92%; }
-    .ws-pane-line:nth-child(2){ width:88%; }
-    .ws-pane-line:nth-child(3){ width:90%; }
-    .ws-pane-line:nth-child(4){ width:86%; }
-    .ws-pane-line:nth-child(5){ width:84%; }
-    .ws-pane-line:nth-child(6){ width:80%; }
+    .ws-pane--before .ws-pane-body{ display:grid; gap:6px; }
+    .ws-pane-line{ height:6px; border-radius:999px; background:#d4ddef; }
+    .ws-pane-line:nth-child(1){ width:80%; }
+    .ws-pane-line:nth-child(2){ width:60%; }
+    .ws-pane-line:nth-child(3){ width:76%; }
+    .ws-pane-line:nth-child(4){ width:52%; }
 
     .ws-pane--after .ws-pane-body{
       display:grid;
@@ -405,7 +373,7 @@
     .ws-pane-thumbnail{ border-radius:10px; background:linear-gradient(135deg,#a8b8ff,#4e71d1); }
     .ws-pane-badge{ border-radius:999px;height:16px;background:#edf1ff;border:1px solid rgba(151,170,223,0.9); }
 
-    /* Selected overlays (guaranteed visible) */
+    /* Selected overlays (hero floats) */
 
     .ws-hero-float{
       position:absolute;
@@ -460,7 +428,7 @@
     .ws-selection-handles .bm{ bottom:-7px; left: calc(50% - 7px); }
     .ws-selection-handles .br{ bottom:-7px; right:-7px; }
 
-    /* “Object” rendered purely in CSS (NO animation on this — per request) */
+    /* “Object” rendered in CSS (no animation) */
     .ws-stock-object{
       width: 168px;
       height: 128px;
@@ -507,7 +475,6 @@
     }
 
     /* Sections */
-
     section{ margin:32px 0; }
 
     .ws-section-header{
@@ -551,564 +518,14 @@
       font-size:0.9rem;
       text-align:center;
     }
+    .ws-placeholder--carousel{
+      min-height:160px;
+      background-image: repeating-linear-gradient(-45deg, #f5f7ff 0, #f5f7ff 6px, #ffffff 6px, #ffffff 12px);
+    }
     .ws-placeholder--visual{ min-height:260px; }
-    .ws-placeholder--mini{ min-height:110px; font-size:0.8rem; }
+    .ws-placeholder--mini{ min-height:80px; font-size:0.8rem; }
 
-    /* Examples: 2-up transformations (new themes, different from Demo) */
-
-    .ws-examples-grid{
-      display:grid;
-      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
-      gap:18px;
-    }
-    @media (max-width:900px){
-      .ws-examples-grid{ grid-template-columns:minmax(0,1fr); }
-    }
-    .ws-xform-card{
-      border-radius:var(--ws-radius-lg);
-      background:var(--ws-surface);
-      border:1px solid var(--ws-border-subtle);
-      padding:14px 14px 16px;
-      display:grid;
-      gap:10px;
-      overflow:hidden;
-    }
-    .ws-xform-top{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .ws-xform-title{
-      display:grid;
-      gap:2px;
-      text-align:left;
-    }
-    .ws-xform-title strong{ font-size:0.92rem; color:var(--ws-text-main); }
-    .ws-xform-title span{ font-size:0.82rem; color:var(--ws-text-muted); }
-
-    .ws-xform-toggle{
-      font-size:0.82rem;
-      padding:7px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.35);
-      background: linear-gradient(135deg, var(--ws-attn), var(--ws-attn2));
-      color:#fff;
-      display:inline-flex;
-      align-items:center;
-      gap:7px;
-      cursor:pointer;
-      user-select:none;
-      white-space:nowrap;
-      box-shadow:0 14px 26px rgba(47,107,255,0.22);
-      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, filter 0.12s ease-out;
-    }
-    .ws-xform-toggle:hover{
-      transform: translateY(-1px);
-      filter: brightness(1.02);
-      box-shadow:0 18px 34px rgba(47,107,255,0.30);
-    }
-
-    .ws-xform-stage{
-      border-radius:14px;
-      background:var(--ws-surface-soft);
-      padding:10px;
-      border:1px dashed var(--ws-border-subtle);
-      position:relative;
-      overflow:hidden;
-      transition: background 0.25s ease-out, border 0.25s ease-out;
-    }
-    .ws-xform-stage.is-after{
-      background: linear-gradient(145deg,#ffffff,#eef1ff);
-      border-style:solid;
-      border-color:var(--ws-border-strong);
-    }
-    .ws-xform-label{
-      font-size:0.76rem;
-      text-transform:uppercase;
-      letter-spacing:0.12em;
-      color:var(--ws-text-muted);
-      margin-bottom:8px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-    .ws-xform-tag{
-      font-size:0.72rem;
-      padding:3px 8px;
-      border-radius:999px;
-      background: rgba(17,64,166,0.06);
-      color: var(--ws-accent);
-      font-weight:500;
-      letter-spacing:0.06em;
-      text-transform:none;
-      white-space:nowrap;
-    }
-
-    /* XFORM “before” intentionally bland: paragraph soup */
-    .ws-xform-before{
-      border-radius:12px;
-      background:#fff;
-      border:1px solid rgba(170,186,224,0.75);
-      padding:12px 12px 14px;
-      box-shadow:0 18px 30px rgba(10,22,60,0.08);
-      display:grid;
-      gap:10px;
-    }
-    .ws-xform-before h4{
-      margin:0;
-      font-size:0.92rem;
-      font-weight:600;
-      color:#1b2440;
-      opacity:0.9;
-    }
-    .ws-xform-before p{
-      margin:0;
-      font-size:0.82rem;
-      line-height:1.65;
-      color:#6a748f;
-    }
-    .ws-xform-before p + p{ opacity:0.92; }
-
-    /* XFORM “after”: structured page */
-    .ws-xform-after{
-      border-radius:12px;
-      background:#fff;
-      border:1px solid rgba(170,186,224,0.75);
-      padding:12px;
-      box-shadow:0 18px 30px rgba(10,22,60,0.10);
-      display:grid;
-      gap:10px;
-    }
-    .ws-xform-hero{
-      border-radius:12px;
-      padding:10px;
-      background: linear-gradient(135deg, rgba(17,64,166,0.10), rgba(124,92,255,0.08));
-      border:1px solid rgba(164,179,218,0.8);
-      display:grid;
-      gap:8px;
-    }
-    .ws-xform-hero .k{ font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase; color:#667098; }
-    .ws-xform-hero .t{ font-size:0.95rem; font-weight:700; letter-spacing:-0.01em; color:#182047; }
-    .ws-xform-hero .s{ font-size:0.82rem; color:#596487; line-height:1.5; }
-    .ws-xform-cta{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:7px 10px;
-      border-radius:999px;
-      background:#1140a6;
-      color:#fff;
-      font-size:0.78rem;
-      font-weight:500;
-      width:max-content;
-      box-shadow:0 12px 22px rgba(17,64,166,0.22);
-    }
-    .ws-xform-grid{
-      display:grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap:10px;
-      align-items:stretch;
-    }
-    .ws-xform-card{
-      border-radius:12px;
-      border:1px solid rgba(164,179,218,0.75);
-      background: linear-gradient(145deg, #ffffff, #f1f4ff);
-      padding:10px;
-      display:grid;
-      gap:6px;
-    }
-    .ws-xform-card .h{ height:7px; border-radius:999px; width:72%; background:#1c2b56; opacity:0.92; }
-    .ws-xform-card .l{ height:5px; border-radius:999px; width:92%; background:#8a98c5; opacity:0.9; }
-    .ws-xform-card .l:nth-child(3){ width:84%; }
-    .ws-xform-side{
-      border-radius:12px;
-      border:1px solid rgba(164,179,218,0.75);
-      background:#fff;
-      padding:10px;
-      display:grid;
-      gap:8px;
-    }
-    .ws-xform-chip{
-      height:18px;
-      border-radius:999px;
-      background: rgba(17,64,166,0.08);
-      border:1px solid rgba(17,64,166,0.18);
-    }
-    .ws-xform-chip:nth-child(1){ width:78%; }
-    .ws-xform-chip:nth-child(2){ width:62%; }
-    .ws-xform-chip:nth-child(3){ width:70%; }
-
-    /* Benefits blocks */
-
-    /* keep overall page height similar: reduce outer margin, increase internal min-height */
-    .ws-benefit-section{ margin:44px 0; }
-    .ws-benefit-layout{
-      display:grid;
-      grid-template-columns: minmax(0,1.1fr) minmax(0,1.1fr);
-      gap:32px;
-      align-items:stretch;
-      min-height:440px;
-    }
-    @media (max-width:900px){
-      .ws-benefit-layout{ grid-template-columns: minmax(0,1fr); min-height:auto; }
-    }
-    .ws-benefit-text-block{
-      font-size:0.94rem;
-      color:var(--ws-text-soft);
-      max-width:48ch;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      gap:10px;
-    }
-    .ws-benefit-heading{
-      font-size:1.12rem;
-      font-weight:650;
-      margin:0;
-      color:var(--ws-text-main);
-      letter-spacing:-0.01em;
-    }
-    .ws-benefit-kicker{
-      font-size:0.76rem;
-      text-transform:uppercase;
-      letter-spacing:0.18em;
-      color:var(--ws-text-muted);
-      margin-bottom:0;
-    }
-    .ws-benefit-p{
-      margin:0;
-      line-height:1.65;
-      color:var(--ws-text-soft);
-    }
-    .ws-benefit-bullets{
-      margin:0;
-      padding-left:18px;
-      display:grid;
-      gap:6px;
-      color:var(--ws-text-soft);
-      font-size:0.9rem;
-      line-height:1.55;
-    }
-    .ws-benefit-bullets li{
-      padding-left:2px;
-    }
-
-    .ws-visual{
-      border-radius:var(--ws-radius-lg);
-      border:1px solid var(--ws-border-subtle);
-      background:var(--ws-surface);
-      padding:14px 14px 16px;
-      display:grid;
-      gap:10px;
-      min-height:320px;
-      align-content:stretch;
-    }
-    .ws-visual-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      font-size:0.78rem;
-      color:var(--ws-text-muted);
-      text-transform:uppercase;
-      letter-spacing:0.14em;
-    }
-    .ws-visual-pill{
-      font-size:0.72rem;
-      text-transform:none;
-      letter-spacing:0.06em;
-      padding:4px 10px;
-      border-radius:999px;
-      background: rgba(17,64,166,0.06);
-      color: var(--ws-accent);
-      border:1px solid rgba(17,64,166,0.12);
-      white-space:nowrap;
-    }
-    .ws-visual-body{
-      border-radius:14px;
-      background: radial-gradient(circle at top left, #ffffff 0, #f4f6ff 42%, #e0e6f9 100%);
-      border:1px solid rgba(174,186,215,0.7);
-      box-shadow:0 18px 40px rgba(10,22,60,0.06);
-      padding:12px;
-      overflow:hidden;
-      position:relative;
-      min-height:250px;
-    }
-
-    /* Visual 01: “first impression” (no weird animations — just polish + glow) */
-    .ws-v1-grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      height:100%;
-      align-items:stretch;
-    }
-    .ws-v1-before, .ws-v1-after{
-      border-radius:12px;
-      border:1px solid rgba(164,179,218,0.75);
-      background:#fff;
-      padding:10px;
-      display:grid;
-      gap:8px;
-      position:relative;
-      overflow:hidden;
-    }
-    .ws-v1-before .line{
-      height:6px; border-radius:999px; background:#d7dfef; opacity:0.95;
-    }
-    .ws-v1-before .line:nth-child(1){ width:92%; }
-    .ws-v1-before .line:nth-child(2){ width:88%; }
-    .ws-v1-before .line:nth-child(3){ width:90%; }
-    .ws-v1-before .line:nth-child(4){ width:86%; }
-    .ws-v1-before .line:nth-child(5){ width:78%; }
-
-    .ws-v1-after{
-      background: linear-gradient(145deg, #ffffff, #f1f4ff);
-    }
-    .ws-v1-after .hero{
-      border-radius:12px;
-      padding:10px;
-      background: linear-gradient(135deg, rgba(17,64,166,0.12), rgba(124,92,255,0.08));
-      border:1px solid rgba(164,179,218,0.75);
-      display:grid;
-      gap:6px;
-    }
-    .ws-v1-after .hero .t{ height:8px; border-radius:999px; width:78%; background:#1d2a55; opacity:0.95; }
-    .ws-v1-after .hero .s{ height:6px; border-radius:999px; width:92%; background:#8a98c5; opacity:0.9; }
-    .ws-v1-after .hero .s:nth-child(3){ width:84%; }
-    .ws-v1-after .cta{
-      width:76px; height:18px; border-radius:999px; background:#1140a6; box-shadow:0 12px 22px rgba(17,64,166,0.22);
-    }
-    .ws-v1-after .cards{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:8px;
-    }
-    .ws-v1-after .card{
-      border-radius:12px;
-      background:#fff;
-      border:1px solid rgba(164,179,218,0.75);
-      padding:10px;
-      display:grid;
-      gap:6px;
-    }
-    .ws-v1-after .card .h{ height:7px; border-radius:999px; width:70%; background:#1c2b56; opacity:0.88; }
-    .ws-v1-after .card .l{ height:6px; border-radius:999px; width:90%; background:#9aa7cf; opacity:0.9; }
-
-    /* Visual 02: Conversion path — dot follows curved path between panels (requested) */
-    .ws-v2-wrap{
-      height:100%;
-      display:grid;
-      gap:10px;
-    }
-    .ws-v2-panels{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      align-items:stretch;
-    }
-    .ws-v2-panel{
-      border-radius:12px;
-      border:1px solid rgba(164,179,218,0.75);
-      background:#fff;
-      padding:10px;
-      display:grid;
-      gap:8px;
-      position:relative;
-      overflow:hidden;
-      min-height:120px;
-    }
-    .ws-v2-panel .t{ height:8px; border-radius:999px; width:70%; background:#1d2a55; opacity:0.9; }
-    .ws-v2-panel .l{ height:6px; border-radius:999px; width:92%; background:#9aa7cf; opacity:0.9; }
-    .ws-v2-panel .l:nth-child(3){ width:84%; }
-    .ws-v2-panel .cta{
-      width:74px; height:18px; border-radius:999px; background:#1140a6; opacity:0.95;
-      box-shadow:0 12px 22px rgba(17,64,166,0.20);
-      margin-top:2px;
-    }
-    .ws-v2-panel.secondary .cta{ width:60px; background:#7c5cff; }
-
-    .ws-v2-svg{
-      width:100%;
-      height:130px;
-      display:block;
-      border-radius:12px;
-      border:1px solid rgba(164,179,218,0.55);
-      background: rgba(255,255,255,0.75);
-    }
-
-    /* Visual 03: Trust signals — no random checkmark animation */
-    .ws-v3-grid{
-      display:grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap:10px;
-      align-items:stretch;
-      height:100%;
-    }
-    .ws-v3-left{
-      border-radius:12px;
-      border:1px solid rgba(164,179,218,0.75);
-      background:#fff;
-      padding:10px;
-      display:grid;
-      gap:10px;
-      position:relative;
-      overflow:hidden;
-    }
-    .ws-v3-badge{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .ws-v3-chip{
-      height:18px;
-      border-radius:999px;
-      border:1px solid rgba(17,64,166,0.16);
-      background: rgba(17,64,166,0.06);
-    }
-    .ws-v3-chip:nth-child(1){ width:84px; }
-    .ws-v3-chip:nth-child(2){ width:112px; }
-    .ws-v3-chip:nth-child(3){ width:96px; }
-    .ws-v3-quote{
-      border-radius:12px;
-      border:1px solid rgba(164,179,218,0.75);
-      background: linear-gradient(145deg,#ffffff,#f1f4ff);
-      padding:10px;
-      display:grid;
-      gap:7px;
-    }
-    .ws-v3-quote .q{ height:6px;border-radius:999px;background:#9aa7cf;opacity:0.9; }
-    .ws-v3-quote .q:nth-child(1){ width:92%; }
-    .ws-v3-quote .q:nth-child(2){ width:88%; }
-    .ws-v3-quote .q:nth-child(3){ width:76%; }
-
-    .ws-v3-right{
-      border-radius:12px;
-      border:1px solid rgba(164,179,218,0.75);
-      background:#fff;
-      padding:10px;
-      display:grid;
-      gap:10px;
-      align-content:start;
-    }
-    .ws-v3-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:8px 10px;
-      border-radius:12px;
-      background: rgba(17,64,166,0.05);
-      border:1px solid rgba(17,64,166,0.10);
-    }
-    .ws-v3-row .l{ height:6px;border-radius:999px;background:#7e8dbb;opacity:0.9; width:60%; }
-    .ws-v3-row .r{ height:16px;border-radius:999px;background:#1140a6;opacity:0.92; width:52px; }
-
-    /* Visual 04: Brand consistency — subtle “snap” loop makes sense */
-    .ws-v4-wrap{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      align-items:stretch;
-      height:100%;
-    }
-    .ws-v4-stack{
-      border-radius:12px;
-      border:1px solid rgba(164,179,218,0.75);
-      background:#fff;
-      padding:10px;
-      display:grid;
-      gap:8px;
-      position:relative;
-      overflow:hidden;
-    }
-    .ws-v4-comp{
-      border-radius:12px;
-      border:1px solid rgba(164,179,218,0.75);
-      background: linear-gradient(145deg,#ffffff,#f1f4ff);
-      padding:10px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      transform: translateY(0);
-      animation: wsSnap 2400ms ease-in-out infinite;
-    }
-    .ws-v4-comp:nth-child(2){ animation-delay: 250ms; }
-    .ws-v4-comp:nth-child(3){ animation-delay: 500ms; }
-    @keyframes wsSnap{
-      0%, 100%{ transform: translateY(0); }
-      50%{ transform: translateY(-2px); }
-    }
-    .ws-v4-left{
-      display:grid;
-      gap:6px;
-      flex:1;
-    }
-    .ws-v4-left .h{ height:7px;border-radius:999px;background:#1d2a55;opacity:0.9;width:62%; }
-    .ws-v4-left .l{ height:6px;border-radius:999px;background:#9aa7cf;opacity:0.9;width:90%; }
-    .ws-v4-icon{
-      width:28px;height:28px;border-radius:10px;
-      background: conic-gradient(from 220deg, #1140a6, #7c5cff, #8ba8ff, #1140a6);
-      box-shadow:0 10px 18px rgba(10,22,60,0.14);
-      border:1px solid rgba(164,179,218,0.75);
-    }
-
-    /* Visual 05: Readable structure / SEO — remove random square animation (none here) */
-    .ws-v5-grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:10px;
-      height:100%;
-    }
-    .ws-v5-headings{
-      border-radius:12px;
-      border:1px solid rgba(164,179,218,0.75);
-      background:#fff;
-      padding:10px;
-      display:grid;
-      gap:8px;
-    }
-    .ws-v5-h{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .ws-v5-tag{
-      font-size:0.72rem;
-      padding:3px 8px;
-      border-radius:999px;
-      background: rgba(17,64,166,0.06);
-      color: var(--ws-accent);
-      border:1px solid rgba(17,64,166,0.12);
-      white-space:nowrap;
-    }
-    .ws-v5-bar{
-      height:7px;border-radius:999px;background:#1d2a55;opacity:0.9;
-    }
-    .ws-v5-bar.h1{ width:72%; }
-    .ws-v5-bar.h2{ width:60%; background:#3a4c7c; opacity:0.86; }
-    .ws-v5-bar.h3{ width:54%; background:#5a6aa0; opacity:0.84; }
-    .ws-v5-lines{
-      border-radius:12px;
-      border:1px solid rgba(164,179,218,0.75);
-      background: linear-gradient(145deg,#ffffff,#f1f4ff);
-      padding:10px;
-      display:grid;
-      gap:7px;
-    }
-    .ws-v5-line{
-      height:6px;border-radius:999px;background:#9aa7cf;opacity:0.9;
-    }
-    .ws-v5-line:nth-child(1){ width:92%; }
-    .ws-v5-line:nth-child(2){ width:88%; }
-    .ws-v5-line:nth-child(3){ width:86%; }
-    .ws-v5-line:nth-child(4){ width:78%; }
-
-    /* Interactive demos (unchanged) */
+    /* Interactive demos */
 
     .ws-demo-grid{
       display:grid;
@@ -1212,6 +629,342 @@
       user-select:none;
     }
 
+    /* Benefits blocks (kept “fatter” without expanding overall section spacing too much) */
+
+    .ws-benefit-section{ margin:44px 0; }
+    .ws-benefit-layout{
+      display:grid;
+      grid-template-columns: minmax(0,1.1fr) minmax(0,1.1fr);
+      gap:32px;
+      align-items:stretch;
+      min-height:440px;
+    }
+    @media (max-width:900px){
+      .ws-benefit-layout{ grid-template-columns: minmax(0,1fr); min-height:auto; }
+    }
+    .ws-benefit-text-block{
+      font-size:0.94rem;
+      color:var(--ws-text-soft);
+      max-width:48ch;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:10px;
+    }
+    .ws-benefit-heading{
+      font-size:1.12rem;
+      font-weight:650;
+      margin:0;
+      color:var(--ws-text-main);
+      letter-spacing:-0.01em;
+    }
+    .ws-benefit-kicker{
+      font-size:0.76rem;
+      text-transform:uppercase;
+      letter-spacing:0.18em;
+      color:var(--ws-text-muted);
+      margin-bottom:0;
+    }
+    .ws-benefit-p{
+      margin:0;
+      line-height:1.65;
+      color:var(--ws-text-soft);
+    }
+    .ws-benefit-bullets{
+      margin:0;
+      padding-left:18px;
+      display:grid;
+      gap:6px;
+      color:var(--ws-text-soft);
+      font-size:0.9rem;
+      line-height:1.55;
+    }
+    .ws-benefit-bullets li{ padding-left:2px; }
+
+    .ws-visual{
+      border-radius:var(--ws-radius-lg);
+      border:1px solid var(--ws-border-subtle);
+      background:var(--ws-surface);
+      padding:14px 14px 16px;
+      display:grid;
+      gap:10px;
+      min-height:320px;
+      align-content:stretch;
+    }
+    .ws-visual-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      font-size:0.78rem;
+      color:var(--ws-text-muted);
+      text-transform:uppercase;
+      letter-spacing:0.14em;
+    }
+    .ws-visual-pill{
+      font-size:0.72rem;
+      text-transform:none;
+      letter-spacing:0.06em;
+      padding:4px 10px;
+      border-radius:999px;
+      background: rgba(17,64,166,0.06);
+      color: var(--ws-accent);
+      border:1px solid rgba(17,64,166,0.12);
+      white-space:nowrap;
+    }
+    .ws-visual-body{
+      border-radius:14px;
+      background: radial-gradient(circle at top left, #ffffff 0, #f4f6ff 42%, #e0e6f9 100%);
+      border:1px solid rgba(174,186,215,0.7);
+      box-shadow:0 18px 40px rgba(10,22,60,0.06);
+      padding:12px;
+      overflow:hidden;
+      position:relative;
+      min-height:250px;
+    }
+
+    /* Visual 01: Hero clarity */
+    .ws-v1-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      height:100%;
+      align-items:stretch;
+    }
+    .ws-v1-before, .ws-v1-after{
+      border-radius:12px;
+      border:1px solid rgba(164,179,218,0.75);
+      background:#fff;
+      padding:10px;
+      display:grid;
+      gap:8px;
+      position:relative;
+      overflow:hidden;
+    }
+    .ws-v1-before .line{ height:6px; border-radius:999px; background:#d7dfef; opacity:0.95; }
+    .ws-v1-before .line:nth-child(1){ width:92%; }
+    .ws-v1-before .line:nth-child(2){ width:88%; }
+    .ws-v1-before .line:nth-child(3){ width:90%; }
+    .ws-v1-before .line:nth-child(4){ width:86%; }
+    .ws-v1-before .line:nth-child(5){ width:78%; }
+
+    .ws-v1-after{ background: linear-gradient(145deg, #ffffff, #f1f4ff); }
+    .ws-v1-after .hero{
+      border-radius:12px;
+      padding:10px;
+      background: linear-gradient(135deg, rgba(17,64,166,0.12), rgba(124,92,255,0.08));
+      border:1px solid rgba(164,179,218,0.75);
+      display:grid;
+      gap:6px;
+    }
+    .ws-v1-after .hero .t{ height:8px; border-radius:999px; width:78%; background:#1d2a55; opacity:0.95; }
+    .ws-v1-after .hero .s{ height:6px; border-radius:999px; width:92%; background:#8a98c5; opacity:0.9; }
+    .ws-v1-after .hero .s:nth-child(3){ width:84%; }
+    .ws-v1-after .cta{
+      width:76px; height:18px; border-radius:999px; background:#1140a6; box-shadow:0 12px 22px rgba(17,64,166,0.22);
+    }
+    .ws-v1-after .cards{ display:grid; grid-template-columns: 1fr 1fr; gap:8px; }
+    .ws-v1-after .card{
+      border-radius:12px;
+      background:#fff;
+      border:1px solid rgba(164,179,218,0.75);
+      padding:10px;
+      display:grid;
+      gap:6px;
+    }
+    .ws-v1-after .card .h{ height:7px; border-radius:999px; width:70%; background:#1c2b56; opacity:0.88; }
+    .ws-v1-after .card .l{ height:6px; border-radius:999px; width:90%; background:#9aa7cf; opacity:0.9; }
+
+    /* Visual 02: Conversion path — recreate “two pages + curved transfer” with this aspect ratio */
+    .ws-v2-canvas{
+      position:relative;
+      width:100%;
+      height:100%;
+      min-height:250px;
+    }
+    .ws-v2-page{
+      position:absolute;
+      width:46%;
+      min-height:120px;
+      border-radius:12px;
+      border:1px solid rgba(164,179,218,0.75);
+      background:#fff;
+      padding:10px;
+      display:grid;
+      gap:8px;
+      overflow:hidden;
+      box-shadow:0 14px 26px rgba(10,22,60,0.06);
+    }
+    .ws-v2-page.left{ left:0; top:8px; }
+    .ws-v2-page.right{ right:0; bottom:8px; }
+
+    .ws-v2-page .t{ height:8px; border-radius:999px; width:68%; background:#1d2a55; opacity:0.9; }
+    .ws-v2-page .l{ height:6px; border-radius:999px; width:92%; background:#9aa7cf; opacity:0.9; }
+    .ws-v2-page .l:nth-child(3){ width:84%; }
+    .ws-v2-page .cta{
+      width:72px; height:18px; border-radius:999px; background:#1140a6; opacity:0.95;
+      box-shadow:0 12px 22px rgba(17,64,166,0.20);
+      margin-top:2px;
+    }
+    .ws-v2-page.right .cta{ background:#7c5cff; width:60px; }
+
+    .ws-v2-wire{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      pointer-events:none;
+    }
+    .ws-v2-wire .bgPath{
+      stroke: rgba(17,64,166,0.12);
+      stroke-width: 10;
+      fill:none;
+      stroke-linecap:round;
+    }
+    .ws-v2-wire .fgPath{
+      stroke: rgba(17,64,166,0.32);
+      stroke-width: 3;
+      fill:none;
+      stroke-linecap:round;
+    }
+
+    /* Visual 03: Trust signals */
+    .ws-v3-grid{
+      display:grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap:10px;
+      align-items:stretch;
+      height:100%;
+    }
+    .ws-v3-left{
+      border-radius:12px;
+      border:1px solid rgba(164,179,218,0.75);
+      background:#fff;
+      padding:10px;
+      display:grid;
+      gap:10px;
+      overflow:hidden;
+    }
+    .ws-v3-badge{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .ws-v3-chip{
+      height:18px;
+      border-radius:999px;
+      border:1px solid rgba(17,64,166,0.16);
+      background: rgba(17,64,166,0.06);
+    }
+    .ws-v3-chip:nth-child(1){ width:84px; }
+    .ws-v3-chip:nth-child(2){ width:112px; }
+    .ws-v3-chip:nth-child(3){ width:96px; }
+    .ws-v3-quote{
+      border-radius:12px;
+      border:1px solid rgba(164,179,218,0.75);
+      background: linear-gradient(145deg,#ffffff,#f1f4ff);
+      padding:10px;
+      display:grid;
+      gap:7px;
+    }
+    .ws-v3-quote .q{ height:6px;border-radius:999px;background:#9aa7cf;opacity:0.9; }
+    .ws-v3-quote .q:nth-child(1){ width:92%; }
+    .ws-v3-quote .q:nth-child(2){ width:88%; }
+    .ws-v3-quote .q:nth-child(3){ width:76%; }
+
+    .ws-v3-right{
+      border-radius:12px;
+      border:1px solid rgba(164,179,218,0.75);
+      background:#fff;
+      padding:10px;
+      display:grid;
+      gap:10px;
+      align-content:start;
+    }
+    .ws-v3-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:8px 10px;
+      border-radius:12px;
+      background: rgba(17,64,166,0.05);
+      border:1px solid rgba(17,64,166,0.10);
+    }
+    .ws-v3-row .l{ height:6px;border-radius:999px;background:#7e8dbb;opacity:0.9; width:60%; }
+    .ws-v3-row .r{ height:16px;border-radius:999px;background:#1140a6;opacity:0.92; width:52px; }
+
+    /* Visual 04: Brand consistency — no animation now */
+    .ws-v4-wrap{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      align-items:stretch;
+      height:100%;
+    }
+    .ws-v4-stack{
+      border-radius:12px;
+      border:1px solid rgba(164,179,218,0.75);
+      background:#fff;
+      padding:10px;
+      display:grid;
+      gap:8px;
+      overflow:hidden;
+    }
+    .ws-v4-comp{
+      border-radius:12px;
+      border:1px solid rgba(164,179,218,0.75);
+      background: linear-gradient(145deg,#ffffff,#f1f4ff);
+      padding:10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .ws-v4-left{ display:grid; gap:6px; flex:1; }
+    .ws-v4-left .h{ height:7px;border-radius:999px;background:#1d2a55;opacity:0.9;width:62%; }
+    .ws-v4-left .l{ height:6px;border-radius:999px;background:#9aa7cf;opacity:0.9;width:90%; }
+    .ws-v4-icon{
+      width:28px;height:28px;border-radius:10px;
+      background: conic-gradient(from 220deg, #1140a6, #7c5cff, #8ba8ff, #1140a6);
+      box-shadow:0 10px 18px rgba(10,22,60,0.14);
+      border:1px solid rgba(164,179,218,0.75);
+    }
+
+    /* Visual 05: Readable structure */
+    .ws-v5-grid{ display:grid; grid-template-columns: 1fr; gap:10px; height:100%; }
+    .ws-v5-headings{
+      border-radius:12px;
+      border:1px solid rgba(164,179,218,0.75);
+      background:#fff;
+      padding:10px;
+      display:grid;
+      gap:8px;
+    }
+    .ws-v5-h{ display:flex; align-items:center; gap:10px; }
+    .ws-v5-tag{
+      font-size:0.72rem;
+      padding:3px 8px;
+      border-radius:999px;
+      background: rgba(17,64,166,0.06);
+      color: var(--ws-accent);
+      border:1px solid rgba(17,64,166,0.12);
+      white-space:nowrap;
+    }
+    .ws-v5-bar{ height:7px;border-radius:999px;background:#1d2a55;opacity:0.9; }
+    .ws-v5-bar.h1{ width:72%; }
+    .ws-v5-bar.h2{ width:60%; background:#3a4c7c; opacity:0.86; }
+    .ws-v5-bar.h3{ width:54%; background:#5a6aa0; opacity:0.84; }
+    .ws-v5-lines{
+      border-radius:12px;
+      border:1px solid rgba(164,179,218,0.75);
+      background: linear-gradient(145deg,#ffffff,#f1f4ff);
+      padding:10px;
+      display:grid;
+      gap:7px;
+    }
+    .ws-v5-line{ height:6px;border-radius:999px;background:#9aa7cf;opacity:0.9; }
+    .ws-v5-line:nth-child(1){ width:92%; }
+    .ws-v5-line:nth-child(2){ width:88%; }
+    .ws-v5-line:nth-child(3){ width:86%; }
+    .ws-v5-line:nth-child(4){ width:78%; }
+
     /* How it works */
 
     .ws-how-grid{
@@ -1275,7 +1028,8 @@
       white-space:nowrap;
     }
 
-    .ws-mini-process{
+    /* Restored “At a glance” animated box (shimmer + flowing progress) */
+    .ws-atglance{
       border-radius:14px;
       border:1px dashed rgba(189,199,227,0.9);
       background: var(--ws-surface-soft);
@@ -1283,8 +1037,27 @@
       display:grid;
       gap:8px;
       overflow:hidden;
+      position:relative;
     }
-    .ws-mini-row{
+    .ws-atglance::before{
+      content:"";
+      position:absolute;
+      top:0; left:-60%;
+      width:60%;
+      height:100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.65), transparent);
+      transform: skewX(-18deg);
+      animation: wsShimmer 2200ms ease-in-out infinite;
+      opacity:0.9;
+      pointer-events:none;
+    }
+    @keyframes wsShimmer{
+      0%{ left:-70%; opacity:0.0; }
+      15%{ opacity:0.9; }
+      55%{ opacity:0.9; }
+      100%{ left:120%; opacity:0.0; }
+    }
+    .ws-at-row{
       border-radius:12px;
       border:1px solid rgba(164,179,218,0.65);
       background:#fff;
@@ -1293,15 +1066,38 @@
       align-items:center;
       justify-content:space-between;
       gap:10px;
+      position:relative;
+      overflow:hidden;
     }
-    .ws-mini-row .l{
+    .ws-at-row .l{
       height:6px;border-radius:999px;background:#7e8dbb;opacity:0.9;width:58%;
     }
-    .ws-mini-row .r{
+    .ws-at-row .r{
       height:16px;border-radius:999px;background:#1140a6;opacity:0.9;width:52px;
+      position:relative;
+      overflow:hidden;
+    }
+    .ws-at-row .r::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.55), rgba(255,255,255,0));
+      transform: translateX(-120%);
+      animation: wsChipSweep 1800ms ease-in-out infinite;
+      opacity:0.9;
+    }
+    .ws-at-row:nth-child(2) .r{ background:#7c5cff; }
+    .ws-at-row:nth-child(2) .r::after{ animation-delay: 240ms; }
+    .ws-at-row:nth-child(3) .r{ background:#1140a6; opacity:0.86; }
+    .ws-at-row:nth-child(3) .r::after{ animation-delay: 480ms; }
+    @keyframes wsChipSweep{
+      0%{ transform: translateX(-120%); opacity:0.0; }
+      20%{ opacity:0.9; }
+      55%{ opacity:0.9; }
+      100%{ transform: translateX(120%); opacity:0.0; }
     }
 
-    /* Final CTA (unchanged parallax) */
+    /* Final CTA */
 
     .ws-cta-final{
       margin-top:40px;
@@ -1429,11 +1225,11 @@
   </style>
 </head>
 
-<body>
+<body class="ws-hero-badfont">
 <header class="ws-header">
   <div class="ws-header-inner">
     <a href="#" class="ws-logo">
-      <div class="ws-logo-mark" aria-hidden="true"></div>
+      <img class="ws-logo-mark" src="assets/logo.jpg" alt="WebSpark logo">
       <span>WebSpark</span>
     </a>
 
@@ -1481,8 +1277,6 @@
                 <div class="ws-pane-line"></div>
                 <div class="ws-pane-line"></div>
                 <div class="ws-pane-line"></div>
-                <div class="ws-pane-line"></div>
-                <div class="ws-pane-line"></div>
               </div>
             </div>
           </div>
@@ -1490,12 +1284,14 @@
       </div>
 
       <div class="ws-hero-center">
-        <h1 class="ws-hero-title" id="hero-title">
+        <h1 class="ws-hero-title ws-hero-anim-target" id="hero-title">
+          <span class="ws-hero-select-overlay" aria-hidden="true"></span>
           Turn your website<br>
-          into a <span class="ws-hero-highlight" id="ws-hero-highlight">great first impression.<span class="ws-hero-select-flash" aria-hidden="true"></span></span>
+          into a <span class="ws-hero-highlight">great first impression.</span>
         </h1>
 
-        <p class="ws-hero-sub">
+        <p class="ws-hero-sub ws-hero-anim-target" id="ws-hero-sub">
+          <span class="ws-hero-select-overlay" aria-hidden="true"></span>
           WebSpark rebuilds an existing site into a cleaner, sharper, more trustworthy experience – in HTML that stays under your control.
         </p>
 
@@ -1503,7 +1299,8 @@
           <a href="contact.html" class="ws-btn-primary">Get started</a>
         </div>
 
-        <div class="ws-hero-meta">
+        <div class="ws-hero-meta ws-hero-anim-target" id="ws-hero-meta">
+          <span class="ws-hero-select-overlay" aria-hidden="true"></span>
           <span><strong>Cleaner layouts</strong> without rebuilding from scratch.</span>
           <span class="ws-hero-meta-divider"></span>
           <span>Keep the content. Upgrade the presentation.</span>
@@ -1551,109 +1348,16 @@
     </div>
   </section>
 
+  <!-- Restored Examples section to original placeholder version -->
   <section id="examples" aria-labelledby="examples-title">
     <div class="ws-section-header">
       <div class="ws-section-kicker">Layout transformations</div>
       <h2 class="ws-section-title" id="examples-title">See how structure changes perception</h2>
-      <p class="ws-section-sub">Two different industries. Same content — dramatically different clarity.</p>
+      <p class="ws-section-sub">Spacing, hierarchy, and visual rhythm shape how a brand is perceived.</p>
     </div>
 
-    <div class="ws-examples-grid">
-
-      <article class="ws-xform-card">
-        <div class="ws-xform-top">
-          <div class="ws-xform-title">
-            <strong>Real Estate Agent</strong>
-            <span>Listing page → confident, scannable pitch</span>
-          </div>
-          <button class="ws-xform-toggle" type="button" data-xform="re">
-            <span>✨</span>
-            <span class="ws-xform-text">Show after</span>
-          </button>
-        </div>
-
-        <div class="ws-xform-stage" id="xform-re">
-          <div class="ws-xform-label">
-            <span class="ws-xform-state">Before</span>
-            <span class="ws-xform-tag">Same content • better hierarchy</span>
-          </div>
-
-          <div class="ws-xform-before ws-xform-view" data-view="before">
-            <h4>Welcome</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at sem vitae risus dignissim bibendum. Nulla facilisi.</p>
-            <p>Donec quis elit nec metus pretium ullamcorper. Sed eget tristique urna. Curabitur nec nisl at velit placerat lacinia.</p>
-          </div>
-
-          <div class="ws-xform-after ws-xform-view" data-view="after" style="display:none;">
-            <div class="ws-xform-hero">
-              <div class="k">Local • Trusted • Fast</div>
-              <div class="t">Find the right home, faster.</div>
-              <div class="s">Clear next steps, clean structure, and a page that looks established — not thrown together.</div>
-              <span class="ws-xform-cta">Book a call</span>
-            </div>
-            <div class="ws-xform-grid">
-              <div class="ws-xform-card">
-                <div class="h"></div>
-                <div class="l"></div>
-                <div class="l"></div>
-              </div>
-              <div class="ws-xform-side">
-                <div class="ws-xform-chip"></div>
-                <div class="ws-xform-chip"></div>
-                <div class="ws-xform-chip"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <article class="ws-xform-card">
-        <div class="ws-xform-top">
-          <div class="ws-xform-title">
-            <strong>Medical Clinic</strong>
-            <span>Services page → calm trust + obvious booking</span>
-          </div>
-          <button class="ws-xform-toggle" type="button" data-xform="clinic">
-            <span>✨</span>
-            <span class="ws-xform-text">Show after</span>
-          </button>
-        </div>
-
-        <div class="ws-xform-stage" id="xform-clinic">
-          <div class="ws-xform-label">
-            <span class="ws-xform-state">Before</span>
-            <span class="ws-xform-tag">Same content • less noise</span>
-          </div>
-
-          <div class="ws-xform-before ws-xform-view" data-view="before">
-            <h4>Our Services</h4>
-            <p>We offer a full range of services. Please contact us for more information about appointments, insurance, and availability.</p>
-            <p>Our team is experienced and committed to helping you. We are open weekdays and can assist with questions.</p>
-          </div>
-
-          <div class="ws-xform-after ws-xform-view" data-view="after" style="display:none;">
-            <div class="ws-xform-hero">
-              <div class="k">Care that feels organized</div>
-              <div class="t">A clear visit plan, before you arrive.</div>
-              <div class="s">Structure signals competence: services grouped, answers easy to find, booking always visible.</div>
-              <span class="ws-xform-cta">Schedule</span>
-            </div>
-            <div class="ws-xform-grid">
-              <div class="ws-xform-card">
-                <div class="h"></div>
-                <div class="l"></div>
-                <div class="l"></div>
-              </div>
-              <div class="ws-xform-side">
-                <div class="ws-xform-chip"></div>
-                <div class="ws-xform-chip"></div>
-                <div class="ws-xform-chip"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-
+    <div class="ws-placeholder ws-placeholder--carousel">
+      Placeholder: future screenshot carousel or grid (before / after images).
     </div>
   </section>
 
@@ -1661,7 +1365,7 @@
     <div class="ws-section-header">
       <div class="ws-section-kicker">Why it matters</div>
       <h2 class="ws-section-title" id="benefits-intro-title">Five outcomes every redesign aims for</h2>
-      <p class="ws-section-sub">More clarity, less friction — without losing control of your HTML.</p>
+      <p class="ws-section-sub">Clarity first. Better first impressions, better conversion paths, and cleaner structure.</p>
     </div>
   </section>
 
@@ -1670,11 +1374,11 @@
       <div class="ws-benefit-text-block">
         <div class="ws-benefit-kicker">Outcome 01</div>
         <h3 class="ws-benefit-heading" id="b1">Better first impressions</h3>
-        <p class="ws-benefit-p">Make the first view instantly understandable: what it is, who it’s for, and what to do next.</p>
+        <p class="ws-benefit-p">Make the first view instantly readable: what it is, who it’s for, and what to do next.</p>
         <ul class="ws-benefit-bullets">
           <li>Clear headline + short supporting line</li>
-          <li>Primary action looks “official” and repeatable</li>
-          <li>Less visual noise, more focus</li>
+          <li>Primary action looks consistent and “official”</li>
+          <li>Less noise, more focus</li>
         </ul>
       </div>
 
@@ -1684,11 +1388,11 @@
           <span class="ws-visual-pill">Readable at a glance</span>
         </div>
         <div class="ws-visual-body">
-          <div class="ws-v1-grid">
-            <div class="ws-v1-before" aria-hidden="true">
+          <div class="ws-v1-grid" aria-hidden="true">
+            <div class="ws-v1-before">
               <div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div>
             </div>
-            <div class="ws-v1-after" aria-hidden="true">
+            <div class="ws-v1-after">
               <div class="hero">
                 <div class="t"></div>
                 <div class="s"></div>
@@ -1713,45 +1417,43 @@
       <div class="ws-visual" aria-label="Conversion path visual">
         <div class="ws-visual-top">
           <span>Conversion path</span>
-          <span class="ws-visual-pill">Fewer dead ends</span>
+          <span class="ws-visual-pill">Clear next steps</span>
         </div>
         <div class="ws-visual-body">
-          <div class="ws-v2-wrap">
-            <div class="ws-v2-panels" aria-hidden="true">
-              <div class="ws-v2-panel">
-                <div class="t"></div>
-                <div class="l"></div>
-                <div class="l"></div>
-                <div class="cta"></div>
-              </div>
-              <div class="ws-v2-panel secondary">
-                <div class="t"></div>
-                <div class="l"></div>
-                <div class="l"></div>
-                <div class="cta"></div>
-              </div>
+          <div class="ws-v2-canvas" aria-hidden="true">
+            <div class="ws-v2-page left">
+              <div class="t"></div>
+              <div class="l"></div>
+              <div class="l"></div>
+              <div class="cta"></div>
             </div>
 
-            <!-- Dot follows curved line between the two panels -->
-            <svg class="ws-v2-svg" viewBox="0 0 600 160" aria-hidden="true">
+            <div class="ws-v2-page right">
+              <div class="t"></div>
+              <div class="l"></div>
+              <div class="l"></div>
+              <div class="cta"></div>
+            </div>
+
+            <svg class="ws-v2-wire" viewBox="0 0 600 260" preserveAspectRatio="none">
               <defs>
-                <linearGradient id="wsFlow" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0" stop-color="#1140a6" stop-opacity="0.35"/>
-                  <stop offset="1" stop-color="#7c5cff" stop-opacity="0.30"/>
+                <linearGradient id="wsFlow2" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#1140a6" stop-opacity="0.30"/>
+                  <stop offset="1" stop-color="#7c5cff" stop-opacity="0.26"/>
                 </linearGradient>
               </defs>
 
-              <path id="ws-curve" d="M 90 120 C 210 40, 390 40, 510 120" fill="none" stroke="url(#wsFlow)" stroke-width="10" stroke-linecap="round"/>
-              <path d="M 90 120 C 210 40, 390 40, 510 120" fill="none" stroke="rgba(17,64,166,0.18)" stroke-width="2" stroke-linecap="round"/>
+              <!-- Curved “transfer” path between the two page rectangles -->
+              <path id="ws-transfer-path" class="bgPath"
+                    d="M 140 70 C 290 40, 330 210, 470 190" />
+              <path class="fgPath"
+                    d="M 140 70 C 290 40, 330 210, 470 190" stroke="url(#wsFlow2)"/>
 
-              <circle r="10" fill="#1140a6" opacity="0.95">
-                <animateMotion dur="2.6s" repeatCount="indefinite" keyTimes="0;1" keySplines="0.42 0 0.58 1" calcMode="spline">
-                  <mpath href="#ws-curve"/>
+              <circle r="9" fill="#1140a6" opacity="0.95">
+                <animateMotion dur="2.8s" repeatCount="indefinite" keySplines="0.42 0 0.58 1" calcMode="spline">
+                  <mpath href="#ws-transfer-path"/>
                 </animateMotion>
               </circle>
-
-              <circle cx="90" cy="120" r="7" fill="#1140a6" opacity="0.65"/>
-              <circle cx="510" cy="120" r="7" fill="#7c5cff" opacity="0.65"/>
             </svg>
           </div>
         </div>
@@ -1760,7 +1462,7 @@
       <div class="ws-benefit-text-block">
         <div class="ws-benefit-kicker">Outcome 02</div>
         <h3 class="ws-benefit-heading" id="b2">More customers</h3>
-        <p class="ws-benefit-p">Reduce friction so the next step is always obvious, consistent, and repeated where it matters.</p>
+        <p class="ws-benefit-p">Reduce friction so the next step is always obvious and always consistent.</p>
         <ul class="ws-benefit-bullets">
           <li>Primary action stays visible (not buried)</li>
           <li>Sections flow in a logical order</li>
@@ -1776,11 +1478,11 @@
       <div class="ws-benefit-text-block">
         <div class="ws-benefit-kicker">Outcome 03</div>
         <h3 class="ws-benefit-heading" id="b3">More trust</h3>
-        <p class="ws-benefit-p">Consistent spacing and calmer typography signal credibility — even before anyone reads the details.</p>
+        <p class="ws-benefit-p">Consistent spacing and calmer typography signal credibility and stability.</p>
         <ul class="ws-benefit-bullets">
           <li>Clear groups instead of random blocks</li>
           <li>Consistent component styling</li>
-          <li>Professional “settled” page rhythm</li>
+          <li>Professional page rhythm</li>
         </ul>
       </div>
 
@@ -1858,11 +1560,11 @@
       <div class="ws-benefit-text-block">
         <div class="ws-benefit-kicker">Outcome 04</div>
         <h3 class="ws-benefit-heading" id="b4">Stronger brand</h3>
-        <p class="ws-benefit-p">Keep identity, improve presentation: coherent components, consistent UI rhythm, and repeatable styling.</p>
+        <p class="ws-benefit-p">Keep identity, improve presentation: coherent components, consistent UI rhythm.</p>
         <ul class="ws-benefit-bullets">
-          <li>Buttons and cards look like the same “system”</li>
-          <li>Spacing rules stop pages from drifting</li>
-          <li>Design feels intentional, not accidental</li>
+          <li>Buttons and cards feel like one system</li>
+          <li>Spacing rules stop the page drifting</li>
+          <li>Design feels intentional</li>
         </ul>
       </div>
 
@@ -1874,10 +1576,10 @@
       <div class="ws-benefit-text-block">
         <div class="ws-benefit-kicker">Outcome 05</div>
         <h3 class="ws-benefit-heading" id="b5">More traffic</h3>
-        <p class="ws-benefit-p">Clean structure and readable headings help both humans and search engines understand the page faster.</p>
+        <p class="ws-benefit-p">Clean structure and readable headings help both humans and search engines.</p>
         <ul class="ws-benefit-bullets">
           <li>Headings tell a clear story</li>
-          <li>Sections are easy to parse and skim</li>
+          <li>Sections are easy to skim</li>
           <li>Less clutter, fewer mixed signals</li>
         </ul>
       </div>
@@ -2018,11 +1720,11 @@
           </div>
         </div>
 
-        <!-- Kept simple; no new animation added here (per “don’t change it”) -->
-        <div class="ws-mini-process" aria-hidden="true">
-          <div class="ws-mini-row"><div class="l"></div><div class="r"></div></div>
-          <div class="ws-mini-row"><div class="l"></div><div class="r"></div></div>
-          <div class="ws-mini-row"><div class="l"></div><div class="r"></div></div>
+        <!-- Restored animated “At a glance” box -->
+        <div class="ws-atglance" aria-hidden="true">
+          <div class="ws-at-row"><div class="l"></div><div class="r"></div></div>
+          <div class="ws-at-row"><div class="l"></div><div class="r"></div></div>
+          <div class="ws-at-row"><div class="l"></div><div class="r"></div></div>
         </div>
       </aside>
     </div>
@@ -2074,14 +1776,8 @@
   document.getElementById('ws-year').textContent = new Date().getFullYear();
 
   const DEMO_FILES = {
-    coffee: {
-      before: 'demos/coffee-before.html',
-      after:  'demos/coffee-after.html'
-    },
-    game: {
-      before: 'demos/game-before.html',
-      after:  'demos/game-after.html'
-    }
+    coffee: { before: 'demos/coffee-before.html', after: 'demos/coffee-after.html' },
+    game:   { before: 'demos/game-before.html',   after: 'demos/game-after.html' }
   };
 
   function setIframeSrc(iframe, url) {
@@ -2115,52 +1811,19 @@
     });
   })();
 
-  // Examples (2-up) toggles
-  (function initXforms(){
-    function setXform(which, toAfter){
-      const stage = document.getElementById('xform-' + which);
-      if (!stage) return;
-
-      stage.classList.toggle('is-after', toAfter);
-
-      const stateEl = stage.querySelector('.ws-xform-state');
-      if (stateEl) stateEl.textContent = toAfter ? 'After' : 'Before';
-
-      const beforeView = stage.querySelector('.ws-xform-view[data-view="before"]');
-      const afterView  = stage.querySelector('.ws-xform-view[data-view="after"]');
-      if (beforeView) beforeView.style.display = toAfter ? 'none' : 'grid';
-      if (afterView)  afterView.style.display  = toAfter ? 'grid' : 'none';
-    }
-
-    document.querySelectorAll('.ws-xform-toggle').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const which = btn.getAttribute('data-xform');
-        const stage = document.getElementById('xform-' + which);
-        if (!stage) return;
-
-        const toAfter = !stage.classList.contains('is-after');
-        setXform(which, toAfter);
-
-        const textEl = btn.querySelector('.ws-xform-text');
-        if (textEl) textEl.textContent = toAfter ? 'Show before' : 'Show after';
-      });
-    });
-  })();
-
-  // Restored “text selection” effect in hero on load
-  (function heroSelectPop(){
-    const el = document.getElementById('ws-hero-highlight');
-    if (!el) return;
-
-    // Add selection state shortly after paint so it feels intentional
+  // Hero “bad font -> selection -> normal” (no initial flash of the good font)
+  (function heroTypeSelect(){
+    // starts as bad font because body has ws-hero-badfont already in HTML
     requestAnimationFrame(() => {
       setTimeout(() => {
-        el.classList.add('ws-selected');
-        // remove the font swap after the flash, keep the blue highlight subtle for a beat
+        document.body.classList.add('ws-hero-selecting');
         setTimeout(() => {
-          el.classList.remove('ws-selected');
-        }, 1400);
-      }, 180);
+          document.body.classList.remove('ws-hero-badfont');  // switch to normal font
+        }, 360);
+        setTimeout(() => {
+          document.body.classList.remove('ws-hero-selecting');
+        }, 1040);
+      }, 160);
     });
   })();
 
