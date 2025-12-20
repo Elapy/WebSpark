@@ -327,31 +327,6 @@
     }
 
     /* subtle brand repeat under hero */
-    .ws-brandline{
-      margin-top:12px;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:6px 12px;
-      border-radius:999px;
-      background: rgba(255,255,255,0.75);
-      border:1px solid rgba(201,210,235,0.75);
-      color: var(--ws-text-soft);
-      font-size:0.78rem;
-      box-shadow:0 14px 26px rgba(10,22,60,0.06);
-    }
-    .ws-brandline img{
-      width:18px;height:18px;border-radius:6px;object-fit:cover;
-      box-shadow:0 0 0 1px rgba(72,101,162,0.18);
-    }
-    .ws-brandline strong{
-      color:var(--ws-text-main);
-      font-weight:600;
-      letter-spacing:0.04em;
-      text-transform:uppercase;
-      font-family:"Montserrat", system-ui, sans-serif;
-      font-size:0.74rem;
-    }
 
     /* Side frames */
 
@@ -562,31 +537,6 @@
     }
 
     /* small brand badge in section headers */
-    .ws-brand-badge{
-      margin-top:10px;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:6px 12px;
-      border-radius:999px;
-      background: rgba(255,255,255,0.8);
-      border:1px solid rgba(201,210,235,0.8);
-      color:var(--ws-text-soft);
-      font-size:0.8rem;
-      box-shadow:0 14px 26px rgba(10,22,60,0.05);
-    }
-    .ws-brand-badge img{
-      width:18px;height:18px;border-radius:6px;object-fit:cover;
-      box-shadow:0 0 0 1px rgba(72,101,162,0.18);
-    }
-    .ws-brand-badge span{
-      font-family:"Montserrat", system-ui, sans-serif;
-      letter-spacing:0.05em;
-      text-transform:uppercase;
-      font-weight:600;
-      font-size:0.74rem;
-      color:var(--ws-text-main);
-    }
 
     /* Static before/after example pairs */
 
@@ -749,59 +699,6 @@
     .ws-benefit-text-block li{ margin:6px 0; }
 
     /* outcome visuals + glow */
-    .ws-outcome-visual{
-      border-radius:var(--ws-radius-lg);
-      position:relative;
-      overflow:visible; /* allow glow to spill */
-      isolation:isolate;
-    }
-    .ws-outcome-visual::before{
-      content:"";
-      position:absolute;
-      inset:-18px;
-      border-radius: calc(var(--ws-radius-lg) + 18px);
-      z-index:0;
-      opacity:0.9;
-      filter: blur(18px);
-      transform: translateZ(0);
-      pointer-events:none;
-      /* default glow */
-      background:
-        radial-gradient(circle at 30% 25%, rgba(47,107,255,0.35), transparent 58%),
-        radial-gradient(circle at 75% 70%, rgba(124,92,255,0.22), transparent 62%),
-        radial-gradient(circle at 55% 45%, rgba(17,64,166,0.18), transparent 70%);
-    }
-    /* per-image glow presets */
-    .ws-outcome-visual[data-glow="a"]::before{
-      background:
-        radial-gradient(circle at 30% 25%, rgba(255,140,84,0.40), transparent 60%),
-        radial-gradient(circle at 70% 70%, rgba(255,210,120,0.22), transparent 62%),
-        radial-gradient(circle at 55% 45%, rgba(255,120,150,0.18), transparent 70%);
-    }
-    .ws-outcome-visual[data-glow="b"]::before{
-      background:
-        radial-gradient(circle at 30% 25%, rgba(64,210,255,0.36), transparent 60%),
-        radial-gradient(circle at 70% 70%, rgba(120,255,190,0.20), transparent 64%),
-        radial-gradient(circle at 55% 45%, rgba(84,120,255,0.16), transparent 70%);
-    }
-    .ws-outcome-visual[data-glow="c"]::before{
-      background:
-        radial-gradient(circle at 30% 25%, rgba(140,120,255,0.36), transparent 60%),
-        radial-gradient(circle at 70% 70%, rgba(255,120,240,0.18), transparent 64%),
-        radial-gradient(circle at 55% 45%, rgba(70,110,255,0.16), transparent 72%);
-    }
-    .ws-outcome-visual[data-glow="d"]::before{
-      background:
-        radial-gradient(circle at 30% 25%, rgba(255,92,92,0.34), transparent 60%),
-        radial-gradient(circle at 70% 70%, rgba(255,180,84,0.20), transparent 64%),
-        radial-gradient(circle at 55% 45%, rgba(255,120,200,0.14), transparent 72%);
-    }
-    .ws-outcome-visual[data-glow="e"]::before{
-      background:
-        radial-gradient(circle at 30% 25%, rgba(47,107,255,0.34), transparent 60%),
-        radial-gradient(circle at 70% 70%, rgba(84,190,255,0.20), transparent 64%),
-        radial-gradient(circle at 55% 45%, rgba(124,92,255,0.14), transparent 72%);
-    }
 
     .ws-outcome-card{
       border-radius:var(--ws-radius-lg);
@@ -1056,29 +953,6 @@
     }
 
     /* CTA brand lockup */
-    .ws-cta-brand{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:6px 12px;
-      border-radius:999px;
-      background: rgba(245,247,251,0.75);
-      border:1px solid rgba(201,210,235,0.75);
-      color:var(--ws-text-soft);
-      font-size:0.8rem;
-    }
-    .ws-cta-brand img{
-      width:18px;height:18px;border-radius:6px;object-fit:cover;
-      box-shadow:0 0 0 1px rgba(72,101,162,0.18);
-    }
-    .ws-cta-brand span{
-      font-family:"Montserrat", system-ui, sans-serif;
-      letter-spacing:0.05em;
-      text-transform:uppercase;
-      font-weight:600;
-      font-size:0.74rem;
-      color:var(--ws-text-main);
-    }
 
     /* Footer */
 
@@ -1234,11 +1108,6 @@
           <span>Keep the content. Upgrade the presentation.</span>
         </div>
 
-        <div class="ws-brandline" aria-hidden="true">
-          <img src="assets/logo.png" alt="" />
-          <strong>WebSpark</strong>
-          <span>Design that looks intentional.</span>
-        </div>
       </div>
 
       <div class="ws-hero-side ws-hero-side-right" aria-hidden="true">
@@ -1290,10 +1159,6 @@
         Same idea, different execution: spacing, hierarchy, and where attention lands first.
       </p>
 
-      <div class="ws-brand-badge" aria-hidden="true">
-        <img src="assets/logo.png" alt="" />
-        <span>WebSpark</span>
-      </div>
     </div>
 
     <div class="ws-layout-gallery">
@@ -1626,10 +1491,6 @@
   <section aria-labelledby="cta-title">
     <div class="ws-cta-final" id="ws-cta-final">
       <div class="ws-cta-final-inner">
-        <div class="ws-cta-brand" aria-hidden="true">
-          <img src="assets/logo.png" alt="" />
-          <span>WebSpark</span>
-        </div>
 
         <h2 class="ws-cta-final-title" id="cta-title">Ready for a cleaner, sharper site?</h2>
         <p class="ws-cta-final-sub">Start with the most important page and upgrade the presentation without losing control.</p>
