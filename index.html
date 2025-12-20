@@ -90,7 +90,7 @@
       border-radius:14px;
       position:relative;
       overflow:hidden;
-      background: conic-gradient(from 210deg, #1140a6, #5384ff, #8ba8ff, #1140a6);
+      background: transparent;
       box-shadow: 0 0 0 1px rgba(72,101,162,0.18);
       flex: 0 0 auto;
     }
@@ -100,16 +100,8 @@
       display:block;
       object-fit:cover;
     }
-    .ws-logo-mark::after{
-      content:"";
-      position:absolute;
-      inset:6px;
-      border-radius:10px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.22));
-      box-shadow:0 0 0 1px rgba(72,101,162,0.12);
-      pointer-events:none;
-      opacity:0.6;
-    }
+    /* removed the old fake/gloss overlay so your real logo shows cleanly */
+    .ws-logo-mark::after{ content:none; }
 
     .ws-nav{
       display:flex;
@@ -334,6 +326,33 @@
       background:rgba(146,161,196,0.7);
     }
 
+    /* subtle brand repeat under hero */
+    .ws-brandline{
+      margin-top:12px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:6px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,0.75);
+      border:1px solid rgba(201,210,235,0.75);
+      color: var(--ws-text-soft);
+      font-size:0.78rem;
+      box-shadow:0 14px 26px rgba(10,22,60,0.06);
+    }
+    .ws-brandline img{
+      width:18px;height:18px;border-radius:6px;object-fit:cover;
+      box-shadow:0 0 0 1px rgba(72,101,162,0.18);
+    }
+    .ws-brandline strong{
+      color:var(--ws-text-main);
+      font-weight:600;
+      letter-spacing:0.04em;
+      text-transform:uppercase;
+      font-family:"Montserrat", system-ui, sans-serif;
+      font-size:0.74rem;
+    }
+
     /* Side frames */
 
     .ws-hero-frame{
@@ -519,6 +538,7 @@
       margin-bottom:18px;
       text-align:center;
       align-items:center;
+      position:relative;
     }
     .ws-section-kicker{
       font-size:0.78rem;
@@ -539,6 +559,33 @@
       color:var(--ws-text-soft);
       max-width:56ch;
       margin:0;
+    }
+
+    /* small brand badge in section headers */
+    .ws-brand-badge{
+      margin-top:10px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:6px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,0.8);
+      border:1px solid rgba(201,210,235,0.8);
+      color:var(--ws-text-soft);
+      font-size:0.8rem;
+      box-shadow:0 14px 26px rgba(10,22,60,0.05);
+    }
+    .ws-brand-badge img{
+      width:18px;height:18px;border-radius:6px;object-fit:cover;
+      box-shadow:0 0 0 1px rgba(72,101,162,0.18);
+    }
+    .ws-brand-badge span{
+      font-family:"Montserrat", system-ui, sans-serif;
+      letter-spacing:0.05em;
+      text-transform:uppercase;
+      font-weight:600;
+      font-size:0.74rem;
+      color:var(--ws-text-main);
     }
 
     /* Static before/after example pairs */
@@ -662,14 +709,6 @@
     .ws-block.medium{ height:24px; }
     .ws-block.tall{ height:42px; }
 
-    /* Animated band (no text, not a placeholder) */
-
-    @media (prefers-reduced-motion: reduce){
-      .ws-spark-band::before{ animation:none; }
-      .ws-spark{ animation:none; }
-      .ws-hero-title-selected .ws-hero-cursor{ animation:none; }
-    }
-
     /* Benefits blocks */
 
     .ws-benefit-section{ margin:60px 0; }
@@ -709,28 +748,78 @@
     }
     .ws-benefit-text-block li{ margin:6px 0; }
 
+    /* outcome visuals + glow */
     .ws-outcome-visual{
+      border-radius:var(--ws-radius-lg);
+      position:relative;
+      overflow:visible; /* allow glow to spill */
+      isolation:isolate;
+    }
+    .ws-outcome-visual::before{
+      content:"";
+      position:absolute;
+      inset:-18px;
+      border-radius: calc(var(--ws-radius-lg) + 18px);
+      z-index:0;
+      opacity:0.9;
+      filter: blur(18px);
+      transform: translateZ(0);
+      pointer-events:none;
+      /* default glow */
+      background:
+        radial-gradient(circle at 30% 25%, rgba(47,107,255,0.35), transparent 58%),
+        radial-gradient(circle at 75% 70%, rgba(124,92,255,0.22), transparent 62%),
+        radial-gradient(circle at 55% 45%, rgba(17,64,166,0.18), transparent 70%);
+    }
+    /* per-image glow presets */
+    .ws-outcome-visual[data-glow="a"]::before{
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,140,84,0.40), transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(255,210,120,0.22), transparent 62%),
+        radial-gradient(circle at 55% 45%, rgba(255,120,150,0.18), transparent 70%);
+    }
+    .ws-outcome-visual[data-glow="b"]::before{
+      background:
+        radial-gradient(circle at 30% 25%, rgba(64,210,255,0.36), transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(120,255,190,0.20), transparent 64%),
+        radial-gradient(circle at 55% 45%, rgba(84,120,255,0.16), transparent 70%);
+    }
+    .ws-outcome-visual[data-glow="c"]::before{
+      background:
+        radial-gradient(circle at 30% 25%, rgba(140,120,255,0.36), transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(255,120,240,0.18), transparent 64%),
+        radial-gradient(circle at 55% 45%, rgba(70,110,255,0.16), transparent 72%);
+    }
+    .ws-outcome-visual[data-glow="d"]::before{
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,92,92,0.34), transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(255,180,84,0.20), transparent 64%),
+        radial-gradient(circle at 55% 45%, rgba(255,120,200,0.14), transparent 72%);
+    }
+    .ws-outcome-visual[data-glow="e"]::before{
+      background:
+        radial-gradient(circle at 30% 25%, rgba(47,107,255,0.34), transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(84,190,255,0.20), transparent 64%),
+        radial-gradient(circle at 55% 45%, rgba(124,92,255,0.14), transparent 72%);
+    }
+
+    .ws-outcome-card{
       border-radius:var(--ws-radius-lg);
       border:1px solid rgba(182,196,229,0.85);
       background: #fff;
       overflow:hidden;
       box-shadow:0 18px 30px rgba(10,22,60,0.06);
+      position:relative;
+      z-index:1;
     }
-    .ws-outcome-visual .ws-outcome-media{
+    .ws-outcome-media{
       width:100%;
       height: 300px;
       display:block;
       object-fit:cover;
     }
     @media (max-width:900px){
-      .ws-outcome-visual .ws-outcome-media{ height: 240px; }
-    }
-    .ws-outcome-caption{
-      padding:10px 12px 12px;
-      font-size:0.82rem;
-      color: var(--ws-text-muted);
-      border-top:1px solid rgba(221,227,240,0.8);
-      background: linear-gradient(180deg, rgba(249,251,255,0.6), rgba(255,255,255,0.9));
+      .ws-outcome-media{ height: 240px; }
     }
 
     /* Interactive demos */
@@ -920,19 +1009,23 @@
       position:relative;
       z-index:1;
       padding:22px 20px 26px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
     }
     .ws-cta-final-title{
       font-size:1.8rem;
       font-weight:600;
       letter-spacing:-0.02em;
-      margin:0 0 10px;
+      margin:0;
       color:var(--ws-text-main);
     }
     .ws-cta-final-sub{
       font-size:0.94rem;
       color:var(--ws-text-soft);
       max-width:40ch;
-      margin:0 auto 18px;
+      margin:0 auto 6px;
     }
     .ws-cta-final .ws-btn-primary{ padding-inline:26px; }
     .ws-cta-final::before,
@@ -960,6 +1053,31 @@
       border-left:11px solid transparent;
       border-right:11px solid transparent;
       border-bottom:20px solid #ff8ab3;
+    }
+
+    /* CTA brand lockup */
+    .ws-cta-brand{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:6px 12px;
+      border-radius:999px;
+      background: rgba(245,247,251,0.75);
+      border:1px solid rgba(201,210,235,0.75);
+      color:var(--ws-text-soft);
+      font-size:0.8rem;
+    }
+    .ws-cta-brand img{
+      width:18px;height:18px;border-radius:6px;object-fit:cover;
+      box-shadow:0 0 0 1px rgba(72,101,162,0.18);
+    }
+    .ws-cta-brand span{
+      font-family:"Montserrat", system-ui, sans-serif;
+      letter-spacing:0.05em;
+      text-transform:uppercase;
+      font-weight:600;
+      font-size:0.74rem;
+      color:var(--ws-text-main);
     }
 
     /* Footer */
@@ -1024,6 +1142,10 @@
       transform: translateY(-2px);
       box-shadow:0 16px 32px rgba(14,29,68,0.3);
       border-color: var(--ws-accent);
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .ws-hero-title-selected .ws-hero-cursor{ animation:none; }
     }
   </style>
 </head>
@@ -1111,6 +1233,12 @@
           <span class="ws-hero-meta-divider"></span>
           <span>Keep the content. Upgrade the presentation.</span>
         </div>
+
+        <div class="ws-brandline" aria-hidden="true">
+          <img src="assets/logo.png" alt="" />
+          <strong>WebSpark</strong>
+          <span>Design that looks intentional.</span>
+        </div>
       </div>
 
       <div class="ws-hero-side ws-hero-side-right" aria-hidden="true">
@@ -1161,6 +1289,11 @@
       <p class="ws-section-sub">
         Same idea, different execution: spacing, hierarchy, and where attention lands first.
       </p>
+
+      <div class="ws-brand-badge" aria-hidden="true">
+        <img src="assets/logo.png" alt="" />
+        <span>WebSpark</span>
+      </div>
     </div>
 
     <div class="ws-layout-gallery">
@@ -1242,8 +1375,6 @@
         </div>
       </article>
     </div>
-
-    <!-- Now: intentional animated band (no placeholder text) -->
   </section>
 
   <section id="benefits" aria-labelledby="benefits-intro-title">
@@ -1272,18 +1403,20 @@
         </ul>
       </div>
 
-      <figure class="ws-outcome-visual">
-        <img class="ws-outcome-media" src="assets/outcome1.jpg" alt="Outcome 1 visual" />
-        <figcaption class="ws-outcome-caption">assets/outcome1.jpg</figcaption>
+      <figure class="ws-outcome-visual" data-glow="a">
+        <div class="ws-outcome-card">
+          <img class="ws-outcome-media" src="assets/outcome1.jpg" alt="Outcome 1 visual" />
+        </div>
       </figure>
     </div>
   </section>
 
   <section class="ws-benefit-section" aria-labelledby="b2">
     <div class="ws-benefit-layout">
-      <figure class="ws-outcome-visual">
-        <img class="ws-outcome-media" src="assets/outcome2.jpg" alt="Outcome 2 visual" />
-        <figcaption class="ws-outcome-caption">assets/outcome2.jpg</figcaption>
+      <figure class="ws-outcome-visual" data-glow="b">
+        <div class="ws-outcome-card">
+          <img class="ws-outcome-media" src="assets/outcome2.jpg" alt="Outcome 2 visual" />
+        </div>
       </figure>
 
       <div class="ws-benefit-text-block">
@@ -1318,18 +1451,20 @@
         </ul>
       </div>
 
-      <figure class="ws-outcome-visual">
-        <img class="ws-outcome-media" src="assets/outcome3.jpg" alt="Outcome 3 visual" />
-        <figcaption class="ws-outcome-caption">assets/outcome3.jpg</figcaption>
+      <figure class="ws-outcome-visual" data-glow="c">
+        <div class="ws-outcome-card">
+          <img class="ws-outcome-media" src="assets/outcome3.jpg" alt="Outcome 3 visual" />
+        </div>
       </figure>
     </div>
   </section>
 
   <section class="ws-benefit-section" aria-labelledby="b4">
     <div class="ws-benefit-layout">
-      <figure class="ws-outcome-visual">
-        <img class="ws-outcome-media" src="assets/outcome4.jpg" alt="Outcome 4 visual" />
-        <figcaption class="ws-outcome-caption">assets/outcome4.jpg</figcaption>
+      <figure class="ws-outcome-visual" data-glow="d">
+        <div class="ws-outcome-card">
+          <img class="ws-outcome-media" src="assets/outcome4.jpg" alt="Outcome 4 visual" />
+        </div>
       </figure>
 
       <div class="ws-benefit-text-block">
@@ -1364,9 +1499,10 @@
         </ul>
       </div>
 
-      <figure class="ws-outcome-visual">
-        <img class="ws-outcome-media" src="assets/outcome5.jpg" alt="Outcome 5 visual" />
-        <figcaption class="ws-outcome-caption">assets/outcome5.jpg</figcaption>
+      <figure class="ws-outcome-visual" data-glow="e">
+        <div class="ws-outcome-card">
+          <img class="ws-outcome-media" src="assets/outcome5.jpg" alt="Outcome 5 visual" />
+        </div>
       </figure>
     </div>
   </section>
@@ -1490,6 +1626,11 @@
   <section aria-labelledby="cta-title">
     <div class="ws-cta-final" id="ws-cta-final">
       <div class="ws-cta-final-inner">
+        <div class="ws-cta-brand" aria-hidden="true">
+          <img src="assets/logo.png" alt="" />
+          <span>WebSpark</span>
+        </div>
+
         <h2 class="ws-cta-final-title" id="cta-title">Ready for a cleaner, sharper site?</h2>
         <p class="ws-cta-final-sub">Start with the most important page and upgrade the presentation without losing control.</p>
         <a href="contact.html" class="ws-btn-primary">Get started ↗</a>
