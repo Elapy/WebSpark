@@ -952,6 +952,30 @@
       border-bottom:20px solid #ff8ab3;
     }
 
+    .ws-cta-signature{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      margin-bottom:14px;
+      opacity:0.85;
+    }
+    
+    .ws-cta-signature img{
+      width:26px;
+      height:26px;
+      object-fit:contain;
+    }
+    
+    .ws-cta-signature span{
+      font-family:"Montserrat", system-ui, sans-serif;
+      font-weight:600;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      font-size:0.68rem;
+      color:var(--ws-text-muted);
+    }
+
     /* CTA brand lockup */
 
     /* Footer */
@@ -1491,6 +1515,11 @@
   <section aria-labelledby="cta-title">
     <div class="ws-cta-final" id="ws-cta-final">
       <div class="ws-cta-final-inner">
+
+        <div class="ws-cta-signature" aria-hidden="true">
+          <img src="assets/logo.png" alt="" />
+          <span>WebSpark</span>
+        </div>
 
         <h2 class="ws-cta-final-title" id="cta-title">Ready for a cleaner, sharper site?</h2>
         <p class="ws-cta-final-sub">Start with the most important page and upgrade the presentation without losing control.</p>
