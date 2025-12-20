@@ -1356,6 +1356,13 @@
       background: radial-gradient(circle at center, rgba(214,180,107,0.10), transparent 65%);
       opacity: 1;
     }
+
+    /* Redesign button text should always be dark */
+    .ws-floating-redesign button,
+    .ws-floating-redesign button span{
+      color:#000;
+    }
+
   </style>
 </head>
 
@@ -2023,8 +2030,8 @@
     const THEMES = [
       {
         id: 'ws-theme-cyber',
-        label: 'Cyber / Neon',
-        emoji: '🧬',
+        label: '↺',
+        emoji: '',
         // keep "WebSpark", keep accurate description, but rewrite everything else
         content: {
           heroTitle: 'WebSpark rebuilds your site<br>into a <span class="ws-hero-highlight">conversion-ready interface.</span>',
@@ -2114,8 +2121,8 @@
       },
       {
         id: 'ws-theme-playful',
-        label: 'Playful / Kids',
-        emoji: '🧸',
+        label: '↺',
+        emoji: '',
         content: {
           heroTitle: 'Make your website<br><span class="ws-hero-highlight">easy to understand</span> in one glance.',
           heroSub: 'WebSpark takes what you already have and rebuilds it into a friendlier, cleaner experience — still your content, just way easier to follow.',
@@ -2204,8 +2211,8 @@
       },
       {
         id: 'ws-theme-editorial',
-        label: 'Editorial / Minimal',
-        emoji: '📰',
+        label: '↺',
+        emoji: '',
         content: {
           heroTitle: 'WebSpark rebuilds websites<br>into <span class="ws-hero-highlight">clear, structured pages.</span>',
           heroSub: 'Less decoration. More meaning. WebSpark refines hierarchy, spacing, and typography so the page reads like a well-edited article.',
@@ -2294,8 +2301,8 @@
       },
       {
         id: 'ws-theme-noir',
-        label: 'Noir / Premium',
-        emoji: '🕯️',
+        label: '↺',
+        emoji: '',
         content: {
           heroTitle: 'WebSpark turns your site<br>into a <span class="ws-hero-highlight">premium first impression.</span>',
           heroSub: 'High contrast. Tight spacing. Quiet confidence. WebSpark rebuilds your layout so the experience feels intentional and worth trusting.',
