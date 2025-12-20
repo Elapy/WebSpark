@@ -36,6 +36,12 @@
 
       --ws-hero-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
+      /* NEW: demo “generator” brand accents */
+      --ws-gen-a: color-mix(in srgb, var(--ws-attn) 92%, white);
+      --ws-gen-b: color-mix(in srgb, var(--ws-attn2) 92%, white);
+      --ws-gen-surface: color-mix(in srgb, var(--ws-surface) 86%, transparent);
+      --ws-gen-border: color-mix(in srgb, var(--ws-border-strong) 70%, transparent);
+
       scroll-behavior:smooth;
     }
 
@@ -754,12 +760,20 @@
       user-select:none;
       white-space:nowrap;
       box-shadow:0 14px 26px rgba(47,107,255,0.22);
-      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, filter 0.12s ease-out;
+      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, filter 0.12s ease-out, opacity 0.12s ease-out;
     }
     .ws-demo-toggle:hover{
       transform: translateY(-1px);
       filter: brightness(1.02);
       box-shadow:0 18px 34px rgba(47,107,255,0.30);
+    }
+    /* NEW: disabled state while “generating” */
+    .ws-demo-toggle:disabled{
+      opacity:0.68;
+      cursor:not-allowed;
+      transform:none;
+      filter:none;
+      box-shadow:0 12px 22px rgba(47,107,255,0.18);
     }
 
     .ws-demo-layout{
@@ -806,6 +820,7 @@
       border:1px solid rgba(170,186,224,0.75);
       background:#fff;
       box-shadow:0 18px 30px rgba(10,22,60,0.08);
+      position:relative;
     }
     .ws-demo-iframe{
       width:100%;
@@ -814,6 +829,210 @@
       display:block;
       pointer-events:none;
       user-select:none;
+
+      /* NEW: smooth crossfade on src changes */
+      opacity: 1;
+      transition: opacity 220ms ease-out, filter 220ms ease-out;
+    }
+    .ws-demo-iframe.ws-fading{
+      opacity: 0;
+      filter: blur(1px);
+    }
+
+    /* ============================================================
+       NEW: “Generating redesign…” overlay (appears only first time)
+       ============================================================ */
+
+    .ws-demo-loader{
+      position:absolute;
+      inset:10px;
+      border-radius:12px;
+      background:
+        radial-gradient(circle at 15% 15%, color-mix(in srgb, var(--ws-gen-a) 18%, transparent) 0%, transparent 55%),
+        radial-gradient(circle at 85% 85%, color-mix(in srgb, var(--ws-gen-b) 16%, transparent) 0%, transparent 60%),
+        color-mix(in srgb, var(--ws-gen-surface) 70%, transparent);
+      border:1px solid var(--ws-gen-border);
+      backdrop-filter: blur(14px);
+      box-shadow:
+        0 18px 44px rgba(10,22,60,0.16),
+        0 0 0 6px color-mix(in srgb, var(--ws-gen-a) 10%, transparent);
+      display:grid;
+      align-content:center;
+      justify-items:center;
+      gap:12px;
+      padding:18px 14px;
+      opacity:0;
+      transform: translateY(6px) scale(0.985);
+      pointer-events:none;
+      z-index:5;
+    }
+
+    .ws-demo-loader.is-visible{
+      opacity:1;
+      transform: translateY(0) scale(1);
+      pointer-events:auto; /* blocks clicks while visible */
+      transition: opacity 160ms ease-out, transform 200ms ease-out;
+    }
+
+    .ws-demo-loader-card{
+      width:min(360px, 92%);
+      border-radius:14px;
+      background: rgba(255,255,255,0.84);
+      border:1px solid rgba(170,186,224,0.75);
+      box-shadow:0 16px 34px rgba(10,22,60,0.10);
+      overflow:hidden;
+    }
+
+    .ws-demo-loader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px 12px;
+      border-bottom:1px solid rgba(190,203,230,0.65);
+      background:
+        linear-gradient(135deg,
+          color-mix(in srgb, var(--ws-gen-a) 14%, white),
+          color-mix(in srgb, var(--ws-gen-b) 10%, white)
+        );
+    }
+
+    .ws-demo-loader-brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-family:"Montserrat", system-ui, sans-serif;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      font-size:0.70rem;
+      color: rgba(16,21,36,0.72);
+      font-weight:700;
+      user-select:none;
+    }
+
+    .ws-demo-loader-mark{
+      width:26px;
+      height:26px;
+      border-radius:10px;
+      position:relative;
+      overflow:hidden;
+      box-shadow: 0 0 0 1px rgba(20,35,80,0.12);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.75), transparent 55%),
+        linear-gradient(135deg, var(--ws-gen-a), var(--ws-gen-b));
+    }
+    .ws-demo-loader-mark::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.75), transparent);
+      transform: rotate(18deg);
+      animation: ws-gen-shine 1.15s ease-in-out infinite;
+    }
+
+    .ws-demo-loader-chip{
+      font-size:0.72rem;
+      padding:4px 9px;
+      border-radius:999px;
+      background: rgba(255,255,255,0.78);
+      border:1px solid rgba(190,203,230,0.75);
+      color: rgba(16,21,36,0.64);
+      user-select:none;
+      font-weight:600;
+    }
+
+    @keyframes ws-gen-shine{
+      0%{ transform: translateX(-40%) rotate(18deg); opacity:0.0; }
+      35%{ opacity:0.9; }
+      100%{ transform: translateX(40%) rotate(18deg); opacity:0.0; }
+    }
+
+    .ws-demo-loader-body{
+      padding:12px 12px 14px;
+      display:grid;
+      gap:10px;
+      justify-items:center;
+    }
+
+    .ws-demo-loader-title{
+      font-family:"Montserrat", system-ui, sans-serif;
+      font-size:0.95rem;
+      font-weight:700;
+      color: rgba(16,21,36,0.88);
+      letter-spacing:-0.01em;
+      margin:0;
+      text-align:center;
+    }
+
+    .ws-demo-loader-step{
+      font-size:0.82rem;
+      color: rgba(16,21,36,0.62);
+      margin:0;
+      text-align:center;
+      min-height: 1.2em;
+    }
+
+    .ws-demo-loader-bar{
+      width:100%;
+      height:10px;
+      border-radius:999px;
+      background: rgba(16,21,36,0.08);
+      overflow:hidden;
+      position:relative;
+      border:1px solid rgba(16,21,36,0.10);
+    }
+
+    .ws-demo-loader-bar::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        linear-gradient(90deg,
+          transparent,
+          color-mix(in srgb, var(--ws-gen-a) 58%, transparent),
+          color-mix(in srgb, var(--ws-gen-b) 58%, transparent),
+          transparent
+        );
+      transform: translateX(-70%);
+      animation: ws-gen-scan 1.05s ease-in-out infinite;
+      filter: blur(0.1px);
+    }
+
+    @keyframes ws-gen-scan{
+      0%{ transform: translateX(-70%); opacity:0.15; }
+      30%{ opacity:0.95; }
+      70%{ opacity:0.95; }
+      100%{ transform: translateX(70%); opacity:0.15; }
+    }
+
+    .ws-demo-loader-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      justify-content:center;
+      margin-top:2px;
+    }
+    .ws-demo-loader-badge{
+      font-size:0.72rem;
+      padding:4px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,0.85);
+      border:1px solid rgba(190,203,230,0.70);
+      color: rgba(16,21,36,0.62);
+      user-select:none;
+      font-weight:600;
+    }
+    .ws-demo-loader-badge strong{
+      color: rgba(16,21,36,0.84);
+      font-weight:800;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .ws-demo-loader-mark::after,
+      .ws-demo-loader-bar::before{
+        animation:none;
+        opacity:0.65;
+      }
+      .ws-demo-iframe{ transition:none; }
     }
 
     /* How it works */
@@ -835,7 +1054,7 @@
       align-items:start;
 
       padding:14px 14px;
-      min-height: 102px;
+      min-height: 102px; /* taller blocks (your request) */
       border-radius:14px;
       background:var(--ws-surface);
       border:1px solid var(--ws-border-subtle);
@@ -1158,93 +1377,6 @@
     }
 
     /* ============================================================
-       SCREEN TRANSFORM EFFECT (added)
-       ============================================================ */
-
-    .ws-screenfx{
-      position: fixed;
-      inset: 0;
-      z-index: 99999;
-      pointer-events: none;
-      opacity: 0;
-      transform: translateZ(0);
-      will-change: opacity, transform, filter;
-      /* A “device screen” feel: light wash + diagonal sweep + subtle grain */
-      background:
-        radial-gradient(circle at 30% 20%, rgba(255,255,255,0.72), transparent 52%),
-        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.35), transparent 58%),
-        linear-gradient(120deg, rgba(17,64,166,0.10), rgba(47,107,255,0.12), rgba(124,92,255,0.08)),
-        rgba(255,255,255,0.22);
-      backdrop-filter: blur(0px) saturate(1);
-      -webkit-backdrop-filter: blur(0px) saturate(1);
-    }
-    .ws-screenfx::after{
-      content:"";
-      position:absolute;
-      inset:-40px;
-      background:
-        repeating-linear-gradient(
-          0deg,
-          rgba(0,0,0,0.05) 0px,
-          rgba(0,0,0,0.05) 1px,
-          transparent 2px,
-          transparent 6px
-        );
-      opacity: 0.06;
-      transform: translateY(0);
-    }
-
-    /* Run animation by adding .is-run */
-    .ws-screenfx.is-run{
-      animation: ws-screenfx-pop 520ms ease-in-out forwards;
-    }
-    .ws-screenfx.is-run::after{
-      animation: ws-screenfx-scan 520ms ease-in-out forwards;
-    }
-
-    @keyframes ws-screenfx-pop{
-      0%{
-        opacity:0;
-        transform: scale(1.01);
-        backdrop-filter: blur(0px) saturate(1);
-        filter: contrast(1) brightness(1);
-      }
-      40%{
-        opacity:1;
-        transform: scale(1.00);
-        backdrop-filter: blur(10px) saturate(1.15);
-        filter: contrast(1.02) brightness(1.02);
-      }
-      60%{
-        opacity:1;
-        transform: scale(1.00);
-        backdrop-filter: blur(14px) saturate(1.25);
-        filter: contrast(1.04) brightness(1.03);
-      }
-      100%{
-        opacity:0;
-        transform: scale(0.995);
-        backdrop-filter: blur(0px) saturate(1);
-        filter: contrast(1) brightness(1);
-      }
-    }
-
-    @keyframes ws-screenfx-scan{
-      0%{ opacity:0.0; transform: translateY(-14px); }
-      35%{ opacity:0.10; transform: translateY(0px); }
-      65%{ opacity:0.10; transform: translateY(8px); }
-      100%{ opacity:0.0; transform: translateY(18px); }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      .ws-screenfx,
-      .ws-screenfx.is-run,
-      .ws-screenfx.is-run::after{
-        animation: none !important;
-      }
-    }
-
-    /* ============================================================
        THEME OVERRIDES (JS sets .ws-theme-* on <html>)
        ============================================================ */
 
@@ -1516,6 +1648,7 @@
         <div class="ws-hero-title-wrap" id="ws-hero-title-wrap">
           <div class="ws-hero-title-highlight-bar" aria-hidden="true"></div>
 
+          <!-- Theme-switchable content (JS will rewrite these) -->
           <h1 class="ws-hero-title" id="hero-title" data-ws-text="heroTitle">
             Turn your website<br>
             into a <span class="ws-hero-highlight">great first impression.</span>
@@ -1537,6 +1670,7 @@
           <span class="ws-hero-meta-divider"></span>
           <span data-ws-text="heroMeta2">Keep the content. Upgrade the presentation.</span>
         </div>
+
       </div>
 
       <div class="ws-hero-side ws-hero-side-right" aria-hidden="true">
@@ -2005,8 +2139,119 @@
     game:   { before: 'demos/game-before.html',   after: 'demos/game-after.html' }
   };
 
+  /* ============================================================
+     NEW: Demo “Generating redesign…” illusion (only first time)
+     - Shows branded loader overlay for a short beat
+     - Only on the FIRST time the user goes Before -> After (across both demos)
+     - Uses sessionStorage to make it “only first time” per tab session
+     ============================================================ */
+
+  function sleep(ms){
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   function setIframeSrc(iframe, url){
     iframe.setAttribute('src', url);
+  }
+
+  function setIframeSrcWithFade(iframe, url){
+    if (!iframe) return;
+    iframe.classList.add('ws-fading');
+
+    // If the iframe errors/never loads, we still fade back in after a safety timeout.
+    let didFinish = false;
+    const safety = setTimeout(() => {
+      if (didFinish) return;
+      didFinish = true;
+      iframe.classList.remove('ws-fading');
+    }, 1200);
+
+    const onLoad = () => {
+      if (didFinish) return;
+      didFinish = true;
+      clearTimeout(safety);
+      // Small delay so the new doc has time to paint behind the fade
+      setTimeout(() => iframe.classList.remove('ws-fading'), 40);
+    };
+
+    iframe.addEventListener('load', onLoad, { once:true });
+    setIframeSrc(iframe, url);
+  }
+
+  function ensureDemoLoader(layout){
+    if (!layout) return null;
+    let loader = layout.querySelector('.ws-demo-loader');
+    if (loader) return loader;
+
+    loader = document.createElement('div');
+    loader.className = 'ws-demo-loader';
+    loader.setAttribute('aria-hidden', 'true');
+
+    loader.innerHTML = `
+      <div class="ws-demo-loader-card" role="status" aria-live="polite">
+        <div class="ws-demo-loader-top">
+          <div class="ws-demo-loader-brand">
+            <span class="ws-demo-loader-mark" aria-hidden="true"></span>
+            <span>WebSpark</span>
+          </div>
+          <span class="ws-demo-loader-chip">Generating</span>
+        </div>
+
+        <div class="ws-demo-loader-body">
+          <p class="ws-demo-loader-title">Building the redesign…</p>
+          <p class="ws-demo-loader-step" data-ws-demo-step>Analyzing layout structure</p>
+
+          <div class="ws-demo-loader-bar" aria-hidden="true"></div>
+
+          <div class="ws-demo-loader-badges" aria-hidden="true">
+            <span class="ws-demo-loader-badge"><strong>✓</strong> spacing</span>
+            <span class="ws-demo-loader-badge"><strong>✓</strong> hierarchy</span>
+            <span class="ws-demo-loader-badge"><strong>✓</strong> CTA focus</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    layout.appendChild(loader);
+    return loader;
+  }
+
+  async function runDemoGenerationOverlay(layout, btn){
+    const loader = ensureDemoLoader(layout);
+    if (!loader) return;
+
+    const stepEl = loader.querySelector('[data-ws-demo-step]');
+    const steps = [
+      'Analyzing layout structure',
+      'Reflowing sections + grid',
+      'Polishing typography + spacing',
+      'Finalizing “after” preview'
+    ];
+
+    // Show
+    loader.setAttribute('aria-hidden', 'false');
+    loader.classList.add('is-visible');
+
+    // Lock the button while “generating”
+    if (btn){
+      btn.disabled = true;
+      btn.setAttribute('aria-busy', 'true');
+    }
+
+    // Stepper (fast + snappy; feels “real” without being annoying)
+    for (let i = 0; i < steps.length; i++){
+      if (stepEl) stepEl.textContent = steps[i];
+      await sleep(i === steps.length - 1 ? 320 : 240);
+    }
+
+    // Hide
+    loader.classList.remove('is-visible');
+    loader.setAttribute('aria-hidden', 'true');
+
+    if (btn){
+      btn.disabled = false;
+      btn.removeAttribute('aria-busy');
+    }
   }
 
   (function initDemos(){
@@ -2015,13 +2260,22 @@
     if (coffeeIframe) setIframeSrc(coffeeIframe, DEMO_FILES.coffee.before);
     if (gameIframe) setIframeSrc(gameIframe, DEMO_FILES.game.before);
 
+    // Only first time across BOTH demos (per tab session)
+    let demoGenerationUsed = false;
+    try{
+      demoGenerationUsed = sessionStorage.getItem('ws_demo_gen_done') === '1';
+    }catch(e){
+      demoGenerationUsed = false;
+    }
+
     document.querySelectorAll('.ws-demo-toggle').forEach((btn) => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', async () => {
         const which = btn.getAttribute('data-demo');
         const layout = document.getElementById('demo-' + which);
         const iframe = document.getElementById('iframe-' + which);
         if (!layout || !iframe || !DEMO_FILES[which]) return;
 
+        const willImprove = !layout.classList.contains('is-improved'); // Before -> After?
         const improved = layout.classList.toggle('is-improved');
 
         const stateEl = layout.querySelector('.ws-demo-state');
@@ -2030,7 +2284,27 @@
         const textEl = btn.querySelector('.ws-toggle-text');
         if (textEl) textEl.textContent = improved ? 'Back to before' : 'Click to improve';
 
-        setIframeSrc(iframe, improved ? DEMO_FILES[which].after : DEMO_FILES[which].before);
+        // If returning to before, no loader. Just swap with a quick fade.
+        if (!improved){
+          setIframeSrcWithFade(iframe, DEMO_FILES[which].before);
+          return;
+        }
+
+        // First-ever Before -> After: show branded “generating” overlay
+        if (willImprove && !demoGenerationUsed){
+          demoGenerationUsed = true;
+          try{ sessionStorage.setItem('ws_demo_gen_done', '1'); }catch(e){}
+
+          // Show loader on the layout itself (feels like it’s generating inside the card)
+          await runDemoGenerationOverlay(layout, btn);
+
+          // Then reveal the after state
+          setIframeSrcWithFade(iframe, DEMO_FILES[which].after);
+          return;
+        }
+
+        // Normal behavior after first time: quick fade + swap
+        setIframeSrcWithFade(iframe, DEMO_FILES[which].after);
       });
     });
   })();
@@ -2081,7 +2355,10 @@
 
   /* ============================================================
      REDESIGN BUTTON: full page “different company” vibes
-     + Screen transformation effect (added)
+     - First click: split into 2 buttons:
+         1) Back to original
+         2) Redesign this view (cycles through designs; original not included)
+     - Back to original returns to original view and collapses to 1 button.
      ============================================================ */
 
   (function wsRedesignController(){
@@ -2090,38 +2367,6 @@
     const firstBtn = document.getElementById('ws-btn-first');
 
     if (!controls || !firstBtn) return;
-
-    // ---- Screen transform helper (added) ----
-    function runScreenTransform(applyFn){
-      // Respect reduced motion
-      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduceMotion){
-        applyFn();
-        return;
-      }
-
-      const fx = document.createElement('div');
-      fx.className = 'ws-screenfx';
-      document.body.appendChild(fx);
-
-      // Start animation next frame so styles apply
-      requestAnimationFrame(() => {
-        fx.classList.add('is-run');
-      });
-
-      // Apply theme near the “peak” of the effect
-      // (must happen while the overlay is fully visible)
-      const APPLY_AT_MS = 260; // ~ half of 520ms
-      const END_AT_MS = 560;   // cleanup after animation finishes
-
-      window.setTimeout(() => {
-        try { applyFn(); } catch (e) { /* fail silent */ }
-      }, APPLY_AT_MS);
-
-      window.setTimeout(() => {
-        if (fx && fx.parentNode) fx.parentNode.removeChild(fx);
-      }, END_AT_MS);
-    }
 
     // Capture original text + src values so "Back to original" is exact.
     const original = {
@@ -2145,6 +2390,7 @@
         id: 'ws-theme-cyber',
         label: '↺',
         emoji: '',
+        // keep "WebSpark", keep accurate description, but rewrite everything else
         content: {
           heroTitle: 'WebSpark rebuilds your site<br>into a <span class="ws-hero-highlight">conversion-ready interface.</span>',
           heroSub: 'Think of it like refactoring — but for perception. Same business. A clearer story. A layout that feels engineered, not improvised.',
@@ -2186,7 +2432,7 @@
 
           o4Kicker: 'Outcome 04',
           o4Title: 'Brand that feels engineered',
-          o4P: 'WebSpark strengthens brand identity by making every component speak the same design language: buttons, cards, headings, and spacing — one voice.',
+          o4P: 'WebSpark strengthens brand identity by making every component speak the same design language: buttons, cards, headings, and spacing all cooperating.',
           o4L1: 'Repeatable UI patterns (less visual noise)',
           o4L2: 'Accent color used like a tool, not paint',
           o4L3: 'Layout symmetry that reads as “professional”',
@@ -2518,25 +2764,29 @@
       });
     }
 
-    function restoreOriginalInstant(){
+    function restoreOriginal(){
       clearThemeClasses();
 
+      // Restore texts
       Object.keys(original.texts).forEach((k) => {
         const el = document.querySelector('[data-ws-text="' + k + '"]');
         if (el) el.innerHTML = original.texts[k];
       });
 
+      // Restore sources
       Object.keys(original.srcs).forEach((k) => {
         const el = document.querySelector('[data-ws-src="' + k + '"]');
         if (el) el.setAttribute('src', original.srcs[k]);
       });
 
+      // Restore hero font variable if it was modified
       if (original.heroFont) {
         htmlEl.style.setProperty('--ws-hero-font', original.heroFont.trim());
       }
 
       activeThemeIndex = -1;
 
+      // Collapse UI back to single button (as requested)
       controls.innerHTML = `
         <button type="button" id="ws-btn-first" title="Redesign view">
           <span>🎛</span>
@@ -2550,17 +2800,14 @@
       hasSplitControls = false;
     }
 
-    function restoreOriginal(){
-      runScreenTransform(restoreOriginalInstant);
-    }
-
-    function applyThemeByIndexInstant(i){
+    function applyThemeByIndex(i){
       const theme = THEMES[i];
       if (!theme) return;
 
       clearThemeClasses();
       htmlEl.classList.add(theme.id);
 
+      // Optional: make the hero font reflect the theme
       if (theme.id === 'ws-theme-editorial'){
         htmlEl.style.setProperty('--ws-hero-font', 'Georgia, "Times New Roman", Times, serif');
       } else if (theme.id === 'ws-theme-cyber'){
@@ -2570,11 +2817,11 @@
       }
 
       applyTextMap(theme.content);
-      activeThemeIndex = i;
-    }
 
-    function applyThemeByIndex(i){
-      runScreenTransform(() => applyThemeByIndexInstant(i));
+      // NOTE about "image choices":
+      // You asked for different image choices, but we can't assume new files exist.
+      // So we keep your existing assets/* images and make them feel different per theme via CSS filters.
+      activeThemeIndex = i;
     }
 
     function splitControlsIfNeeded(){
@@ -2601,10 +2848,11 @@
     }
 
     function cycleTheme(){
+      // Cycle through non-original themes only.
       const next = (activeThemeIndex + 1) % THEMES.length;
-
       applyThemeByIndex(next);
 
+      // Nudge button label to show what you landed on (still says "Redesign this view")
       const cycleBtn = document.getElementById('ws-btn-cycle');
       if (cycleBtn){
         const theme = THEMES[next];
@@ -2614,9 +2862,9 @@
     }
 
     function firstClickOrCycle(){
+      // First click ever: split buttons and apply first non-original theme.
       if (!hasSplitControls){
         splitControlsIfNeeded();
-
         applyThemeByIndex(0);
 
         const cycleBtn = document.getElementById('ws-btn-cycle');
@@ -2628,6 +2876,7 @@
         return;
       }
 
+      // If already split, it becomes cycle.
       cycleTheme();
     }
 
