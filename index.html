@@ -1165,12 +1165,17 @@
     .ws-cta-final::after{ bottom:-140px; right:-200px; }
 
     .ws-cta-shapes{ position:absolute; inset:0; pointer-events:none; z-index:0; }
+    
     .ws-cta-shape{
       position:absolute;
-      transform: translate(0,0) rotate(var(--rot,0deg));
+      --tx: 0px;
+      --ty: 0px;
+      transform: translate(var(--tx), var(--ty)) rotate(var(--rot,0deg));
       opacity:0.8;
       transition: transform 0.05s linear;
+      will-change: transform;
     }
+
     .ws-cta-shape.circle{ width:26px;height:26px;border-radius:999px;background:#ffcc70; }
     .ws-cta-shape.square{ width:20px;height:20px;border-radius:6px;background:#7ad3ff; }
     .ws-cta-shape.triangle{
@@ -2264,6 +2269,85 @@
   })();
 
   /* ============================================================
+     CTA SHAPES PARALLAX (RESTORED)
+     - ONLY affects the shapes inside #ws-cta-final
+     - Does NOT touch demos or full-site redesign effect
+     ============================================================ */
+  (function initCtaShapesParallax(){
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
+    const cta = document.getElementById('ws-cta-final');
+    if (!cta) return;
+
+    const shapes = Array.from(cta.querySelectorAll('.ws-cta-shape'));
+    if (!shapes.length) return;
+
+    // Cache each shape's intended travel range (from your data-x / data-y)
+    const ranges = shapes.map((el) => {
+      const dx = parseFloat(el.getAttribute('data-x') || '0');
+      const dy = parseFloat(el.getAttribute('data-y') || '0');
+      return { el, dx, dy };
+    });
+
+    let rafId = 0;
+    let targetNX = 0; // -1..1
+    let targetNY = 0; // -1..1
+    let curNX = 0;
+    let curNY = 0;
+
+    // Tune: lower = subtler motion
+    const STRENGTH = 0.12;  // multiplies your dx/dy (which are large by design)
+    const EASE = 0.10;      // smoothing factor per frame
+
+    function update(){
+      rafId = 0;
+
+      // Smooth toward target
+      curNX += (targetNX - curNX) * EASE;
+      curNY += (targetNY - curNY) * EASE;
+
+      for (const item of ranges){
+        const tx = (curNX * item.dx * STRENGTH);
+        const ty = (curNY * item.dy * STRENGTH);
+        item.el.style.setProperty('--tx', tx.toFixed(2) + 'px');
+        item.el.style.setProperty('--ty', ty.toFixed(2) + 'px');
+      }
+
+      // Keep animating while we're not basically settled
+      if (Math.abs(targetNX - curNX) > 0.001 || Math.abs(targetNY - curNY) > 0.001){
+        rafId = requestAnimationFrame(update);
+      }
+    }
+
+    function requestUpdate(){
+      if (!rafId) rafId = requestAnimationFrame(update);
+    }
+
+    function onMove(e){
+      const r = cta.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width;   // 0..1
+      const y = (e.clientY - r.top) / r.height;   // 0..1
+
+      // Convert to -1..1 centered coordinates
+      targetNX = (x - 0.5) * 2;
+      targetNY = (y - 0.5) * 2;
+
+      requestUpdate();
+    }
+
+    function onLeave(){
+      targetNX = 0;
+      targetNY = 0;
+      requestUpdate();
+    }
+
+    // Use pointer events (covers mouse + pen)
+    cta.addEventListener('pointermove', onMove, { passive: true });
+    cta.addEventListener('pointerleave', onLeave, { passive: true });
+  })();
+
+  /* ============================================================
      REDESIGN BUTTON: full page “different company” vibes
      + Screen transformation effect (added)
      ============================================================ */
@@ -2384,7 +2468,7 @@
 
           demoKicker: 'Interactive',
           demoTitle: 'Tap to see “before” become “after”',
-          demoSub: 'Two sample sites. One idea: better hierarchy changes behavior.',
+          demoSub: 'Two examples that show how better hierarchy changes behavior.',
           demoCoffeeTitle: 'Local Coffee Site',
           demoGameTitle: 'Indie Game Launch Page',
           demoTag: 'Same content • sharper layout',
@@ -2818,5 +2902,6 @@
     firstBtn.addEventListener('click', firstClickOrCycle);
   })();
 </script>
+
 </body>
 </html>
