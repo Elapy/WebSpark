@@ -94,19 +94,17 @@
       color:var(--ws-accent);
     }
     .ws-logo-mark{
-      padding:0;
-      background:transparent;
-      border:none;
-      box-shadow:none;
-      display:block;
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      object-fit: contain;   /* or cover if you want it to fill the square */
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      display: block;
+      flex: 0 0 auto;
     }
-    .ws-logo-mark img{
-      width:100%;
-      height:100%;
-      display:block;
-      object-fit:cover;
-    }
-    .ws-logo-mark::after{ content:none; }
 
     .ws-nav {
       display: flex;
@@ -1367,9 +1365,7 @@
 <header class="ws-header">
   <div class="ws-header-inner">
     <a href="index.html" class="ws-logo">
-      <div class="ws-logo-mark" aria-hidden="true">
-        <img src="assets/logo.png" alt="" />
-      </div>
+      <img class="ws-logo-mark" src="assets/logo.png" alt="WebSpark logo" width="32" height="32">
       <span>WebSpark</span>
     </a>
 
