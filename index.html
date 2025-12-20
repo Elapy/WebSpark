@@ -663,93 +663,6 @@
     .ws-block.tall{ height:42px; }
 
     /* Animated band (no text, not a placeholder) */
-    .ws-spark-band{
-      margin-top:16px;
-      border-radius:var(--ws-radius-lg);
-      border:1px solid rgba(182,196,229,0.85);
-      background:#fff;
-      overflow:hidden;
-      min-height:160px; /* keep “aspect feel” */
-      position:relative;
-      box-shadow:0 18px 30px rgba(10,22,60,0.06);
-    }
-    .ws-spark-band::before{
-      content:"";
-      position:absolute;
-      inset:-70px;
-      background:
-        radial-gradient(circle at 18% 30%, rgba(47,107,255,0.22), transparent 55%),
-        radial-gradient(circle at 84% 38%, rgba(124,92,255,0.20), transparent 58%),
-        radial-gradient(circle at 55% 80%, rgba(17,64,166,0.12), transparent 60%),
-        repeating-linear-gradient(
-          -45deg,
-          rgba(245,247,255,0.95) 0,
-          rgba(245,247,255,0.95) 10px,
-          rgba(255,255,255,0.96) 10px,
-          rgba(255,255,255,0.96) 22px
-        );
-      filter: saturate(1.05);
-      transform: translate3d(0,0,0);
-      animation: ws-band-drift 7.5s ease-in-out infinite;
-    }
-    .ws-spark-band::after{
-      content:"";
-      position:absolute;
-      inset:12px;
-      border-radius:16px;
-      border:1px solid rgba(182,196,229,0.65);
-      background:
-        linear-gradient(135deg, rgba(255,255,255,0.62), rgba(255,255,255,0.22));
-      backdrop-filter: blur(10px);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
-      pointer-events:none;
-    }
-
-    /* subtle floating “sparks” */
-    .ws-band-sparks{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      z-index:1;
-    }
-    .ws-spark{
-      position:absolute;
-      width:10px;
-      height:10px;
-      border-radius:999px;
-      background: rgba(47,107,255,0.25);
-      box-shadow: 0 10px 20px rgba(10,22,60,0.10);
-      animation: ws-spark-float 5.2s ease-in-out infinite;
-    }
-    .ws-spark:nth-child(2){
-      width:14px; height:14px;
-      background: rgba(124,92,255,0.22);
-      animation-duration: 6.2s;
-      animation-delay: -1.8s;
-    }
-    .ws-spark:nth-child(3){
-      width:8px; height:8px;
-      background: rgba(17,64,166,0.18);
-      animation-duration: 4.6s;
-      animation-delay: -0.9s;
-    }
-    .ws-spark:nth-child(4){
-      width:12px; height:12px;
-      background: rgba(47,107,255,0.18);
-      animation-duration: 7.1s;
-      animation-delay: -3.1s;
-    }
-
-    @keyframes ws-band-drift{
-      0%   { transform: translate(-10px, -8px) rotate(-0.6deg); }
-      50%  { transform: translate(10px, 10px) rotate(0.6deg); }
-      100% { transform: translate(-10px, -8px) rotate(-0.6deg); }
-    }
-    @keyframes ws-spark-float{
-      0%   { transform: translate3d(0,0,0); opacity:0.75; }
-      50%  { transform: translate3d(0,-14px,0); opacity:1; }
-      100% { transform: translate3d(0,0,0); opacity:0.75; }
-    }
 
     @media (prefers-reduced-motion: reduce){
       .ws-spark-band::before{ animation:none; }
@@ -1331,14 +1244,6 @@
     </div>
 
     <!-- Now: intentional animated band (no placeholder text) -->
-    <div class="ws-spark-band" aria-hidden="true">
-      <div class="ws-band-sparks">
-        <span class="ws-spark" style="top:22%; left:18%;"></span>
-        <span class="ws-spark" style="top:62%; left:36%;"></span>
-        <span class="ws-spark" style="top:34%; left:68%;"></span>
-        <span class="ws-spark" style="top:70%; left:82%;"></span>
-      </div>
-    </div>
   </section>
 
   <section id="benefits" aria-labelledby="benefits-intro-title">
