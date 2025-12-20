@@ -100,7 +100,6 @@
       display:block;
       object-fit:cover;
     }
-    /* removed the old fake/gloss overlay so your real logo shows cleanly */
     .ws-logo-mark::after{ content:none; }
 
     .ws-nav{
@@ -326,8 +325,6 @@
       background:rgba(146,161,196,0.7);
     }
 
-    /* subtle brand repeat under hero */
-
     /* Side frames */
 
     .ws-hero-frame{
@@ -536,8 +533,6 @@
       margin:0;
     }
 
-    /* small brand badge in section headers */
-
     /* Static before/after example pairs */
 
     .ws-layout-gallery{
@@ -698,8 +693,6 @@
     }
     .ws-benefit-text-block li{ margin:6px 0; }
 
-    /* outcome visuals + glow */
-
     .ws-outcome-card{
       border-radius:var(--ws-radius-lg);
       border:1px solid rgba(182,196,229,0.85);
@@ -838,18 +831,20 @@
     .ws-step{
       display:grid;
       grid-template-columns:auto minmax(0,1fr);
-      gap:10px;
+      gap:12px;
       align-items:start;
-      padding:10px 12px;
+
+      padding:14px 14px;
+      min-height: 102px; /* taller blocks (your request) */
       border-radius:14px;
       background:var(--ws-surface);
       border:1px solid var(--ws-border-subtle);
     }
     .ws-step-index{
-      width:24px;height:24px;border-radius:999px;
+      width:28px;height:28px;border-radius:999px;
       background:var(--ws-accent-soft);
       color:var(--ws-accent);
-      font-size:0.82rem;
+      font-size:0.86rem;
       display:flex;align-items:center;justify-content:center;
       font-weight:600;
     }
@@ -886,7 +881,6 @@
       white-space:nowrap;
     }
 
-    /* Mini process visual (filled) */
     .ws-process-mini{
       margin-top: 12px;
       border-radius: 14px;
@@ -899,7 +893,7 @@
       height: 78px;
       position:relative;
     }
-    
+
     .ws-process-flow{
       position:absolute;
       inset:0;
@@ -909,7 +903,7 @@
       padding: 12px;
       gap: 10px;
     }
-    
+
     .ws-proc-box{
       flex: 0 0 auto;
       width: 72px;
@@ -921,7 +915,7 @@
       position:relative;
       overflow:hidden;
     }
-    
+
     .ws-proc-box::after{
       content:"";
       position:absolute;
@@ -932,7 +926,7 @@
       border-radius:999px;
       background: rgba(0,0,0,0.10);
     }
-    
+
     .ws-proc-box::before{
       content:"";
       position:absolute;
@@ -943,7 +937,7 @@
       border-radius:999px;
       background: rgba(0,0,0,0.08);
     }
-    
+
     .ws-proc-arrow{
       flex: 1 1 auto;
       height: 2px;
@@ -957,7 +951,7 @@
       position:relative;
       overflow:hidden;
     }
-    
+
     .ws-proc-arrow::after{
       content:"";
       position:absolute;
@@ -970,23 +964,22 @@
       filter: blur(0.2px);
       animation: ws-scan 1.8s ease-in-out infinite;
     }
-    
+
     @keyframes ws-scan{
       0%{ transform: translateX(0); opacity:0.0; }
       20%{ opacity:0.85; }
       80%{ opacity:0.85; }
       100%{ transform: translateX(calc(100% + 40px)); opacity:0; }
     }
-    
+
     .ws-proc-box.good{
       background: linear-gradient(145deg, #ffffff, #eef1ff);
       border-color: rgba(140,160,220,0.9);
     }
-    
+
     .ws-proc-box.good::after{ background: rgba(17,64,166,0.82); }
     .ws-proc-box.good::before{ background: rgba(47,107,255,0.50); }
-    
-    /* Respect reduced motion */
+
     @media (prefers-reduced-motion: reduce){
       .ws-proc-arrow::after{ animation: none; opacity: 0.55; }
     }
@@ -1065,13 +1058,13 @@
       margin-bottom:0px;
       opacity:0.85;
     }
-    
+
     .ws-cta-signature img{
       width:26px;
       height:26px;
       object-fit:contain;
     }
-    
+
     .ws-cta-signature span{
       font-family:"Montserrat", system-ui, sans-serif;
       font-weight:600;
@@ -1080,8 +1073,6 @@
       font-size:0.68rem;
       color:var(--ws-text-muted);
     }
-
-    /* CTA brand lockup */
 
     /* Footer */
 
@@ -1117,17 +1108,23 @@
     .ws-footer-contact a{ color:var(--ws-text-muted); }
     .ws-footer-contact a:hover{ color:var(--ws-accent); }
 
-    /* Floating redesign button */
+    /* Floating redesign controls */
 
     .ws-floating-redesign{
       position:fixed;
       right:18px;
       bottom:18px;
       z-index:60;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+      max-width:min(560px, calc(100vw - 36px));
     }
     .ws-floating-redesign button{
       border-radius:var(--ws-radius-pill);
-      padding:8px 16px;
+      padding:8px 14px;
       border:1px solid rgba(129,147,193,0.9);
       background: rgba(246,249,255,0.98);
       box-shadow:0 12px 24px rgba(22,37,80,0.25);
@@ -1139,39 +1136,226 @@
       gap:8px;
       cursor:pointer;
       backdrop-filter: blur(12px);
-      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, border-color 0.12s ease-out;
+      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, border-color 0.12s ease-out, background 0.12s ease-out;
+      white-space:nowrap;
     }
     .ws-floating-redesign button:hover{
       transform: translateY(-2px);
       box-shadow:0 16px 32px rgba(14,29,68,0.3);
       border-color: var(--ws-accent);
     }
+    .ws-floating-redesign button.ws-danger{
+      border-color: rgba(180,70,70,0.55);
+      color: rgba(150,45,45,1);
+      background: rgba(255,246,246,0.98);
+    }
+    .ws-floating-redesign button.ws-danger:hover{
+      border-color: rgba(180,70,70,0.85);
+    }
 
     @media (prefers-reduced-motion: reduce){
       .ws-hero-title-selected .ws-hero-cursor{ animation:none; }
     }
 
-    /* Taller "How it works" step cards */
-    .ws-step{
-      display:grid;
-      grid-template-columns:auto minmax(0,1fr);
-      gap:12px;
-      align-items:start;
-    
-      padding:14px 14px;     /* was 10px 12px */
-      min-height: 86px;      /* adds consistent height */
-      border-radius:14px;
-      background:var(--ws-surface);
-      border:1px solid var(--ws-border-subtle);
+    /* ============================================================
+       THEME OVERRIDES (JS sets .ws-theme-* on <html>)
+       ============================================================ */
+
+    /* Shared behavior tweaks when any theme is active */
+    html[class*="ws-theme-"] body{
+      background: var(--ws-bg);
     }
-    
-    /* Optional: make the number badge feel proportional */
-    .ws-step-index{
-      width:28px;
-      height:28px;
-      font-size:0.86rem;
+    html[class*="ws-theme-"] header.ws-header{
+      background: color-mix(in srgb, var(--ws-bg) 88%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--ws-border-subtle) 70%, transparent);
     }
-    
+    html[class*="ws-theme-"] .ws-hero-frame,
+    html[class*="ws-theme-"] .ws-layout-pair,
+    html[class*="ws-theme-"] .ws-demo-card,
+    html[class*="ws-theme-"] .ws-step,
+    html[class*="ws-theme-"] .ws-how-visual,
+    html[class*="ws-theme-"] .ws-cta-final,
+    html[class*="ws-theme-"] .ws-outcome-card{
+      background: var(--ws-surface);
+      border-color: var(--ws-border-subtle);
+    }
+    html[class*="ws-theme-"] .ws-btn-primary{
+      background: var(--ws-accent);
+      box-shadow: 0 16px 34px color-mix(in srgb, var(--ws-accent) 28%, transparent);
+    }
+    html[class*="ws-theme-"] .ws-btn-primary:hover{
+      background: var(--ws-accent-hover);
+      box-shadow: 0 20px 44px color-mix(in srgb, var(--ws-accent) 34%, transparent);
+    }
+
+    /* Theme: Cyber / Neon */
+    html.ws-theme-cyber{
+      --ws-bg: radial-gradient(circle at 15% 10%, rgba(0,255,204,0.10), transparent 55%),
+              radial-gradient(circle at 85% 25%, rgba(255,0,214,0.10), transparent 55%),
+              radial-gradient(circle at 40% 90%, rgba(84,130,255,0.14), transparent 60%),
+              #070A12;
+      --ws-surface: rgba(12,16,28,0.84);
+      --ws-surface-soft: rgba(18,24,42,0.62);
+      --ws-border-subtle: rgba(124,255,232,0.18);
+      --ws-border-strong: rgba(255,0,214,0.22);
+      --ws-text-main: rgba(235,246,255,0.96);
+      --ws-text-soft: rgba(204,221,238,0.78);
+      --ws-text-muted: rgba(190,208,228,0.58);
+      --ws-accent: #00ffd5;
+      --ws-accent-hover:#00c9a9;
+      --ws-accent-soft: rgba(0,255,213,0.12);
+      --ws-attn:#ff00d6;
+      --ws-attn2:#00ffd5;
+      --ws-shadow-soft: 0 18px 50px rgba(0,0,0,0.55);
+      --ws-select-blue:#00ffd5;
+      --ws-select-blue-soft: rgba(0,255,213,0.18);
+    }
+    html.ws-theme-cyber .ws-logo{ color: var(--ws-accent); }
+    html.ws-theme-cyber .ws-hero-title{ text-shadow: 0 0 22px rgba(0,255,213,0.16); }
+    html.ws-theme-cyber .ws-hero-frame{
+      background:
+        radial-gradient(circle at 15% 20%, rgba(0,255,213,0.10), transparent 55%),
+        radial-gradient(circle at 85% 80%, rgba(255,0,214,0.10), transparent 55%),
+        rgba(10,14,26,0.78);
+      border-color: rgba(0,255,213,0.18);
+    }
+    html.ws-theme-cyber .ws-demo-toggle{
+      box-shadow: 0 18px 40px rgba(255,0,214,0.18);
+    }
+    html.ws-theme-cyber .ws-outcome-media{
+      filter: contrast(1.05) saturate(1.15) brightness(0.95) hue-rotate(12deg);
+    }
+    html.ws-theme-cyber .ws-layout-after{
+      background: linear-gradient(145deg, rgba(12,16,28,0.92), rgba(18,24,42,0.70));
+    }
+    html.ws-theme-cyber .ws-cta-final::before,
+    html.ws-theme-cyber .ws-cta-final::after{
+      background: radial-gradient(circle at center, rgba(0,255,213,0.08), transparent 65%);
+      opacity: 1;
+    }
+    html.ws-theme-cyber .ws-hero-shell{
+      grid-template-columns: minmax(0,1fr) minmax(0,min(520px,100%)) minmax(0,1fr);
+    }
+
+    /* Theme: Playful / Kids */
+    html.ws-theme-playful{
+      --ws-bg: radial-gradient(circle at 10% 20%, rgba(255,203,91,0.42), transparent 55%),
+              radial-gradient(circle at 80% 25%, rgba(122,211,255,0.40), transparent 55%),
+              radial-gradient(circle at 55% 90%, rgba(255,138,179,0.35), transparent 60%),
+              #fff7ee;
+      --ws-surface:#ffffff;
+      --ws-surface-soft:#fffaf2;
+      --ws-border-subtle: rgba(220,180,120,0.45);
+      --ws-border-strong: rgba(122,211,255,0.55);
+      --ws-text-main:#1b1a22;
+      --ws-text-soft:#434158;
+      --ws-text-muted:#7a738c;
+      --ws-accent:#ff4d8d;
+      --ws-accent-hover:#e63b7c;
+      --ws-accent-soft: rgba(255,77,141,0.16);
+      --ws-attn:#7ad3ff;
+      --ws-attn2:#ffcc70;
+      --ws-shadow-soft: 0 14px 40px rgba(90,50,30,0.12);
+      --ws-select-blue:#ff4d8d;
+      --ws-select-blue-soft: rgba(255,77,141,0.18);
+    }
+    html.ws-theme-playful .ws-hero-title{
+      font-family: "Montserrat", system-ui, sans-serif;
+      letter-spacing:-0.03em;
+    }
+    html.ws-theme-playful .ws-hero-frame{
+      background:
+        radial-gradient(circle at 18% 22%, rgba(255,77,141,0.12), transparent 55%),
+        radial-gradient(circle at 85% 78%, rgba(122,211,255,0.14), transparent 55%),
+        #ffffff;
+      border-color: rgba(255,77,141,0.22);
+    }
+    html.ws-theme-playful .ws-outcome-media{
+      filter: saturate(1.15) contrast(1.02);
+    }
+    html.ws-theme-playful .ws-cta-shape.circle{ background:#7ad3ff; }
+    html.ws-theme-playful .ws-cta-shape.square{ background:#ffcc70; }
+    html.ws-theme-playful .ws-cta-shape.triangle{ border-bottom-color:#ff4d8d; }
+
+    /* Theme: Editorial / Minimal */
+    html.ws-theme-editorial{
+      --ws-bg: linear-gradient(180deg, #fbfbf8 0%, #f3f2ed 100%);
+      --ws-surface:#ffffff;
+      --ws-surface-soft:#f7f6f1;
+      --ws-border-subtle:#e2e1da;
+      --ws-border-strong:#d0cec4;
+      --ws-text-main:#171717;
+      --ws-text-soft:#3a3a3a;
+      --ws-text-muted:#777777;
+      --ws-accent:#0f6d3b;
+      --ws-accent-hover:#0b542d;
+      --ws-accent-soft: rgba(15,109,59,0.12);
+      --ws-attn:#0f6d3b;
+      --ws-attn2:#222;
+      --ws-shadow-soft: 0 18px 44px rgba(20,20,20,0.10);
+      --ws-select-blue:#0f6d3b;
+      --ws-select-blue-soft: rgba(15,109,59,0.15);
+      --ws-hero-font: Georgia, "Times New Roman", Times, serif;
+    }
+    html.ws-theme-editorial .ws-logo{
+      font-family: Georgia, "Times New Roman", Times, serif;
+      letter-spacing:0.02em;
+      text-transform:none;
+      font-size: 1.0rem;
+    }
+    html.ws-theme-editorial .ws-nav-link{
+      border-radius: 10px;
+    }
+    html.ws-theme-editorial .ws-hero-title{
+      max-width: 22ch;
+      line-height:1.02;
+    }
+    html.ws-theme-editorial .ws-hero-shell{
+      grid-template-columns: minmax(0,0.9fr) minmax(0,min(560px,100%)) minmax(0,0.9fr);
+    }
+    html.ws-theme-editorial .ws-hero-side-left .ws-hero-side-inner,
+    html.ws-theme-editorial .ws-hero-side-right .ws-hero-side-inner{
+      transform: none;
+    }
+    html.ws-theme-editorial .ws-outcome-media{
+      filter: saturate(0.92) contrast(1.02);
+    }
+
+    /* Theme: Dark / Premium */
+    html.ws-theme-noir{
+      --ws-bg: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.06), transparent 55%),
+              radial-gradient(circle at 85% 75%, rgba(255,255,255,0.05), transparent 60%),
+              #070707;
+      --ws-surface: rgba(22,22,22,0.92);
+      --ws-surface-soft: rgba(30,30,30,0.60);
+      --ws-border-subtle: rgba(255,255,255,0.10);
+      --ws-border-strong: rgba(255,255,255,0.16);
+      --ws-text-main: rgba(255,255,255,0.94);
+      --ws-text-soft: rgba(255,255,255,0.72);
+      --ws-text-muted: rgba(255,255,255,0.52);
+      --ws-accent:#d6b46b;
+      --ws-accent-hover:#c7a85f;
+      --ws-accent-soft: rgba(214,180,107,0.12);
+      --ws-attn:#d6b46b;
+      --ws-attn2:#ffffff;
+      --ws-shadow-soft: 0 18px 60px rgba(0,0,0,0.62);
+      --ws-select-blue:#d6b46b;
+      --ws-select-blue-soft: rgba(214,180,107,0.18);
+    }
+    html.ws-theme-noir .ws-outcome-media{
+      filter: contrast(1.08) saturate(0.85) brightness(0.90);
+    }
+    html.ws-theme-noir .ws-hero-frame{
+      background:
+        radial-gradient(circle at 18% 22%, rgba(214,180,107,0.12), transparent 55%),
+        rgba(18,18,18,0.85);
+      border-color: rgba(214,180,107,0.18);
+    }
+    html.ws-theme-noir .ws-cta-final::before,
+    html.ws-theme-noir .ws-cta-final::after{
+      background: radial-gradient(circle at center, rgba(214,180,107,0.10), transparent 65%);
+      opacity: 1;
+    }
   </style>
 </head>
 
@@ -1238,25 +1422,28 @@
       <div class="ws-hero-center">
         <div class="ws-hero-title-wrap" id="ws-hero-title-wrap">
           <div class="ws-hero-title-highlight-bar" aria-hidden="true"></div>
-          <h1 class="ws-hero-title" id="hero-title">
+
+          <!-- Theme-switchable content (JS will rewrite these) -->
+          <h1 class="ws-hero-title" id="hero-title" data-ws-text="heroTitle">
             Turn your website<br>
             into a <span class="ws-hero-highlight">great first impression.</span>
           </h1>
+
           <div class="ws-hero-cursor" aria-hidden="true"></div>
         </div>
 
-        <p class="ws-hero-sub">
+        <p class="ws-hero-sub" data-ws-text="heroSub">
           WebSpark rebuilds an existing site into a cleaner, sharper, more trustworthy experience — in HTML that stays under your control.
         </p>
 
         <div class="ws-hero-actions">
-          <a href="contact.html" class="ws-btn-primary">Get started</a>
+          <a href="contact.html" class="ws-btn-primary" data-ws-text="heroCta">Get started</a>
         </div>
 
         <div class="ws-hero-meta">
-          <span><strong>Cleaner layouts</strong> without rebuilding from scratch.</span>
+          <span data-ws-text="heroMeta1"><strong>Cleaner layouts</strong> without rebuilding from scratch.</span>
           <span class="ws-hero-meta-divider"></span>
-          <span>Keep the content. Upgrade the presentation.</span>
+          <span data-ws-text="heroMeta2">Keep the content. Upgrade the presentation.</span>
         </div>
 
       </div>
@@ -1304,12 +1491,11 @@
 
   <section id="examples" aria-labelledby="examples-title">
     <div class="ws-section-header">
-      <div class="ws-section-kicker">Layout transformations</div>
-      <h2 class="ws-section-title" id="examples-title">See how structure changes perception</h2>
-      <p class="ws-section-sub">
+      <div class="ws-section-kicker" data-ws-text="examplesKicker">Layout transformations</div>
+      <h2 class="ws-section-title" id="examples-title" data-ws-text="examplesTitle">See how structure changes perception</h2>
+      <p class="ws-section-sub" data-ws-text="examplesSub">
         Same idea, different execution: spacing, hierarchy, and where attention lands first.
       </p>
-
     </div>
 
     <div class="ws-layout-gallery">
@@ -1322,7 +1508,7 @@
         </div>
         <div class="ws-layout-after">
           <div class="ws-layout-label">After</div>
-          <div class="ws-layout-tag">Hero focus</div>
+          <div class="ws-layout-tag" data-ws-text="exampleTagA">Hero focus</div>
           <div class="ws-layout-after-grid a">
             <div class="ws-tile">
               <div class="ws-tile-title"></div>
@@ -1349,7 +1535,7 @@
         </div>
         <div class="ws-layout-after">
           <div class="ws-layout-label">After</div>
-          <div class="ws-layout-tag">Service clarity</div>
+          <div class="ws-layout-tag" data-ws-text="exampleTagB">Service clarity</div>
           <div class="ws-layout-after-grid b">
             <div class="ws-tile">
               <div class="ws-tile-title"></div>
@@ -1376,7 +1562,7 @@
         </div>
         <div class="ws-layout-after">
           <div class="ws-layout-label">After</div>
-          <div class="ws-layout-tag">Visual balance</div>
+          <div class="ws-layout-tag" data-ws-text="exampleTagC">Visual balance</div>
           <div class="ws-layout-after-grid c">
             <div class="ws-tile">
               <div class="ws-block image tall"></div>
@@ -1395,9 +1581,9 @@
 
   <section id="benefits" aria-labelledby="benefits-intro-title">
     <div class="ws-section-header">
-      <div class="ws-section-kicker">Why it matters</div>
-      <h2 class="ws-section-title" id="benefits-intro-title">Five outcomes every redesign aims for</h2>
-      <p class="ws-section-sub">
+      <div class="ws-section-kicker" data-ws-text="benefitsKicker">Why it matters</div>
+      <h2 class="ws-section-title" id="benefits-intro-title" data-ws-text="benefitsTitle">Five outcomes every redesign aims for</h2>
+      <p class="ws-section-sub" data-ws-text="benefitsSub">
         The goal is simple: reduce noise, increase clarity, and make the page feel deliberate from the first glance.
       </p>
     </div>
@@ -1406,22 +1592,22 @@
   <section class="ws-benefit-section" aria-labelledby="b1">
     <div class="ws-benefit-layout">
       <div class="ws-benefit-text-block">
-        <div class="ws-benefit-kicker">Outcome 01</div>
-        <h3 class="ws-benefit-heading" id="b1">Better first impressions</h3>
-        <p>
+        <div class="ws-benefit-kicker" data-ws-text="o1Kicker">Outcome 01</div>
+        <h3 class="ws-benefit-heading" id="b1" data-ws-text="o1Title">Better first impressions</h3>
+        <p data-ws-text="o1P">
           The opening view should answer three things instantly: what it is, who it’s for, and what happens next.
           A redesign is successful when the page becomes readable in seconds — without relying on guesswork.
         </p>
         <ul>
-          <li>Clear headline + supporting line that actually supports</li>
-          <li>Visual hierarchy that guides the eye, not fights it</li>
-          <li>One obvious primary action</li>
+          <li data-ws-text="o1L1">Clear headline + supporting line that actually supports</li>
+          <li data-ws-text="o1L2">Visual hierarchy that guides the eye, not fights it</li>
+          <li data-ws-text="o1L3">One obvious primary action</li>
         </ul>
       </div>
 
       <figure class="ws-outcome-visual" data-glow="a">
         <div class="ws-outcome-card">
-          <img class="ws-outcome-media" src="assets/outcome1.jpg" alt="Outcome 1 visual" />
+          <img class="ws-outcome-media" src="assets/outcome1.jpg" alt="Outcome 1 visual" data-ws-src="outcome1" />
         </div>
       </figure>
     </div>
@@ -1431,21 +1617,21 @@
     <div class="ws-benefit-layout">
       <figure class="ws-outcome-visual" data-glow="b">
         <div class="ws-outcome-card">
-          <img class="ws-outcome-media" src="assets/outcome2.jpg" alt="Outcome 2 visual" />
+          <img class="ws-outcome-media" src="assets/outcome2.jpg" alt="Outcome 2 visual" data-ws-src="outcome2" />
         </div>
       </figure>
 
       <div class="ws-benefit-text-block">
-        <div class="ws-benefit-kicker">Outcome 02</div>
-        <h3 class="ws-benefit-heading" id="b2">More customers</h3>
-        <p>
+        <div class="ws-benefit-kicker" data-ws-text="o2Kicker">Outcome 02</div>
+        <h3 class="ws-benefit-heading" id="b2" data-ws-text="o2Title">More customers</h3>
+        <p data-ws-text="o2P">
           People don’t convert when they’re confused. The layout should reduce decisions and remove dead ends:
           fewer competing buttons, fewer mixed messages, fewer distractions near the primary action.
         </p>
         <ul>
-          <li>Consistent CTA placement (no scavenger hunt)</li>
-          <li>Sections that flow logically (benefit → proof → action)</li>
-          <li>Readable spacing that keeps the page calm</li>
+          <li data-ws-text="o2L1">Consistent CTA placement (no scavenger hunt)</li>
+          <li data-ws-text="o2L2">Sections that flow logically (benefit → proof → action)</li>
+          <li data-ws-text="o2L3">Readable spacing that keeps the page calm</li>
         </ul>
       </div>
     </div>
@@ -1454,22 +1640,22 @@
   <section class="ws-benefit-section" aria-labelledby="b3">
     <div class="ws-benefit-layout">
       <div class="ws-benefit-text-block">
-        <div class="ws-benefit-kicker">Outcome 03</div>
-        <h3 class="ws-benefit-heading" id="b3">More trust</h3>
-        <p>
+        <div class="ws-benefit-kicker" data-ws-text="o3Kicker">Outcome 03</div>
+        <h3 class="ws-benefit-heading" id="b3" data-ws-text="o3Title">More trust</h3>
+        <p data-ws-text="o3P">
           Trust comes from consistency: type scale, spacing rhythm, alignment, and restrained color.
           When the interface feels controlled, the brand feels reliable.
         </p>
         <ul>
-          <li>Predictable typography and spacing</li>
-          <li>Cleaner composition (less visual “shouting”)</li>
-          <li>Modern polish without feeling templated</li>
+          <li data-ws-text="o3L1">Predictable typography and spacing</li>
+          <li data-ws-text="o3L2">Cleaner composition (less visual “shouting”)</li>
+          <li data-ws-text="o3L3">Modern polish without feeling templated</li>
         </ul>
       </div>
 
       <figure class="ws-outcome-visual" data-glow="c">
         <div class="ws-outcome-card">
-          <img class="ws-outcome-media" src="assets/outcome3.jpg" alt="Outcome 3 visual" />
+          <img class="ws-outcome-media" src="assets/outcome3.jpg" alt="Outcome 3 visual" data-ws-src="outcome3" />
         </div>
       </figure>
     </div>
@@ -1479,21 +1665,21 @@
     <div class="ws-benefit-layout">
       <figure class="ws-outcome-visual" data-glow="d">
         <div class="ws-outcome-card">
-          <img class="ws-outcome-media" src="assets/outcome4.jpg" alt="Outcome 4 visual" />
+          <img class="ws-outcome-media" src="assets/outcome4.jpg" alt="Outcome 4 visual" data-ws-src="outcome4" />
         </div>
       </figure>
 
       <div class="ws-benefit-text-block">
-        <div class="ws-benefit-kicker">Outcome 04</div>
-        <h3 class="ws-benefit-heading" id="b4">Stronger brand</h3>
-        <p>
+        <div class="ws-benefit-kicker" data-ws-text="o4Kicker">Outcome 04</div>
+        <h3 class="ws-benefit-heading" id="b4" data-ws-text="o4Title">Stronger brand</h3>
+        <p data-ws-text="o4P">
           A strong brand isn’t just a logo — it’s repeated decisions. A redesign strengthens identity by
           making components feel like they belong together: buttons, cards, headings, and spacing all speaking one language.
         </p>
         <ul>
-          <li>Consistent component styling across sections</li>
-          <li>Intentional color usage (accent used sparingly)</li>
-          <li>Layout structure that feels designed, not assembled</li>
+          <li data-ws-text="o4L1">Consistent component styling across sections</li>
+          <li data-ws-text="o4L2">Intentional color usage (accent used sparingly)</li>
+          <li data-ws-text="o4L3">Layout structure that feels designed, not assembled</li>
         </ul>
       </div>
     </div>
@@ -1502,22 +1688,22 @@
   <section class="ws-benefit-section" aria-labelledby="b5">
     <div class="ws-benefit-layout">
       <div class="ws-benefit-text-block">
-        <div class="ws-benefit-kicker">Outcome 05</div>
-        <h3 class="ws-benefit-heading" id="b5">More traffic</h3>
-        <p>
+        <div class="ws-benefit-kicker" data-ws-text="o5Kicker">Outcome 05</div>
+        <h3 class="ws-benefit-heading" id="b5" data-ws-text="o5Title">More traffic</h3>
+        <p data-ws-text="o5P">
           Cleaner structure makes pages easier to understand — for humans and for search engines.
           Strong headings, clear sections, and accessible markup help content perform without gimmicks.
         </p>
         <ul>
-          <li>Clear heading hierarchy (H1 → H2 → H3)</li>
-          <li>Readable blocks that encourage scrolling</li>
-          <li>Less clutter competing with the main message</li>
+          <li data-ws-text="o5L1">Clear heading hierarchy (H1 → H2 → H3)</li>
+          <li data-ws-text="o5L2">Readable blocks that encourage scrolling</li>
+          <li data-ws-text="o5L3">Less clutter competing with the main message</li>
         </ul>
       </div>
 
       <figure class="ws-outcome-visual" data-glow="e">
         <div class="ws-outcome-card">
-          <img class="ws-outcome-media" src="assets/outcome5.jpg" alt="Outcome 5 visual" />
+          <img class="ws-outcome-media" src="assets/outcome5.jpg" alt="Outcome 5 visual" data-ws-src="outcome5" />
         </div>
       </figure>
     </div>
@@ -1525,9 +1711,9 @@
 
   <section id="demo" aria-labelledby="demo-title">
     <div class="ws-section-header">
-      <div class="ws-section-kicker">Live-style previews</div>
-      <h2 class="ws-section-title" id="demo-title">Click to improve a layout</h2>
-      <p class="ws-section-sub">
+      <div class="ws-section-kicker" data-ws-text="demoKicker">Live-style previews</div>
+      <h2 class="ws-section-title" id="demo-title" data-ws-text="demoTitle">Click to improve a layout</h2>
+      <p class="ws-section-sub" data-ws-text="demoSub">
         Two different themes, two different redesign styles — same topic before vs after.
       </p>
     </div>
@@ -1536,7 +1722,7 @@
 
       <article class="ws-demo-card">
         <div class="ws-demo-topline">
-          <span class="ws-demo-domain">Coffee Shop Site</span>
+          <span class="ws-demo-domain" data-ws-text="demoCoffeeTitle">Coffee Shop Site</span>
           <button class="ws-demo-toggle" type="button" data-demo="coffee">
             <span>✨</span>
             <span class="ws-toggle-text">Click to improve</span>
@@ -1546,7 +1732,7 @@
         <div class="ws-demo-layout" id="demo-coffee">
           <div class="ws-demo-label">
             <span class="ws-demo-state">Before</span>
-            <span class="ws-demo-tag">Same site • better design</span>
+            <span class="ws-demo-tag" data-ws-text="demoTag">Same site • better design</span>
           </div>
 
           <div class="ws-demo-viewport">
@@ -1557,7 +1743,7 @@
 
       <article class="ws-demo-card">
         <div class="ws-demo-topline">
-          <span class="ws-demo-domain">Video Game Site</span>
+          <span class="ws-demo-domain" data-ws-text="demoGameTitle">Video Game Site</span>
           <button class="ws-demo-toggle" type="button" data-demo="game">
             <span>✨</span>
             <span class="ws-toggle-text">Click to improve</span>
@@ -1567,7 +1753,7 @@
         <div class="ws-demo-layout" id="demo-game">
           <div class="ws-demo-label">
             <span class="ws-demo-state">Before</span>
-            <span class="ws-demo-tag">Same site • better design</span>
+            <span class="ws-demo-tag" data-ws-text="demoTag2">Same site • better design</span>
           </div>
 
           <div class="ws-demo-viewport">
@@ -1581,9 +1767,9 @@
 
   <section id="how-it-works" aria-labelledby="how-title">
     <div class="ws-section-header">
-      <div class="ws-section-kicker">Process</div>
-      <h2 class="ws-section-title" id="how-title">From existing site to cleaner HTML</h2>
-      <p class="ws-section-sub">A simple workflow: share the site, rebuild layout, deliver clean output.</p>
+      <div class="ws-section-kicker" data-ws-text="howKicker">Process</div>
+      <h2 class="ws-section-title" id="how-title" data-ws-text="howTitle">From existing site to cleaner HTML</h2>
+      <p class="ws-section-sub" data-ws-text="howSub">A simple workflow: share the site, rebuild layout, deliver clean output.</p>
     </div>
 
     <div class="ws-how-grid">
@@ -1591,48 +1777,48 @@
         <article class="ws-step">
           <div class="ws-step-index">1</div>
           <div>
-            <div class="ws-step-title">Share the site</div>
-            <p class="ws-step-text">Provide a link or the current HTML.</p>
+            <div class="ws-step-title" data-ws-text="step1Title">Share the site</div>
+            <p class="ws-step-text" data-ws-text="step1Text">Provide a link or the current HTML.</p>
           </div>
         </article>
 
         <article class="ws-step">
           <div class="ws-step-index">2</div>
           <div>
-            <div class="ws-step-title">Rebuild the layout</div>
-            <p class="ws-step-text">Improve hierarchy, spacing, and readability.</p>
+            <div class="ws-step-title" data-ws-text="step2Title">Rebuild the layout</div>
+            <p class="ws-step-text" data-ws-text="step2Text">Improve hierarchy, spacing, and readability.</p>
           </div>
         </article>
 
         <article class="ws-step">
           <div class="ws-step-index">3</div>
           <div>
-            <div class="ws-step-title">Deliver clean output</div>
-            <p class="ws-step-text">HTML/CSS that can be hosted anywhere and maintained easily.</p>
+            <div class="ws-step-title" data-ws-text="step3Title">Deliver clean output</div>
+            <p class="ws-step-text" data-ws-text="step3Text">HTML/CSS that can be hosted anywhere and maintained easily.</p>
           </div>
         </article>
 
-        <p class="ws-how-note">Clean structure first. Visual polish second. Always readable.</p>
+        <p class="ws-how-note" data-ws-text="howNote">Clean structure first. Visual polish second. Always readable.</p>
       </div>
 
       <aside class="ws-how-visual" aria-label="Summary">
-        <div class="ws-section-kicker" style="font-size:0.72rem;">At a glance</div>
+        <div class="ws-section-kicker" style="font-size:0.72rem;" data-ws-text="glanceKicker">At a glance</div>
         <div class="ws-how-track">
           <div class="ws-track-item">
-            <span class="ws-track-name">Hero clarity</span>
-            <span class="ws-track-pill">Focused</span>
+            <span class="ws-track-name" data-ws-text="glance1Name">Hero clarity</span>
+            <span class="ws-track-pill" data-ws-text="glance1Pill">Focused</span>
           </div>
           <div class="ws-track-item">
-            <span class="ws-track-name">CTA visibility</span>
-            <span class="ws-track-pill">Consistent</span>
+            <span class="ws-track-name" data-ws-text="glance2Name">CTA visibility</span>
+            <span class="ws-track-pill" data-ws-text="glance2Pill">Consistent</span>
           </div>
           <div class="ws-track-item">
-            <span class="ws-track-name">Typography</span>
-            <span class="ws-track-pill">Deliberate</span>
+            <span class="ws-track-name" data-ws-text="glance3Name">Typography</span>
+            <span class="ws-track-pill" data-ws-text="glance3Pill">Deliberate</span>
           </div>
           <div class="ws-track-item">
-            <span class="ws-track-name">Noise</span>
-            <span class="ws-track-pill">Reduced</span>
+            <span class="ws-track-name" data-ws-text="glance4Name">Noise</span>
+            <span class="ws-track-pill" data-ws-text="glance4Pill">Reduced</span>
           </div>
         </div>
 
@@ -1657,9 +1843,9 @@
           <span>WebSpark</span>
         </div>
 
-        <h2 class="ws-cta-final-title" id="cta-title">Ready for a cleaner, sharper site?</h2>
-        <p class="ws-cta-final-sub">Start with the most important page and upgrade the presentation without losing control.</p>
-        <a href="contact.html" class="ws-btn-primary">Get started ↗</a>
+        <h2 class="ws-cta-final-title" id="cta-title" data-ws-text="ctaTitle">Ready for a cleaner, sharper site?</h2>
+        <p class="ws-cta-final-sub" data-ws-text="ctaSub">Start with the most important page and upgrade the presentation without losing control.</p>
+        <a href="contact.html" class="ws-btn-primary" data-ws-text="ctaBtn">Get started ↗</a>
       </div>
 
       <div class="ws-cta-shapes">
@@ -1689,8 +1875,9 @@
 
 </main>
 
-<div class="ws-floating-redesign">
-  <button type="button" title="Redesign view">
+<!-- Floating redesign controls (JS will morph this UI after first click) -->
+<div class="ws-floating-redesign" id="ws-redesign-controls">
+  <button type="button" id="ws-btn-first" title="Redesign view">
     <span>🎛</span>
     <span>Redesign this view</span>
   </button>
@@ -1799,6 +1986,536 @@
     window.addEventListener('scroll', update, { passive:true });
     window.addEventListener('resize', update);
     update();
+  })();
+
+  /* ============================================================
+     REDESIGN BUTTON: full page “different company” vibes
+     - First click: split into 2 buttons:
+         1) Back to original
+         2) Redesign this view (cycles through designs; original not included)
+     - Back to original returns to original view and collapses to 1 button.
+     ============================================================ */
+
+  (function wsRedesignController(){
+    const htmlEl = document.documentElement;
+    const controls = document.getElementById('ws-redesign-controls');
+    const firstBtn = document.getElementById('ws-btn-first');
+
+    if (!controls || !firstBtn) return;
+
+    // Capture original text + src values so "Back to original" is exact.
+    const original = {
+      texts: {},
+      srcs: {},
+      heroFont: getComputedStyle(htmlEl).getPropertyValue('--ws-hero-font'),
+      htmlClass: htmlEl.className
+    };
+
+    document.querySelectorAll('[data-ws-text]').forEach((el) => {
+      const key = el.getAttribute('data-ws-text');
+      original.texts[key] = el.innerHTML;
+    });
+    document.querySelectorAll('[data-ws-src]').forEach((el) => {
+      const key = el.getAttribute('data-ws-src');
+      original.srcs[key] = el.getAttribute('src');
+    });
+
+    const THEMES = [
+      {
+        id: 'ws-theme-cyber',
+        label: 'Cyber / Neon',
+        emoji: '🧬',
+        // keep "WebSpark", keep accurate description, but rewrite everything else
+        content: {
+          heroTitle: 'WebSpark rebuilds your site<br>into a <span class="ws-hero-highlight">conversion-ready interface.</span>',
+          heroSub: 'Think of it like refactoring — but for perception. Same business. A clearer story. A layout that feels engineered, not improvised.',
+          heroCta: 'Start the rebuild',
+          heroMeta1: '<strong>Signal-first</strong> hierarchy that reads fast.',
+          heroMeta2: 'Clean HTML/CSS you can host anywhere.',
+
+          examplesKicker: 'Before / after patterns',
+          examplesTitle: 'Structure is a trust protocol',
+          examplesSub: 'When layout is deliberate, visitors stop guessing and start moving.',
+          exampleTagA: 'Impact header',
+          exampleTagB: 'Clean offer',
+          exampleTagC: 'Balanced flow',
+
+          benefitsKicker: 'Outcomes',
+          benefitsTitle: 'What a WebSpark redesign is built to do',
+          benefitsSub: 'Not “prettier.” More understandable. More credible. More likely to convert.',
+
+          o1Kicker: 'Outcome 01',
+          o1Title: 'Instant clarity',
+          o1P: 'Your first screen should behave like a perfect summary: what you offer, who it’s for, and the next step — all readable in under five seconds.',
+          o1L1: 'Headline that states the promise (not a vibe)',
+          o1L2: 'Supporting line that explains, not repeats',
+          o1L3: 'One primary action, positioned early',
+
+          o2Kicker: 'Outcome 02',
+          o2Title: 'Lower friction → more customers',
+          o2P: 'Conversions drop when users are forced to interpret. WebSpark removes dead ends and decision fatigue so the page feels obvious to navigate.',
+          o2L1: 'CTA placement that’s consistent and intentional',
+          o2L2: 'Sections that flow: benefit → proof → action',
+          o2L3: 'Spacing rhythm that keeps the page calm',
+
+          o3Kicker: 'Outcome 03',
+          o3Title: 'Trust through consistency',
+          o3P: 'Trust isn’t a badge you add — it’s the result of alignment, typography discipline, and controlled color decisions repeated across the page.',
+          o3L1: 'Type scale that looks designed (not default)',
+          o3L2: 'Components that feel like one system',
+          o3L3: 'Accessibility-friendly contrast and structure',
+
+          o4Kicker: 'Outcome 04',
+          o4Title: 'Brand that feels engineered',
+          o4P: 'WebSpark strengthens brand identity by making every component speak the same design language: buttons, cards, headings, and spacing all cooperating.',
+          o4L1: 'Repeatable UI patterns (less visual noise)',
+          o4L2: 'Accent color used like a tool, not paint',
+          o4L3: 'Layout symmetry that reads as “professional”',
+
+          o5Kicker: 'Outcome 05',
+          o5Title: 'Search-friendly structure',
+          o5P: 'Cleaner hierarchy helps both humans and crawlers. Strong headings, logical sections, and accessible markup improve comprehension and indexing.',
+          o5L1: 'Correct heading order and clear sections',
+          o5L2: 'Readable blocks that encourage scrolling',
+          o5L3: 'Less clutter competing with your message',
+
+          demoKicker: 'Interactive',
+          demoTitle: 'Tap to see “before” become “after”',
+          demoSub: 'Two sample sites. One idea: better hierarchy changes behavior.',
+          demoCoffeeTitle: 'Local Coffee Site',
+          demoGameTitle: 'Indie Game Launch Page',
+          demoTag: 'Same content • sharper layout',
+          demoTag2: 'Same content • sharper layout',
+
+          howKicker: 'Workflow',
+          howTitle: 'A redesign pipeline that stays in your control',
+          howSub: 'You share what exists. WebSpark rebuilds the presentation. You receive clean output.',
+          step1Title: 'Share the site',
+          step1Text: 'Send a link or paste the current HTML.',
+          step2Title: 'Rebuild the layout',
+          step2Text: 'Hierarchy, spacing, typography, flow — redesigned.',
+          step3Title: 'Deliver clean output',
+          step3Text: 'HTML/CSS you can host anywhere and maintain easily.',
+          howNote: 'Readable first. Beautiful second. Every decision intentional.',
+          glanceKicker: 'System check',
+          glance1Name: 'Message clarity',
+          glance1Pill: 'High',
+          glance2Name: 'CTA visibility',
+          glance2Pill: 'Obvious',
+          glance3Name: 'Layout symmetry',
+          glance3Pill: 'Controlled',
+          glance4Name: 'Noise',
+          glance4Pill: 'Low',
+
+          ctaTitle: 'Want your site to feel inevitable to navigate?',
+          ctaSub: 'Let WebSpark rebuild the page so your offer is understood immediately — in clean HTML you own.',
+          ctaBtn: 'Get started ↗'
+        }
+      },
+      {
+        id: 'ws-theme-playful',
+        label: 'Playful / Kids',
+        emoji: '🧸',
+        content: {
+          heroTitle: 'Make your website<br><span class="ws-hero-highlight">easy to understand</span> in one glance.',
+          heroSub: 'WebSpark takes what you already have and rebuilds it into a friendlier, cleaner experience — still your content, just way easier to follow.',
+          heroCta: 'Let’s make it better',
+          heroMeta1: '<strong>Clear sections</strong> that feel welcoming.',
+          heroMeta2: 'Same message — smoother flow.',
+
+          examplesKicker: 'Glow-up snapshots',
+          examplesTitle: 'Same idea, way kinder layout',
+          examplesSub: 'Visitors shouldn’t have to work to understand you.',
+          exampleTagA: 'Big headline',
+          exampleTagB: 'Simple choices',
+          exampleTagC: 'Happy balance',
+
+          benefitsKicker: 'What improves',
+          benefitsTitle: 'Five wins you can feel immediately',
+          benefitsSub: 'Less confusion, more trust, and a page that feels “put together.”',
+
+          o1Kicker: 'Win 01',
+          o1Title: 'Friendly first screen',
+          o1P: 'The first screen should feel like a quick hello: what this is, who it helps, and what to click next.',
+          o1L1: 'Clear headline that says the point',
+          o1L2: 'Support line that explains it plainly',
+          o1L3: 'One main button that stands out',
+
+          o2Kicker: 'Win 02',
+          o2Title: 'More “yes” moments',
+          o2P: 'When the page is easy, people move forward. WebSpark reduces distractions so the next step feels natural.',
+          o2L1: 'Fewer competing buttons',
+          o2L2: 'Sections that flow in a comfy order',
+          o2L3: 'Spacing that makes reading relaxing',
+
+          o3Kicker: 'Win 03',
+          o3Title: 'Trust that feels effortless',
+          o3P: 'Consistency feels professional. Matching styles, tidy spacing, and calm color choices make the brand feel reliable.',
+          o3L1: 'Typography that’s readable everywhere',
+          o3L2: 'Components that match each other',
+          o3L3: 'Clean alignment (no “messy” feeling)',
+
+          o4Kicker: 'Win 04',
+          o4Title: 'A stronger brand vibe',
+          o4P: 'A brand is a set of repeated decisions. WebSpark makes buttons, headings, and cards feel like one family.',
+          o4L1: 'One visual language across the page',
+          o4L2: 'Accent color used on purpose',
+          o4L3: 'Layout that looks designed, not random',
+
+          o5Kicker: 'Win 05',
+          o5Title: 'Cleaner structure helps discovery',
+          o5P: 'Clear sections and headings help users and search engines understand what the page is about.',
+          o5L1: 'Headings that make sense in order',
+          o5L2: 'Content blocks that invite scrolling',
+          o5L3: 'Less clutter fighting your message',
+
+          demoKicker: 'Try it',
+          demoTitle: 'Click to “clean it up”',
+          demoSub: 'Two quick previews that show what better hierarchy looks like.',
+          demoCoffeeTitle: 'Cute Café Page',
+          demoGameTitle: 'Game Page (but tidy!)',
+          demoTag: 'Same page • clearer design',
+          demoTag2: 'Same page • clearer design',
+
+          howKicker: 'How it works',
+          howTitle: 'A simple three-step glow-up',
+          howSub: 'Share the page, rebuild the layout, and get clean HTML/CSS back.',
+          step1Title: 'Share the site',
+          step1Text: 'Link it or send the HTML.',
+          step2Title: 'Rebuild the layout',
+          step2Text: 'Make it cleaner, calmer, and easier to read.',
+          step3Title: 'Deliver clean output',
+          step3Text: 'HTML/CSS you can host anywhere.',
+          howNote: 'Less clutter. More clarity. Better first impressions.',
+          glanceKicker: 'Quick check',
+          glance1Name: 'First screen',
+          glance1Pill: 'Clear',
+          glance2Name: 'Buttons',
+          glance2Pill: 'Easy',
+          glance3Name: 'Reading',
+          glance3Pill: 'Smooth',
+          glance4Name: 'Clutter',
+          glance4Pill: 'Low',
+
+          ctaTitle: 'Ready for a friendlier first impression?',
+          ctaSub: 'WebSpark rebuilds your layout so people instantly understand what you do — using clean HTML you control.',
+          ctaBtn: 'Get started ↗'
+        }
+      },
+      {
+        id: 'ws-theme-editorial',
+        label: 'Editorial / Minimal',
+        emoji: '📰',
+        content: {
+          heroTitle: 'WebSpark rebuilds websites<br>into <span class="ws-hero-highlight">clear, structured pages.</span>',
+          heroSub: 'Less decoration. More meaning. WebSpark refines hierarchy, spacing, and typography so the page reads like a well-edited article.',
+          heroCta: 'Request a redesign',
+          heroMeta1: '<strong>Readable</strong> composition.',
+          heroMeta2: 'Clean HTML/CSS, owned by you.',
+
+          examplesKicker: 'Comparisons',
+          examplesTitle: 'Design is editorial discipline',
+          examplesSub: 'The best layouts feel inevitable: each section earns its place.',
+          exampleTagA: 'Lead story',
+          exampleTagB: 'Offer clarity',
+          exampleTagC: 'Rhythm',
+
+          benefitsKicker: 'Results',
+          benefitsTitle: 'What improves when the page is edited',
+          benefitsSub: 'Clarity produces trust; trust produces action.',
+
+          o1Kicker: 'Result 01',
+          o1Title: 'A stronger lead',
+          o1P: 'The first screen becomes a tight summary: what you do, who it’s for, and what to do next.',
+          o1L1: 'Headline with a real claim',
+          o1L2: 'Supporting line with specifics',
+          o1L3: 'One primary action, placed early',
+
+          o2Kicker: 'Result 02',
+          o2Title: 'Fewer distractions',
+          o2P: 'A page that asks fewer questions converts better. WebSpark reduces competing elements so the path forward is clear.',
+          o2L1: 'Consistent CTA placement',
+          o2L2: 'Logical section order',
+          o2L3: 'Spacing that improves comprehension',
+
+          o3Kicker: 'Result 03',
+          o3Title: 'Trust by consistency',
+          o3P: 'Consistency is credibility: a restrained type scale, aligned grids, and predictable components.',
+          o3L1: 'Typography that holds together',
+          o3L2: 'Repeatable component design',
+          o3L3: 'Accessible structure and contrast',
+
+          o4Kicker: 'Result 04',
+          o4Title: 'A more coherent brand',
+          o4P: 'Brand strength comes from repeated choices. WebSpark makes those choices visible and consistent throughout the page.',
+          o4L1: 'Unified styling system',
+          o4L2: 'Accent used sparingly and strategically',
+          o4L3: 'Composition that feels intentional',
+
+          o5Kicker: 'Result 05',
+          o5Title: 'Improved structure for search',
+          o5P: 'Clear headings and sections improve understanding for users and crawlers. Structure is performance.',
+          o5L1: 'Correct heading hierarchy',
+          o5L2: 'Skimmable content blocks',
+          o5L3: 'Reduced clutter and duplication',
+
+          demoKicker: 'Preview',
+          demoTitle: 'See structure take over',
+          demoSub: 'Two examples that show how hierarchy changes perception.',
+          demoCoffeeTitle: 'Local Coffee',
+          demoGameTitle: 'Game Launch',
+          demoTag: 'Same site • edited layout',
+          demoTag2: 'Same site • edited layout',
+
+          howKicker: 'Method',
+          howTitle: 'A simple, controlled workflow',
+          howSub: 'Start with what exists. Improve the presentation. Deliver clean output.',
+          step1Title: 'Share the site',
+          step1Text: 'Provide a link or current HTML.',
+          step2Title: 'Rebuild the layout',
+          step2Text: 'Refine hierarchy, spacing, and flow.',
+          step3Title: 'Deliver clean output',
+          step3Text: 'HTML/CSS you can host anywhere.',
+          howNote: 'Clarity is the product. Aesthetics follow.',
+          glanceKicker: 'Highlights',
+          glance1Name: 'Hierarchy',
+          glance1Pill: 'Strong',
+          glance2Name: 'Flow',
+          glance2Pill: 'Logical',
+          glance3Name: 'Typography',
+          glance3Pill: 'Controlled',
+          glance4Name: 'Noise',
+          glance4Pill: 'Reduced',
+
+          ctaTitle: 'Want a page that reads cleanly?',
+          ctaSub: 'WebSpark rebuilds your layout to make the message obvious — in HTML you own and can maintain.',
+          ctaBtn: 'Get started ↗'
+        }
+      },
+      {
+        id: 'ws-theme-noir',
+        label: 'Noir / Premium',
+        emoji: '🕯️',
+        content: {
+          heroTitle: 'WebSpark turns your site<br>into a <span class="ws-hero-highlight">premium first impression.</span>',
+          heroSub: 'High contrast. Tight spacing. Quiet confidence. WebSpark rebuilds your layout so the experience feels intentional and worth trusting.',
+          heroCta: 'Start a premium redesign',
+          heroMeta1: '<strong>Polished</strong> hierarchy with restraint.',
+          heroMeta2: 'Clean HTML/CSS you keep.',
+
+          examplesKicker: 'Transformations',
+          examplesTitle: 'Luxury is clarity + restraint',
+          examplesSub: 'Remove the noise and the value becomes obvious.',
+          exampleTagA: 'Signature hero',
+          exampleTagB: 'Offer focus',
+          exampleTagC: 'Balance',
+
+          benefitsKicker: 'Value',
+          benefitsTitle: 'Five outcomes that signal quality',
+          benefitsSub: 'A premium feel comes from controlled decisions repeated everywhere.',
+
+          o1Kicker: 'Outcome 01',
+          o1Title: 'A first screen that sells',
+          o1P: 'The opening view should communicate value instantly: what it is, who it’s for, and why it’s worth attention.',
+          o1L1: 'Headline that makes a confident claim',
+          o1L2: 'Supporting line that adds proof, not fluff',
+          o1L3: 'A single primary action that stands out',
+
+          o2Kicker: 'Outcome 02',
+          o2Title: 'Cleaner path to conversion',
+          o2P: 'WebSpark reduces cognitive load so the page feels easy to navigate. Less friction, more forward movement.',
+          o2L1: 'CTA placement that doesn’t hide',
+          o2L2: 'A deliberate section sequence',
+          o2L3: 'Whitespace used as a design tool',
+
+          o3Kicker: 'Outcome 03',
+          o3Title: 'Trust through polish',
+          o3P: 'Premium is consistent: type scale, spacing rhythm, and alignment make the brand feel stable and reliable.',
+          o3L1: 'Typographic discipline',
+          o3L2: 'Components that match, everywhere',
+          o3L3: 'Accessible contrast and structure',
+
+          o4Kicker: 'Outcome 04',
+          o4Title: 'A stronger identity',
+          o4P: 'A strong brand is repeated decisions. WebSpark makes those decisions coherent: buttons, cards, headings, spacing — one voice.',
+          o4L1: 'Unified component styling',
+          o4L2: 'Accent color used sparingly',
+          o4L3: 'Symmetry and balance as default',
+
+          o5Kicker: 'Outcome 05',
+          o5Title: 'Structure that performs',
+          o5P: 'Cleaner markup and headings make the page easier to understand and index. Technical clarity supports marketing clarity.',
+          o5L1: 'Correct heading hierarchy',
+          o5L2: 'Skimmable sections that invite scrolling',
+          o5L3: 'Less clutter competing with the message',
+
+          demoKicker: 'Preview',
+          demoTitle: 'Tap to reveal the “after”',
+          demoSub: 'Two sample sites, redesigned for clarity and confidence.',
+          demoCoffeeTitle: 'Cafe Landing (Premium)',
+          demoGameTitle: 'Game Launch (Premium)',
+          demoTag: 'Same site • refined design',
+          demoTag2: 'Same site • refined design',
+
+          howKicker: 'Process',
+          howTitle: 'A premium rebuild, not a rebuild-from-scratch',
+          howSub: 'You keep the content. WebSpark rebuilds the presentation. You receive clean output.',
+          step1Title: 'Share the site',
+          step1Text: 'Link it or provide your current HTML.',
+          step2Title: 'Rebuild the layout',
+          step2Text: 'Hierarchy, spacing, and tone are redesigned.',
+          step3Title: 'Deliver clean output',
+          step3Text: 'HTML/CSS you can host anywhere.',
+          howNote: 'Restraint wins. Clarity sells.',
+          glanceKicker: 'Signals',
+          glance1Name: 'Tone',
+          glance1Pill: 'Premium',
+          glance2Name: 'CTA',
+          glance2Pill: 'Focused',
+          glance3Name: 'Consistency',
+          glance3Pill: 'High',
+          glance4Name: 'Noise',
+          glance4Pill: 'Minimal',
+
+          ctaTitle: 'Ready for a premium first impression?',
+          ctaSub: 'WebSpark rebuilds your presentation so the page feels deliberate — in clean HTML you control.',
+          ctaBtn: 'Get started ↗'
+        }
+      }
+    ];
+
+    let activeThemeIndex = -1; // -1 = original
+    let hasSplitControls = false;
+
+    function clearThemeClasses(){
+      THEMES.forEach(t => htmlEl.classList.remove(t.id));
+    }
+
+    function applyTextMap(map){
+      if (!map) return;
+      Object.keys(map).forEach((k) => {
+        const el = document.querySelector('[data-ws-text="' + k + '"]');
+        if (el) el.innerHTML = map[k];
+      });
+    }
+
+    function restoreOriginal(){
+      clearThemeClasses();
+
+      // Restore texts
+      Object.keys(original.texts).forEach((k) => {
+        const el = document.querySelector('[data-ws-text="' + k + '"]');
+        if (el) el.innerHTML = original.texts[k];
+      });
+
+      // Restore sources
+      Object.keys(original.srcs).forEach((k) => {
+        const el = document.querySelector('[data-ws-src="' + k + '"]');
+        if (el) el.setAttribute('src', original.srcs[k]);
+      });
+
+      // Restore hero font variable if it was modified
+      if (original.heroFont) {
+        htmlEl.style.setProperty('--ws-hero-font', original.heroFont.trim());
+      }
+
+      activeThemeIndex = -1;
+
+      // Collapse UI back to single button (as requested)
+      controls.innerHTML = `
+        <button type="button" id="ws-btn-first" title="Redesign view">
+          <span>🎛</span>
+          <span>Redesign this view</span>
+        </button>
+      `;
+      const newFirst = document.getElementById('ws-btn-first');
+      if (newFirst) {
+        newFirst.addEventListener('click', firstClickOrCycle);
+      }
+      hasSplitControls = false;
+    }
+
+    function applyThemeByIndex(i){
+      const theme = THEMES[i];
+      if (!theme) return;
+
+      clearThemeClasses();
+      htmlEl.classList.add(theme.id);
+
+      // Optional: make the hero font reflect the theme
+      if (theme.id === 'ws-theme-editorial'){
+        htmlEl.style.setProperty('--ws-hero-font', 'Georgia, "Times New Roman", Times, serif');
+      } else if (theme.id === 'ws-theme-cyber'){
+        htmlEl.style.setProperty('--ws-hero-font', '"Rubik Glitch", "Montserrat", system-ui, sans-serif');
+      } else {
+        htmlEl.style.setProperty('--ws-hero-font', '"Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif');
+      }
+
+      applyTextMap(theme.content);
+
+      // NOTE about "image choices":
+      // You asked for different image choices, but we can't assume new files exist.
+      // So we keep your existing assets/* images and make them feel different per theme via CSS filters.
+      activeThemeIndex = i;
+    }
+
+    function splitControlsIfNeeded(){
+      if (hasSplitControls) return;
+
+      controls.innerHTML = `
+        <button type="button" id="ws-btn-back" class="ws-danger" title="Back to original">
+          <span>↩</span>
+          <span>Back to original</span>
+        </button>
+        <button type="button" id="ws-btn-cycle" title="Redesign this view">
+          <span>🎛</span>
+          <span>Redesign this view</span>
+        </button>
+      `;
+
+      const backBtn = document.getElementById('ws-btn-back');
+      const cycleBtn = document.getElementById('ws-btn-cycle');
+
+      if (backBtn) backBtn.addEventListener('click', restoreOriginal);
+      if (cycleBtn) cycleBtn.addEventListener('click', cycleTheme);
+
+      hasSplitControls = true;
+    }
+
+    function cycleTheme(){
+      // Cycle through non-original themes only.
+      const next = (activeThemeIndex + 1) % THEMES.length;
+      applyThemeByIndex(next);
+
+      // Nudge button label to show what you landed on (still says "Redesign this view")
+      const cycleBtn = document.getElementById('ws-btn-cycle');
+      if (cycleBtn){
+        const theme = THEMES[next];
+        const labelSpan = cycleBtn.querySelector('span:last-child');
+        if (labelSpan) labelSpan.textContent = `Redesign this view (${theme.emoji} ${theme.label})`;
+      }
+    }
+
+    function firstClickOrCycle(){
+      // First click ever: split buttons and apply first non-original theme.
+      if (!hasSplitControls){
+        splitControlsIfNeeded();
+        applyThemeByIndex(0);
+
+        const cycleBtn = document.getElementById('ws-btn-cycle');
+        if (cycleBtn){
+          const theme = THEMES[0];
+          const labelSpan = cycleBtn.querySelector('span:last-child');
+          if (labelSpan) labelSpan.textContent = `Redesign this view (${theme.emoji} ${theme.label})`;
+        }
+        return;
+      }
+
+      // If already split, it becomes cycle.
+      cycleTheme();
+    }
+
+    firstBtn.addEventListener('click', firstClickOrCycle);
   })();
 </script>
 </body>
