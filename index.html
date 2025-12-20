@@ -1150,6 +1150,28 @@
     @media (prefers-reduced-motion: reduce){
       .ws-hero-title-selected .ws-hero-cursor{ animation:none; }
     }
+
+    /* Taller "How it works" step cards */
+    .ws-step{
+      display:grid;
+      grid-template-columns:auto minmax(0,1fr);
+      gap:12px;
+      align-items:start;
+    
+      padding:14px 14px;     /* was 10px 12px */
+      min-height: 86px;      /* adds consistent height */
+      border-radius:14px;
+      background:var(--ws-surface);
+      border:1px solid var(--ws-border-subtle);
+    }
+    
+    /* Optional: make the number badge feel proportional */
+    .ws-step-index{
+      width:28px;
+      height:28px;
+      font-size:0.86rem;
+    }
+    
   </style>
 </head>
 
