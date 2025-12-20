@@ -2261,53 +2261,7 @@
         }, delayMs);
       });
     });
-  })()
-
-  (function attachCTAParallax(){
-    const cta = document.getElementById('ws-cta-final');
-    if (!cta) return;
-
-    const shapes = cta.querySelectorAll('.ws-cta-shape');
-    let lastScrollY = window.scrollY;
-    let lastProgress = 0;
-
-    function baseProgressFromRect(rect){
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      const start = vh;
-      const end = vh * 0.2;
-      const t = (start - rect.top) / (start - end);
-      return Math.max(0, Math.min(1, t));
-    }
-
-    function update(){
-      const rect = cta.getBoundingClientRect();
-      const base = baseProgressFromRect(rect);
-
-      const scrollY = window.scrollY;
-      const down = scrollY >= lastScrollY;
-
-      let progress = down ? Math.max(lastProgress, base) : base;
-      progress = Math.max(0, Math.min(1, progress));
-
-      lastProgress = progress;
-      lastScrollY = scrollY;
-
-      shapes.forEach((shape) => {
-        const maxX = parseFloat(shape.getAttribute('data-x')) || 0;
-        const maxY = parseFloat(shape.getAttribute('data-y')) || 0;
-        const tx = maxX * progress;
-        const ty = maxY * progress;
-        const rot = getComputedStyle(shape).getPropertyValue('--rot') || '0deg';
-        shape.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot})`;
-      });
-    }
-
-    window.addEventListener('scroll', update, { passive:true });
-    window.addEventListener('resize', update);
-    update();
   })();
-
-;
 
   /* ============================================================
      REDESIGN BUTTON: full page “different company” vibes
