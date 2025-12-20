@@ -835,7 +835,7 @@
       align-items:start;
 
       padding:14px 14px;
-      min-height: 102px; /* taller blocks (your request) */
+      min-height: 102px;
       border-radius:14px;
       background:var(--ws-surface);
       border:1px solid var(--ws-border-subtle);
@@ -1158,6 +1158,93 @@
     }
 
     /* ============================================================
+       SCREEN TRANSFORM EFFECT (added)
+       ============================================================ */
+
+    .ws-screenfx{
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateZ(0);
+      will-change: opacity, transform, filter;
+      /* A “device screen” feel: light wash + diagonal sweep + subtle grain */
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,0.72), transparent 52%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.35), transparent 58%),
+        linear-gradient(120deg, rgba(17,64,166,0.10), rgba(47,107,255,0.12), rgba(124,92,255,0.08)),
+        rgba(255,255,255,0.22);
+      backdrop-filter: blur(0px) saturate(1);
+      -webkit-backdrop-filter: blur(0px) saturate(1);
+    }
+    .ws-screenfx::after{
+      content:"";
+      position:absolute;
+      inset:-40px;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          rgba(0,0,0,0.05) 0px,
+          rgba(0,0,0,0.05) 1px,
+          transparent 2px,
+          transparent 6px
+        );
+      opacity: 0.06;
+      transform: translateY(0);
+    }
+
+    /* Run animation by adding .is-run */
+    .ws-screenfx.is-run{
+      animation: ws-screenfx-pop 520ms ease-in-out forwards;
+    }
+    .ws-screenfx.is-run::after{
+      animation: ws-screenfx-scan 520ms ease-in-out forwards;
+    }
+
+    @keyframes ws-screenfx-pop{
+      0%{
+        opacity:0;
+        transform: scale(1.01);
+        backdrop-filter: blur(0px) saturate(1);
+        filter: contrast(1) brightness(1);
+      }
+      40%{
+        opacity:1;
+        transform: scale(1.00);
+        backdrop-filter: blur(10px) saturate(1.15);
+        filter: contrast(1.02) brightness(1.02);
+      }
+      60%{
+        opacity:1;
+        transform: scale(1.00);
+        backdrop-filter: blur(14px) saturate(1.25);
+        filter: contrast(1.04) brightness(1.03);
+      }
+      100%{
+        opacity:0;
+        transform: scale(0.995);
+        backdrop-filter: blur(0px) saturate(1);
+        filter: contrast(1) brightness(1);
+      }
+    }
+
+    @keyframes ws-screenfx-scan{
+      0%{ opacity:0.0; transform: translateY(-14px); }
+      35%{ opacity:0.10; transform: translateY(0px); }
+      65%{ opacity:0.10; transform: translateY(8px); }
+      100%{ opacity:0.0; transform: translateY(18px); }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .ws-screenfx,
+      .ws-screenfx.is-run,
+      .ws-screenfx.is-run::after{
+        animation: none !important;
+      }
+    }
+
+    /* ============================================================
        THEME OVERRIDES (JS sets .ws-theme-* on <html>)
        ============================================================ */
 
@@ -1362,7 +1449,6 @@
     .ws-floating-redesign button span{
       color:#000;
     }
-
   </style>
 </head>
 
@@ -1430,7 +1516,6 @@
         <div class="ws-hero-title-wrap" id="ws-hero-title-wrap">
           <div class="ws-hero-title-highlight-bar" aria-hidden="true"></div>
 
-          <!-- Theme-switchable content (JS will rewrite these) -->
           <h1 class="ws-hero-title" id="hero-title" data-ws-text="heroTitle">
             Turn your website<br>
             into a <span class="ws-hero-highlight">great first impression.</span>
@@ -1452,7 +1537,6 @@
           <span class="ws-hero-meta-divider"></span>
           <span data-ws-text="heroMeta2">Keep the content. Upgrade the presentation.</span>
         </div>
-
       </div>
 
       <div class="ws-hero-side ws-hero-side-right" aria-hidden="true">
@@ -1997,10 +2081,7 @@
 
   /* ============================================================
      REDESIGN BUTTON: full page “different company” vibes
-     - First click: split into 2 buttons:
-         1) Back to original
-         2) Redesign this view (cycles through designs; original not included)
-     - Back to original returns to original view and collapses to 1 button.
+     + Screen transformation effect (added)
      ============================================================ */
 
   (function wsRedesignController(){
@@ -2009,6 +2090,38 @@
     const firstBtn = document.getElementById('ws-btn-first');
 
     if (!controls || !firstBtn) return;
+
+    // ---- Screen transform helper (added) ----
+    function runScreenTransform(applyFn){
+      // Respect reduced motion
+      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduceMotion){
+        applyFn();
+        return;
+      }
+
+      const fx = document.createElement('div');
+      fx.className = 'ws-screenfx';
+      document.body.appendChild(fx);
+
+      // Start animation next frame so styles apply
+      requestAnimationFrame(() => {
+        fx.classList.add('is-run');
+      });
+
+      // Apply theme near the “peak” of the effect
+      // (must happen while the overlay is fully visible)
+      const APPLY_AT_MS = 260; // ~ half of 520ms
+      const END_AT_MS = 560;   // cleanup after animation finishes
+
+      window.setTimeout(() => {
+        try { applyFn(); } catch (e) { /* fail silent */ }
+      }, APPLY_AT_MS);
+
+      window.setTimeout(() => {
+        if (fx && fx.parentNode) fx.parentNode.removeChild(fx);
+      }, END_AT_MS);
+    }
 
     // Capture original text + src values so "Back to original" is exact.
     const original = {
@@ -2032,7 +2145,6 @@
         id: 'ws-theme-cyber',
         label: '↺',
         emoji: '',
-        // keep "WebSpark", keep accurate description, but rewrite everything else
         content: {
           heroTitle: 'WebSpark rebuilds your site<br>into a <span class="ws-hero-highlight">conversion-ready interface.</span>',
           heroSub: 'Think of it like refactoring — but for perception. Same business. A clearer story. A layout that feels engineered, not improvised.',
@@ -2074,7 +2186,7 @@
 
           o4Kicker: 'Outcome 04',
           o4Title: 'Brand that feels engineered',
-          o4P: 'WebSpark strengthens brand identity by making every component speak the same design language: buttons, cards, headings, and spacing all cooperating.',
+          o4P: 'WebSpark strengthens brand identity by making every component speak the same design language: buttons, cards, headings, and spacing — one voice.',
           o4L1: 'Repeatable UI patterns (less visual noise)',
           o4L2: 'Accent color used like a tool, not paint',
           o4L3: 'Layout symmetry that reads as “professional”',
@@ -2406,29 +2518,25 @@
       });
     }
 
-    function restoreOriginal(){
+    function restoreOriginalInstant(){
       clearThemeClasses();
 
-      // Restore texts
       Object.keys(original.texts).forEach((k) => {
         const el = document.querySelector('[data-ws-text="' + k + '"]');
         if (el) el.innerHTML = original.texts[k];
       });
 
-      // Restore sources
       Object.keys(original.srcs).forEach((k) => {
         const el = document.querySelector('[data-ws-src="' + k + '"]');
         if (el) el.setAttribute('src', original.srcs[k]);
       });
 
-      // Restore hero font variable if it was modified
       if (original.heroFont) {
         htmlEl.style.setProperty('--ws-hero-font', original.heroFont.trim());
       }
 
       activeThemeIndex = -1;
 
-      // Collapse UI back to single button (as requested)
       controls.innerHTML = `
         <button type="button" id="ws-btn-first" title="Redesign view">
           <span>🎛</span>
@@ -2442,14 +2550,17 @@
       hasSplitControls = false;
     }
 
-    function applyThemeByIndex(i){
+    function restoreOriginal(){
+      runScreenTransform(restoreOriginalInstant);
+    }
+
+    function applyThemeByIndexInstant(i){
       const theme = THEMES[i];
       if (!theme) return;
 
       clearThemeClasses();
       htmlEl.classList.add(theme.id);
 
-      // Optional: make the hero font reflect the theme
       if (theme.id === 'ws-theme-editorial'){
         htmlEl.style.setProperty('--ws-hero-font', 'Georgia, "Times New Roman", Times, serif');
       } else if (theme.id === 'ws-theme-cyber'){
@@ -2459,11 +2570,11 @@
       }
 
       applyTextMap(theme.content);
-
-      // NOTE about "image choices":
-      // You asked for different image choices, but we can't assume new files exist.
-      // So we keep your existing assets/* images and make them feel different per theme via CSS filters.
       activeThemeIndex = i;
+    }
+
+    function applyThemeByIndex(i){
+      runScreenTransform(() => applyThemeByIndexInstant(i));
     }
 
     function splitControlsIfNeeded(){
@@ -2490,11 +2601,10 @@
     }
 
     function cycleTheme(){
-      // Cycle through non-original themes only.
       const next = (activeThemeIndex + 1) % THEMES.length;
+
       applyThemeByIndex(next);
 
-      // Nudge button label to show what you landed on (still says "Redesign this view")
       const cycleBtn = document.getElementById('ws-btn-cycle');
       if (cycleBtn){
         const theme = THEMES[next];
@@ -2504,9 +2614,9 @@
     }
 
     function firstClickOrCycle(){
-      // First click ever: split buttons and apply first non-original theme.
       if (!hasSplitControls){
         splitControlsIfNeeded();
+
         applyThemeByIndex(0);
 
         const cycleBtn = document.getElementById('ws-btn-cycle');
@@ -2518,7 +2628,6 @@
         return;
       }
 
-      // If already split, it becomes cycle.
       cycleTheme();
     }
 
