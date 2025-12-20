@@ -714,6 +714,138 @@
 
     /* Interactive demos */
 
+    /* ============================================================
+       DEMO: one-time “generating redesign” overlay + smooth reveal
+       (only for the "Click to improve a layout" demo cards)
+       ============================================================ */
+    
+    .ws-demo-layout{
+      position:relative; /* ensures overlay can sit on top */
+    }
+    
+    .ws-demo-iframe{
+      transition: opacity 220ms ease-out, filter 220ms ease-out;
+      opacity: 1;
+    }
+    .ws-demo-iframe.ws-demo-fade{
+      opacity: 0;
+    }
+    
+    /* Loading overlay */
+    .ws-demo-loader{
+      position:absolute;
+      inset:0;
+      z-index:10;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      border-radius:14px;
+    
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255,255,255,0.55), transparent 55%),
+        radial-gradient(circle at 85% 80%, rgba(47,107,255,0.18), transparent 60%),
+        linear-gradient(145deg, rgba(255,255,255,0.92), rgba(239,244,255,0.94));
+      border: 1px solid rgba(170,186,224,0.75);
+    
+      opacity:0;
+      transform: translateY(6px);
+      pointer-events:none;
+    
+      transition: opacity 180ms ease-out, transform 180ms ease-out;
+    }
+    
+    .ws-demo-layout.is-generating .ws-demo-loader{
+      opacity:1;
+      transform: translateY(0);
+      pointer-events:auto; /* block clicks while "generating" */
+    }
+    
+    .ws-demo-loader-inner{
+      width:min(340px, 100%);
+      border-radius: 16px;
+      padding: 14px 14px 12px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(182,196,229,0.85);
+      box-shadow: 0 18px 34px rgba(10,22,60,0.12);
+      text-align:center;
+    }
+    
+    .ws-demo-loader-brand{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    
+    .ws-demo-loader-mark{
+      width:26px;
+      height:26px;
+      border-radius: 10px;
+      background:
+        radial-gradient(circle at 30% 35%, rgba(255,255,255,0.95), transparent 58%),
+        linear-gradient(135deg, rgba(26,115,232,0.95), rgba(124,92,255,0.92));
+      box-shadow: 0 10px 18px rgba(15,46,112,0.18);
+      border: 1px solid rgba(140,160,220,0.6);
+    }
+    
+    .ws-demo-loader-name{
+      font-family:"Montserrat", system-ui, sans-serif;
+      font-weight:700;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      font-size:0.72rem;
+      color: rgba(16,21,36,0.88);
+    }
+    
+    .ws-demo-loader-title{
+      font-size:0.92rem;
+      font-weight:600;
+      color: rgba(16,21,36,0.92);
+      margin: 0 0 6px;
+    }
+    
+    .ws-demo-loader-sub{
+      font-size:0.82rem;
+      color: rgba(76,86,110,0.9);
+      margin: 0 0 10px;
+    }
+    
+    .ws-demo-loader-bar{
+      height: 10px;
+      border-radius: 999px;
+      overflow:hidden;
+      background: rgba(17,64,166,0.10);
+      border: 1px solid rgba(182,196,229,0.85);
+      position:relative;
+    }
+    
+    .ws-demo-loader-bar::after{
+      content:"";
+      position:absolute;
+      top:-6px;
+      left:-40%;
+      width: 40%;
+      height: 22px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(47,107,255,0.0), rgba(47,107,255,0.65), rgba(124,92,255,0.0));
+      filter: blur(0.2px);
+      animation: ws-demo-sweep 900ms ease-in-out infinite;
+    }
+    
+    @keyframes ws-demo-sweep{
+      0%{ transform: translateX(0); opacity:0.25; }
+      40%{ opacity:0.9; }
+      100%{ transform: translateX(260%); opacity:0.25; }
+    }
+    
+    @media (prefers-reduced-motion: reduce){
+      .ws-demo-iframe{ transition:none; }
+      .ws-demo-loader{ transition:none; }
+      .ws-demo-loader-bar::after{ animation:none; opacity:0.7; left:30%; transform:none; }
+    }
+
     .ws-demo-grid{
       display:grid;
       grid-template-columns: minmax(0,1fr) minmax(0,1fr);
@@ -2015,6 +2147,51 @@
     if (coffeeIframe) setIframeSrc(coffeeIframe, DEMO_FILES.coffee.before);
     if (gameIframe) setIframeSrc(gameIframe, DEMO_FILES.game.before);
 
+    // Tracks whether each demo has shown the "generating" illusion already (per demo, not global)
+    const demoSeenGenerate = {
+      coffee: false,
+      game: false
+    };
+
+    function ensureLoader(layout){
+      let loader = layout.querySelector('.ws-demo-loader');
+      if (loader) return loader;
+
+      loader = document.createElement('div');
+      loader.className = 'ws-demo-loader';
+      loader.innerHTML = `
+        <div class="ws-demo-loader-inner" role="status" aria-live="polite">
+          <div class="ws-demo-loader-brand" aria-hidden="true">
+            <div class="ws-demo-loader-mark"></div>
+            <div class="ws-demo-loader-name">WebSpark</div>
+          </div>
+          <p class="ws-demo-loader-title">Generating redesign…</p>
+          <p class="ws-demo-loader-sub">Rebuilding layout, hierarchy, and spacing</p>
+          <div class="ws-demo-loader-bar"></div>
+        </div>
+      `;
+      layout.appendChild(loader);
+      return loader;
+    }
+
+    function setIframeSrcWithFade(iframe, url){
+      if (!iframe) return;
+
+      // Fade out quickly before the swap
+      iframe.classList.add('ws-demo-fade');
+
+      // When iframe finishes loading, fade back in
+      const onLoad = () => {
+        requestAnimationFrame(() => {
+          iframe.classList.remove('ws-demo-fade');
+        });
+      };
+      iframe.addEventListener('load', onLoad, { once:true });
+
+      // Swap src
+      setIframeSrc(iframe, url);
+    }
+
     document.querySelectorAll('.ws-demo-toggle').forEach((btn) => {
       btn.addEventListener('click', () => {
         const which = btn.getAttribute('data-demo');
@@ -2022,61 +2199,66 @@
         const iframe = document.getElementById('iframe-' + which);
         if (!layout || !iframe || !DEMO_FILES[which]) return;
 
-        const improved = layout.classList.toggle('is-improved');
+        const isCurrentlyImproved = layout.classList.contains('is-improved');
+        const wantsImprove = !isCurrentlyImproved;
 
+        // Always allow instant return to "Before"
+        if (!wantsImprove){
+          layout.classList.remove('is-improved');
+          layout.classList.remove('is-generating');
+
+          const stateEl = layout.querySelector('.ws-demo-state');
+          if (stateEl) stateEl.textContent = 'Before';
+
+          const textEl = btn.querySelector('.ws-toggle-text');
+          if (textEl) textEl.textContent = 'Click to improve';
+
+          setIframeSrcWithFade(iframe, DEMO_FILES[which].before);
+          return;
+        }
+
+        // Wants to go to "After"
         const stateEl = layout.querySelector('.ws-demo-state');
-        if (stateEl) stateEl.textContent = improved ? 'After' : 'Before';
-
         const textEl = btn.querySelector('.ws-toggle-text');
-        if (textEl) textEl.textContent = improved ? 'Back to before' : 'Click to improve';
 
-        setIframeSrc(iframe, improved ? DEMO_FILES[which].after : DEMO_FILES[which].before);
+        // If we've already shown the "generating" illusion for this demo, switch instantly
+        if (demoSeenGenerate[which]){
+          layout.classList.add('is-improved');
+          if (stateEl) stateEl.textContent = 'After';
+          if (textEl) textEl.textContent = 'Back to before';
+          setIframeSrcWithFade(iframe, DEMO_FILES[which].after);
+          return;
+        }
+
+        // First time for THIS demo: show unique branded "generating" screen briefly
+        ensureLoader(layout);
+        demoSeenGenerate[which] = true;
+
+        layout.classList.add('is-generating');
+        btn.disabled = true;
+
+        // Set label early so the user sees intent immediately
+        if (stateEl) stateEl.textContent = 'Generating…';
+        if (textEl) textEl.textContent = 'Generating…';
+
+        // Delay length: tuned to feel "real" but not annoying
+        const delayMs = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          ? 350
+          : 950;
+
+        setTimeout(() => {
+          layout.classList.remove('is-generating');
+          layout.classList.add('is-improved');
+
+          if (stateEl) stateEl.textContent = 'After';
+          if (textEl) textEl.textContent = 'Back to before';
+
+          setIframeSrcWithFade(iframe, DEMO_FILES[which].after);
+
+          btn.disabled = false;
+        }, delayMs);
       });
     });
-  })();
-
-  (function attachCTAParallax(){
-    const cta = document.getElementById('ws-cta-final');
-    if (!cta) return;
-
-    const shapes = cta.querySelectorAll('.ws-cta-shape');
-    let lastScrollY = window.scrollY;
-    let lastProgress = 0;
-
-    function baseProgressFromRect(rect){
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      const start = vh;
-      const end = vh * 0.2;
-      const t = (start - rect.top) / (start - end);
-      return Math.max(0, Math.min(1, t));
-    }
-
-    function update(){
-      const rect = cta.getBoundingClientRect();
-      const base = baseProgressFromRect(rect);
-
-      const scrollY = window.scrollY;
-      const down = scrollY >= lastScrollY;
-
-      let progress = down ? Math.max(lastProgress, base) : base;
-      progress = Math.max(0, Math.min(1, progress));
-
-      lastProgress = progress;
-      lastScrollY = scrollY;
-
-      shapes.forEach((shape) => {
-        const maxX = parseFloat(shape.getAttribute('data-x')) || 0;
-        const maxY = parseFloat(shape.getAttribute('data-y')) || 0;
-        const tx = maxX * progress;
-        const ty = maxY * progress;
-        const rot = getComputedStyle(shape).getPropertyValue('--rot') || '0deg';
-        shape.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot})`;
-      });
-    }
-
-    window.addEventListener('scroll', update, { passive:true });
-    window.addEventListener('resize', update);
-    update();
   })();
 
   /* ============================================================
