@@ -100,7 +100,6 @@
       display:block;
       object-fit:cover;
     }
-    /* In case logo.jpg isn't present yet, keep a soft “glass” cue */
     .ws-logo-mark::after{
       content:"";
       position:absolute;
@@ -186,8 +185,8 @@
       align-items:center;
       position:relative;
       overflow: visible;
-      isolation:isolate; /* clean stacking context */
-      padding: 22px 10px; /* ensures floats don't sit against edges */
+      isolation:isolate;
+      padding: 22px 10px;
     }
 
     .ws-hero-side{
@@ -253,7 +252,6 @@
       margin:0 0 20px;
     }
 
-    /* “Selection” animation on hero title */
     .ws-hero-title-highlight-bar{
       position:absolute;
       left:0;
@@ -465,7 +463,6 @@
     .ws-selection-handles .bm{ bottom:-7px; left: calc(50% - 7px); }
     .ws-selection-handles .br{ bottom:-7px; right:-7px; }
 
-    /* “Object” rendered in CSS */
     .ws-stock-object{
       width: 168px;
       height: 128px;
@@ -544,7 +541,8 @@
       margin:0;
     }
 
-    /* Bring back the static “before/after” example pairs */
+    /* Static before/after example pairs */
+
     .ws-layout-gallery{
       display:grid;
       grid-template-columns: minmax(0,1fr);
@@ -603,7 +601,6 @@
       font-weight:500;
     }
 
-    /* “Before” shapes (muted / grayscale-ish) */
     .mono-lines{ display:grid; gap:6px; }
     .mono-lines .line{
       height:6px;
@@ -622,7 +619,6 @@
     .mono-lines .line:nth-child(3){ width:90%; }
     .mono-lines .line:nth-child(4){ width:90%; }
 
-    /* “After” tiles */
     .ws-layout-after-grid{
       display:grid;
       gap:6px;
@@ -666,23 +662,24 @@
     .ws-block.medium{ height:24px; }
     .ws-block.tall{ height:42px; }
 
-    /* Carousel “abstract/animation” placeholder */
-    .ws-carousel-art{
+    /* Animated band (no text, not a placeholder) */
+    .ws-spark-band{
+      margin-top:16px;
       border-radius:var(--ws-radius-lg);
       border:1px solid rgba(182,196,229,0.85);
       background:#fff;
       overflow:hidden;
-      min-height:160px; /* keep aspect */
+      min-height:160px; /* keep “aspect feel” */
       position:relative;
       box-shadow:0 18px 30px rgba(10,22,60,0.06);
     }
-    .ws-carousel-art::before{
+    .ws-spark-band::before{
       content:"";
       position:absolute;
-      inset:-60px;
+      inset:-70px;
       background:
-        radial-gradient(circle at 20% 25%, rgba(47,107,255,0.22), transparent 55%),
-        radial-gradient(circle at 80% 35%, rgba(124,92,255,0.18), transparent 58%),
+        radial-gradient(circle at 18% 30%, rgba(47,107,255,0.22), transparent 55%),
+        radial-gradient(circle at 84% 38%, rgba(124,92,255,0.20), transparent 58%),
         radial-gradient(circle at 55% 80%, rgba(17,64,166,0.12), transparent 60%),
         repeating-linear-gradient(
           -45deg,
@@ -693,45 +690,74 @@
         );
       filter: saturate(1.05);
       transform: translate3d(0,0,0);
-      animation: ws-art-drift 7.5s ease-in-out infinite;
+      animation: ws-band-drift 7.5s ease-in-out infinite;
     }
-    .ws-carousel-art::after{
+    .ws-spark-band::after{
       content:"";
       position:absolute;
-      inset:14px;
+      inset:12px;
       border-radius:16px;
-      border:1px solid rgba(182,196,229,0.7);
+      border:1px solid rgba(182,196,229,0.65);
       background:
-        linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.35));
+        linear-gradient(135deg, rgba(255,255,255,0.62), rgba(255,255,255,0.22));
       backdrop-filter: blur(10px);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
       pointer-events:none;
     }
-    .ws-carousel-art-inner{
-      position:relative;
+
+    /* subtle floating “sparks” */
+    .ws-band-sparks{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
       z-index:1;
-      height:100%;
-      min-height:160px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:18px 16px;
-      text-align:center;
-      color: var(--ws-text-muted);
-      font-size:0.9rem;
     }
-    @keyframes ws-art-drift{
+    .ws-spark{
+      position:absolute;
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      background: rgba(47,107,255,0.25);
+      box-shadow: 0 10px 20px rgba(10,22,60,0.10);
+      animation: ws-spark-float 5.2s ease-in-out infinite;
+    }
+    .ws-spark:nth-child(2){
+      width:14px; height:14px;
+      background: rgba(124,92,255,0.22);
+      animation-duration: 6.2s;
+      animation-delay: -1.8s;
+    }
+    .ws-spark:nth-child(3){
+      width:8px; height:8px;
+      background: rgba(17,64,166,0.18);
+      animation-duration: 4.6s;
+      animation-delay: -0.9s;
+    }
+    .ws-spark:nth-child(4){
+      width:12px; height:12px;
+      background: rgba(47,107,255,0.18);
+      animation-duration: 7.1s;
+      animation-delay: -3.1s;
+    }
+
+    @keyframes ws-band-drift{
       0%   { transform: translate(-10px, -8px) rotate(-0.6deg); }
       50%  { transform: translate(10px, 10px) rotate(0.6deg); }
       100% { transform: translate(-10px, -8px) rotate(-0.6deg); }
     }
+    @keyframes ws-spark-float{
+      0%   { transform: translate3d(0,0,0); opacity:0.75; }
+      50%  { transform: translate3d(0,-14px,0); opacity:1; }
+      100% { transform: translate3d(0,0,0); opacity:0.75; }
+    }
 
     @media (prefers-reduced-motion: reduce){
-      .ws-carousel-art::before{ animation:none; }
+      .ws-spark-band::before{ animation:none; }
+      .ws-spark{ animation:none; }
       .ws-hero-title-selected .ws-hero-cursor{ animation:none; }
     }
 
-    /* Benefit sections */
+    /* Benefits blocks */
 
     .ws-benefit-section{ margin:60px 0; }
     .ws-benefit-layout{
@@ -770,7 +796,6 @@
     }
     .ws-benefit-text-block li{ margin:6px 0; }
 
-    /* Outcome images (taller aspect without making section larger) */
     .ws-outcome-visual{
       border-radius:var(--ws-radius-lg);
       border:1px solid rgba(182,196,229,0.85);
@@ -780,7 +805,7 @@
     }
     .ws-outcome-visual .ws-outcome-media{
       width:100%;
-      height: 300px; /* taller aspect */
+      height: 300px;
       display:block;
       object-fit:cover;
     }
@@ -961,7 +986,6 @@
       font-weight:500;
       white-space:nowrap;
     }
-    /* Removed: the “At a glance” placeholder block per request */
 
     /* Final CTA */
 
@@ -1096,7 +1120,6 @@
   <div class="ws-header-inner">
     <a href="#" class="ws-logo" aria-label="WebSpark home">
       <div class="ws-logo-mark" aria-hidden="true">
-        <!-- assets/logo.jpg -->
         <img src="assets/logo.jpg" alt="" />
       </div>
       <span>WebSpark</span>
@@ -1119,7 +1142,6 @@
   <section class="ws-hero" aria-labelledby="hero-title">
     <div class="ws-hero-shell">
 
-      <!-- Top-left selected “object” -->
       <div class="ws-hero-float tl" aria-hidden="true">
         <div class="ws-selection">
           <div class="ws-selection-handles" aria-hidden="true">
@@ -1131,7 +1153,6 @@
         </div>
       </div>
 
-      <!-- Left: BEFORE -->
       <div class="ws-hero-side ws-hero-side-left" aria-hidden="true">
         <div class="ws-hero-side-inner">
           <div class="ws-hero-frame">
@@ -1154,7 +1175,6 @@
         </div>
       </div>
 
-      <!-- Center hero copy -->
       <div class="ws-hero-center">
         <div class="ws-hero-title-wrap" id="ws-hero-title-wrap">
           <div class="ws-hero-title-highlight-bar" aria-hidden="true"></div>
@@ -1180,7 +1200,6 @@
         </div>
       </div>
 
-      <!-- Right: AFTER -->
       <div class="ws-hero-side ws-hero-side-right" aria-hidden="true">
         <div class="ws-hero-side-inner">
           <div class="ws-hero-frame">
@@ -1208,7 +1227,6 @@
         </div>
       </div>
 
-      <!-- Bottom-right selected “text” -->
       <div class="ws-hero-float br" aria-hidden="true">
         <div class="ws-selection">
           <div class="ws-selection-handles" aria-hidden="true">
@@ -1223,7 +1241,6 @@
     </div>
   </section>
 
-  <!-- Bring back static before/after example pairs -->
   <section id="examples" aria-labelledby="examples-title">
     <div class="ws-section-header">
       <div class="ws-section-kicker">Layout transformations</div>
@@ -1234,7 +1251,6 @@
     </div>
 
     <div class="ws-layout-gallery">
-      <!-- Pair A -->
       <article class="ws-layout-pair" data-variant="a" aria-label="Homepage layout example">
         <div class="ws-layout-before">
           <div class="ws-layout-label">Before</div>
@@ -1262,7 +1278,6 @@
         </div>
       </article>
 
-      <!-- Pair B -->
       <article class="ws-layout-pair" data-variant="b" aria-label="Services layout example">
         <div class="ws-layout-before">
           <div class="ws-layout-label">Before</div>
@@ -1290,7 +1305,6 @@
         </div>
       </article>
 
-      <!-- Pair C -->
       <article class="ws-layout-pair" data-variant="c" aria-label="Content layout example">
         <div class="ws-layout-before">
           <div class="ws-layout-label">Before</div>
@@ -1316,12 +1330,13 @@
       </article>
     </div>
 
-    <!-- Carousel placeholder replaced with abstract animated “panel” (aspect preserved) -->
-    <div style="margin-top:16px;">
-      <div class="ws-carousel-art" aria-label="Abstract preview panel">
-        <div class="ws-carousel-art-inner">
-          Abstract preview area (kept at the same aspect). Replace with a real carousel later if desired.
-        </div>
+    <!-- Now: intentional animated band (no placeholder text) -->
+    <div class="ws-spark-band" aria-hidden="true">
+      <div class="ws-band-sparks">
+        <span class="ws-spark" style="top:22%; left:18%;"></span>
+        <span class="ws-spark" style="top:62%; left:36%;"></span>
+        <span class="ws-spark" style="top:34%; left:68%;"></span>
+        <span class="ws-spark" style="top:70%; left:82%;"></span>
       </div>
     </div>
   </section>
@@ -1336,7 +1351,6 @@
     </div>
   </section>
 
-  <!-- Outcome 01 -->
   <section class="ws-benefit-section" aria-labelledby="b1">
     <div class="ws-benefit-layout">
       <div class="ws-benefit-text-block">
@@ -1360,7 +1374,6 @@
     </div>
   </section>
 
-  <!-- Outcome 02 -->
   <section class="ws-benefit-section" aria-labelledby="b2">
     <div class="ws-benefit-layout">
       <figure class="ws-outcome-visual">
@@ -1384,7 +1397,6 @@
     </div>
   </section>
 
-  <!-- Outcome 03 -->
   <section class="ws-benefit-section" aria-labelledby="b3">
     <div class="ws-benefit-layout">
       <div class="ws-benefit-text-block">
@@ -1408,7 +1420,6 @@
     </div>
   </section>
 
-  <!-- Outcome 04 -->
   <section class="ws-benefit-section" aria-labelledby="b4">
     <div class="ws-benefit-layout">
       <figure class="ws-outcome-visual">
@@ -1432,7 +1443,6 @@
     </div>
   </section>
 
-  <!-- Outcome 05 -->
   <section class="ws-benefit-section" aria-labelledby="b5">
     <div class="ws-benefit-layout">
       <div class="ws-benefit-text-block">
@@ -1615,7 +1625,6 @@
 </div>
 
 <script>
-  // Footer year
   document.getElementById('ws-year').textContent = new Date().getFullYear();
 
   // Hero selection animation + font upgrade
@@ -1624,12 +1633,10 @@
     var cursorEl = titleWrap ? titleWrap.querySelector('.ws-hero-cursor') : null;
     if (!titleWrap) return;
 
-    // Step 1: selection highlight + cursor blink
     setTimeout(function(){
       titleWrap.classList.add('ws-hero-title-selected');
     }, 400);
 
-    // Step 2: swap hero font to Montserrat
     setTimeout(function(){
       document.documentElement.style.setProperty(
         '--ws-hero-font',
@@ -1637,14 +1644,12 @@
       );
     }, 1100);
 
-    // Step 3: fade out highlight and ensure cursor doesn't get stuck
     setTimeout(function(){
       titleWrap.classList.add('ws-hero-title-done');
       if (cursorEl) cursorEl.style.opacity = '0';
     }, 1600);
   });
 
-  // Demo iframes
   const DEMO_FILES = {
     coffee: { before: 'demos/coffee-before.html', after: 'demos/coffee-after.html' },
     game:   { before: 'demos/game-before.html',   after: 'demos/game-after.html' }
@@ -1680,7 +1685,6 @@
     });
   })();
 
-  // Final CTA shape scroll effect (monotonic expansion on scroll down)
   (function attachCTAParallax(){
     const cta = document.getElementById('ws-cta-final');
     if (!cta) return;
