@@ -886,6 +886,111 @@
       white-space:nowrap;
     }
 
+    /* Mini process visual (filled) */
+    .ws-process-mini{
+      margin-top: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(200,210,235,0.9);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(83,132,255,0.12), transparent 48%),
+        radial-gradient(circle at 85% 85%, rgba(17,64,166,0.10), transparent 50%),
+        rgba(255,255,255,0.9);
+      overflow:hidden;
+      height: 78px;
+      position:relative;
+    }
+    
+    .ws-process-flow{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 12px;
+      gap: 10px;
+    }
+    
+    .ws-proc-box{
+      flex: 0 0 auto;
+      width: 72px;
+      height: 52px;
+      border-radius: 14px;
+      border: 1px solid rgba(170,186,224,0.75);
+      background: rgba(245,248,255,0.95);
+      box-shadow: 0 12px 20px rgba(10,22,60,0.06);
+      position:relative;
+      overflow:hidden;
+    }
+    
+    .ws-proc-box::after{
+      content:"";
+      position:absolute;
+      left: 10px;
+      top: 12px;
+      width: 46px;
+      height: 8px;
+      border-radius:999px;
+      background: rgba(0,0,0,0.10);
+    }
+    
+    .ws-proc-box::before{
+      content:"";
+      position:absolute;
+      left: 10px;
+      top: 26px;
+      width: 32px;
+      height: 6px;
+      border-radius:999px;
+      background: rgba(0,0,0,0.08);
+    }
+    
+    .ws-proc-arrow{
+      flex: 1 1 auto;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        rgba(17,64,166,0.22),
+        rgba(47,107,255,0.65),
+        rgba(124,92,255,0.22)
+      );
+      border-radius:999px;
+      position:relative;
+      overflow:hidden;
+    }
+    
+    .ws-proc-arrow::after{
+      content:"";
+      position:absolute;
+      top: -6px;
+      left: -28px;
+      width: 28px;
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(47,107,255,0.45);
+      filter: blur(0.2px);
+      animation: ws-scan 1.8s ease-in-out infinite;
+    }
+    
+    @keyframes ws-scan{
+      0%{ transform: translateX(0); opacity:0.0; }
+      20%{ opacity:0.85; }
+      80%{ opacity:0.85; }
+      100%{ transform: translateX(calc(100% + 40px)); opacity:0; }
+    }
+    
+    .ws-proc-box.good{
+      background: linear-gradient(145deg, #ffffff, #eef1ff);
+      border-color: rgba(140,160,220,0.9);
+    }
+    
+    .ws-proc-box.good::after{ background: rgba(17,64,166,0.82); }
+    .ws-proc-box.good::before{ background: rgba(47,107,255,0.50); }
+    
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .ws-proc-arrow::after{ animation: none; opacity: 0.55; }
+    }
+
     /* Final CTA */
 
     .ws-cta-final{
@@ -1508,6 +1613,15 @@
             <span class="ws-track-pill">Reduced</span>
           </div>
         </div>
+
+        <div class="ws-process-mini" aria-label="Mini process animation">
+          <div class="ws-process-flow">
+            <div class="ws-proc-box"></div>
+            <div class="ws-proc-arrow"></div>
+            <div class="ws-proc-box good"></div>
+          </div>
+        </div>
+
       </aside>
     </div>
   </section>
