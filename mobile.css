@@ -250,3 +250,62 @@ section {
     height: 190px;
   }
 }
+
+/* MOBILE ONLY: remove the floating hero overlays that sit on top of content */
+@media (max-width: 900px){
+  .ws-hero-float{
+    display: none !important;
+  }
+}
+
+/* MOBILE ONLY: main page layout polish */
+@media (max-width: 900px){
+
+  /* Give the page a little more breathing room */
+  .ws-page{
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* Hero: prevent cramped look */
+  .ws-hero{
+    padding: 26px 0 18px;
+  }
+
+  .ws-hero-title{
+    max-width: 22ch;          /* slightly wider on mobile */
+    font-size: clamp(2.0rem, 7.2vw, 2.6rem);
+  }
+
+  .ws-hero-sub{
+    max-width: 46ch;
+    font-size: 0.95rem;
+  }
+
+  /* Buttons: better tap targets (common mobile UX guidance is ~44px tall) :contentReference[oaicite:0]{index=0} */
+  .ws-btn-primary,
+  .ws-nav-cta,
+  .ws-demo-toggle{
+    min-height: 44px;
+  }
+
+  /* Demo section: make iframes feel less “squished” */
+  .ws-demo-iframe{
+    height: 360px;
+  }
+
+  /* Benefits: reduce vertical bloat but keep it readable */
+  .ws-benefit-section{
+    margin: 42px 0;
+  }
+  .ws-benefit-layout{
+    gap: 18px;
+  }
+
+  /* Final CTA: avoid huge empty space on short screens */
+  .ws-cta-final{
+    min-height: auto;
+    padding: 24px 0;
+  }
+}
+
