@@ -1,0 +1,252 @@
+/* ============================================================
+   WebSpark — MOBILE ONLY OVERRIDES
+   Loaded only when (max-width: 900px) via <link media="...">
+   Goal: improve mobile layout without changing desktop.
+   ============================================================ */
+
+/* --- Mobile sanity defaults --- */
+html, body {
+  overflow-x: hidden;
+}
+
+.ws-page {
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: 44px;
+}
+
+/* --- Header: make it tighter + prevent wrapping collisions --- */
+header.ws-header {
+  backdrop-filter: blur(10px);
+}
+
+.ws-header-inner {
+  padding: 0 14px;
+  gap: 10px;
+}
+
+.ws-logo {
+  gap: 8px;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.ws-logo-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 12px;
+}
+
+.ws-nav-cta {
+  padding: 8px 12px;
+  font-size: 0.86rem;
+  white-space: nowrap;
+}
+
+/* --- Hero: remove overflow issues + make it feel intentional --- */
+.ws-hero {
+  padding: 22px 0 18px;
+  min-height: auto;
+}
+
+/* Reduce “stuff flying around” on small phones so it doesn't clip */
+.ws-hero-float {
+  display: none;
+}
+
+/* Make center content breathe */
+.ws-hero-center {
+  padding: 0 2px;
+}
+
+.ws-hero-title {
+  font-size: clamp(2.0rem, 7.2vw, 2.5rem);
+  max-width: 22ch;
+  margin-bottom: 12px;
+}
+
+.ws-hero-sub {
+  font-size: 0.95rem;
+  max-width: 44ch;
+  margin-bottom: 16px;
+}
+
+/* Buttons: thumb-friendly (WCAG target size guidance) */
+.ws-btn-primary,
+.ws-demo-toggle,
+.ws-nav-cta {
+  min-height: 44px;
+}
+/* WCAG target size guidance varies by version; this just makes mobile feel right. :contentReference[oaicite:2]{index=2} */
+
+.ws-hero-actions {
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.ws-hero-meta {
+  gap: 10px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+.ws-hero-meta-divider {
+  display: none; /* avoid awkward tiny divider wraps */
+}
+
+/* Side frames: make them full-width cards on mobile (they already stack) */
+.ws-hero-side {
+  justify-content: stretch;
+}
+.ws-hero-side-inner {
+  max-width: 100%;
+}
+.ws-hero-frame {
+  padding: 12px 12px 14px;
+}
+.ws-hero-url {
+  font-size: 0.72rem;
+}
+
+/* --- Sections: tighten vertical rhythm on mobile --- */
+section {
+  margin: 26px 0;
+}
+
+.ws-section-title {
+  font-size: 1.32rem;
+  line-height: 1.15;
+}
+
+.ws-section-sub {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* --- Example pairs: reduce density + improve tap/scan --- */
+.ws-layout-pair {
+  padding: 12px 12px 14px;
+  gap: 12px;
+}
+.ws-layout-before,
+.ws-layout-after {
+  padding: 10px;
+}
+
+/* --- Benefits: ensure images don’t dominate --- */
+.ws-benefit-section {
+  margin: 38px 0;
+}
+
+.ws-benefit-layout {
+  gap: 18px;
+}
+
+.ws-benefit-text-block {
+  font-size: 0.98rem;
+  max-width: 60ch;
+}
+
+.ws-outcome-media {
+  height: 210px;
+}
+
+/* --- Demo: make iframes feel like “real cards” on phones --- */
+.ws-demo-grid {
+  gap: 14px;
+}
+
+.ws-demo-card {
+  padding: 12px 12px 14px;
+}
+
+.ws-demo-topline {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.ws-demo-toggle {
+  width: 100%;
+  justify-content: center;
+}
+
+.ws-demo-iframe {
+  height: 260px;
+}
+
+/* Loader sizing on small screens */
+.ws-demo-loader-inner {
+  width: min(320px, 92%);
+}
+
+/* --- How it works: remove cramped min-heights --- */
+.ws-step {
+  min-height: unset;
+  padding: 12px 12px;
+}
+
+.ws-step-title {
+  font-size: 0.98rem;
+}
+
+.ws-step-text {
+  font-size: 0.90rem;
+  line-height: 1.5;
+}
+
+/* --- Final CTA: reduce huge min-height so it doesn’t feel empty --- */
+.ws-cta-final {
+  min-height: auto;
+  padding: 18px 0;
+}
+
+.ws-cta-final-inner {
+  padding: 18px 16px 20px;
+  gap: 10px;
+}
+
+.ws-cta-final-title {
+  font-size: 1.5rem;
+  line-height: 1.12;
+}
+
+.ws-cta-final-sub {
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+/* --- Floating redesign controls: keep it from covering content --- */
+.ws-floating-redesign {
+  right: 12px;
+  bottom: 12px;
+  gap: 8px;
+  max-width: min(520px, calc(100vw - 24px));
+}
+
+.ws-floating-redesign button {
+  padding: 10px 12px;
+  font-size: 0.86rem;
+}
+
+/* --- Ultra-small phones --- */
+@media (max-width: 420px) {
+  .ws-header-inner {
+    padding: 0 12px;
+  }
+
+  .ws-logo span {
+    display: none; /* icon-only logo on tiny screens */
+  }
+
+  .ws-hero-title {
+    font-size: clamp(1.85rem, 7.8vw, 2.2rem);
+  }
+
+  .ws-demo-iframe {
+    height: 240px;
+  }
+
+  .ws-outcome-media {
+    height: 190px;
+  }
+}
