@@ -10,36 +10,210 @@
     --bg:#fbf7f1; --ink:#1e1b16; --muted:#6b6258; --card:#ffffff;
     --accent:#7b4a2a; --line:rgba(30,27,22,.14); --shadow:0 18px 40px rgba(30,27,22,.10); --r:18px;
   }
-  html,body{margin:0;height:100%;background: radial-gradient(circle at top, #ffffff 0, var(--bg) 56%, #f0e6d8 100%);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;}
+
+  html,body{
+    margin:0;
+    height:100%;
+    background: radial-gradient(circle at top, #ffffff 0, var(--bg) 56%, #f0e6d8 100%);
+    color:var(--ink);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;
+  }
+
   .wrap{padding:14px;}
-  .top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.7);backdrop-filter: blur(10px);}
-  .brand{display:flex;align-items:center;gap:10px;}
-  .mark{width:28px;height:28px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#2c1b12);box-shadow:0 10px 20px rgba(123,74,42,.25);}
-  .name{font-family:Fraunces,serif;font-weight:700;letter-spacing:.02em;}
-  .nav{display:flex;gap:10px;color:var(--muted);font-size:13px;}
+  .top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px 12px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:rgba(255,255,255,.7);
+    backdrop-filter: blur(10px);
+  }
+  .brand{display:flex;align-items:center;gap:10px;min-width:0;}
+  .mark{
+    width:28px;height:28px;border-radius:10px;
+    background:linear-gradient(135deg,var(--accent),#2c1b12);
+    box-shadow:0 10px 20px rgba(123,74,42,.25);
+    flex:0 0 auto;
+  }
+  .name{
+    font-family:Fraunces,serif;
+    font-weight:700;
+    letter-spacing:.02em;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .nav{display:flex;gap:10px;color:var(--muted);font-size:13px;flex:0 0 auto;}
   .nav span{padding:6px 10px;border-radius:999px;border:1px solid transparent;}
   .nav span:nth-child(1){border-color:rgba(123,74,42,.18);background:rgba(123,74,42,.06);color:var(--ink);}
-  .hero{margin-top:12px;border-radius:var(--r);background:linear-gradient(135deg,#ffffff, #f7efe3);border:1px solid var(--line);box-shadow: var(--shadow);padding:14px;}
+
+  .hero{
+    margin-top:12px;
+    border-radius:var(--r);
+    background:linear-gradient(135deg,#ffffff, #f7efe3);
+    border:1px solid var(--line);
+    box-shadow: var(--shadow);
+    padding:14px;
+  }
+
   .kicker{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);}
   h1{margin:6px 0 8px;font-family:Fraunces,serif;font-size:26px;line-height:1.05;}
   .sub{color:var(--muted);font-size:13.5px;line-height:1.55;max-width:44ch;}
+
   .actions{margin-top:10px;display:flex;gap:10px;align-items:center;}
-  .btn{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;border:1px solid rgba(123,74,42,.28);background:#fff;color:var(--ink);font-weight:600;font-size:13px;}
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:9px 12px;
+    border-radius:999px;
+    border:1px solid rgba(123,74,42,.28);
+    background:#fff;
+    color:var(--ink);
+    font-weight:600;
+    font-size:13px;
+    user-select:none;
+  }
   .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+
   .chips{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;}
-  .chip{font-size:12px;color:var(--muted);padding:6px 10px;border-radius:999px;border:1px solid rgba(30,27,22,.12);background:rgba(255,255,255,.6);}
+  .chip{
+    font-size:12px;
+    color:var(--muted);
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid rgba(30,27,22,.12);
+    background:rgba(255,255,255,.6);
+  }
+
   .grid{margin-top:12px;display:grid;grid-template-columns:1.2fr 1fr;gap:12px;}
-  .menu{border-radius:var(--r);border:1px solid var(--line);background:rgba(255,255,255,.7);padding:12px;}
+
+  .menu{
+    border-radius:var(--r);
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.7);
+    padding:12px;
+  }
   .menu h2{margin:0 0 8px;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
-  .item{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid rgba(30,27,22,.10);}
+
+  .item{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+    padding:8px 0;
+    border-top:1px solid rgba(30,27,22,.10);
+  }
   .item:first-of-type{border-top:none;}
   .item b{display:block;font-size:13px;}
   .item span{display:block;font-size:12px;color:var(--muted);margin-top:2px;}
-  .price{font-weight:700;color:var(--accent);}
-  .side{border-radius:var(--r);border:1px solid var(--line);background:linear-gradient(135deg,#fff, #f6ebdc);padding:12px;display:grid;gap:10px;}
-  .photo{height:88px;border-radius:14px;background:linear-gradient(135deg,#d9b38c,#7b4a2a);position:relative;overflow:hidden;}
-  .photo:after{content:"";position:absolute;inset:-40px;background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 60%);}
+  .price{font-weight:700;color:var(--accent);white-space:nowrap;}
+
+  .side{
+    border-radius:var(--r);
+    border:1px solid var(--line);
+    background:linear-gradient(135deg,#fff, #f6ebdc);
+    padding:12px;
+    display:grid;
+    gap:10px;
+  }
+  .photo{
+    height:88px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#d9b38c,#7b4a2a);
+    position:relative;
+    overflow:hidden;
+  }
+  .photo:after{
+    content:"";
+    position:absolute;
+    inset:-40px;
+    background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 60%);
+  }
+
   .info{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:12px;}
+  .info b{color:#1e1b16;}
+
+  /* ============================================================
+     MOBILE ONLY (does not affect desktop)
+     ============================================================ */
+  @media (max-width: 520px){
+
+    .wrap{padding:12px;}
+
+    /* Top bar: avoid crowding */
+    .top{
+      padding:10px 10px;
+      gap:10px;
+    }
+    .nav{
+      display:none; /* keep desktop nav; mobile stays clean */
+    }
+
+    /* Hero: slightly tighter spacing + better type scaling */
+    .hero{
+      padding:14px;
+    }
+    .kicker{
+      font-size:11.5px;
+      letter-spacing:.16em;
+    }
+    h1{
+      font-size:clamp(22px, 7vw, 28px);
+      line-height:1.06;
+      margin:8px 0 10px;
+    }
+    .sub{
+      font-size:14px;
+      line-height:1.6;
+      max-width:56ch;
+    }
+
+    /* Buttons: easier to tap + allow wrapping */
+    .actions{
+      flex-direction:column;
+      align-items:stretch;
+      gap:10px;
+    }
+    .btn{
+      width:100%;
+      min-height:44px;
+      padding:12px 14px;
+      font-size:14px;
+    }
+
+    /* Chips: keep them tidy */
+    .chips{gap:8px;}
+    .chip{
+      font-size:12.5px;
+      padding:7px 10px;
+    }
+
+    /* Grid: stack columns */
+    .grid{
+      grid-template-columns:1fr;
+    }
+
+    /* Menu items: prevent awkward wrapping */
+    .item b{font-size:14px;}
+    .item span{font-size:12.5px;}
+    .price{font-size:14px;}
+
+    /* Side card: give the “photo” more presence */
+    .photo{
+      height:110px;
+    }
+
+    /* Info rows: better balance on narrow screens */
+    .info{
+      font-size:12.5px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -73,16 +247,25 @@
       <div class="grid">
         <div class="menu">
           <h2>Popular</h2>
-          <div class="item"><div><b>Brown Sugar Latte</b><span>espresso • oat • cinnamon</span></div><div class="price">$5.50</div></div>
-          <div class="item"><div><b>Cold Brew</b><span>smooth • low-acid</span></div><div class="price">$4.75</div></div>
-          <div class="item"><div><b>Butter Croissant</b><span>flaky • baked daily</span></div><div class="price">$3.95</div></div>
+          <div class="item">
+            <div><b>Brown Sugar Latte</b><span>espresso • oat • cinnamon</span></div>
+            <div class="price">$5.50</div>
+          </div>
+          <div class="item">
+            <div><b>Cold Brew</b><span>smooth • low-acid</span></div>
+            <div class="price">$4.75</div>
+          </div>
+          <div class="item">
+            <div><b>Butter Croissant</b><span>flaky • baked daily</span></div>
+            <div class="price">$3.95</div>
+          </div>
         </div>
 
         <div class="side">
           <div class="photo" aria-hidden="true"></div>
           <div class="info">
-            <div><b style="color:#1e1b16;">Main St.</b><div>2 min walk</div></div>
-            <div><b style="color:#1e1b16;">Today</b><div>Light roast</div></div>
+            <div><b>Main St.</b><div>2 min walk</div></div>
+            <div><b>Today</b><div>Light roast</div></div>
           </div>
         </div>
       </div>
