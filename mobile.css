@@ -309,3 +309,82 @@ section {
   }
 }
 
+@media (max-width: 900px){
+
+  /* Dark themes: demo preview should not stay white */
+  html.ws-theme-cyber .ws-demo-viewport,
+  html.ws-theme-noir .ws-demo-viewport{
+    background: rgba(10,14,26,0.80);
+    border-color: rgba(255,255,255,0.14);
+  }
+
+  html.ws-theme-cyber .ws-demo-iframe,
+  html.ws-theme-noir .ws-demo-iframe{
+    background: transparent; /* avoid white flash edges */
+  }
+
+  /* Make the label/tag feel consistent on dark themes */
+  html.ws-theme-cyber .ws-demo-tag,
+  html.ws-theme-noir .ws-demo-tag{
+    background: rgba(255,255,255,0.08);
+    color: var(--ws-accent);
+    border: 1px solid rgba(255,255,255,0.10);
+  }
+}
+
+@media (max-width: 900px){
+
+  /* Dark themes: Process mini visual should not stay light */
+  html.ws-theme-cyber .ws-process-mini,
+  html.ws-theme-noir .ws-process-mini{
+    background: rgba(12,16,28,0.72);
+    border-color: rgba(255,255,255,0.14);
+  }
+
+  html.ws-theme-cyber .ws-proc-box,
+  html.ws-theme-noir .ws-proc-box{
+    background: rgba(18,24,42,0.78);
+    border-color: rgba(255,255,255,0.14);
+  }
+
+  html.ws-theme-cyber .ws-proc-box::after,
+  html.ws-theme-noir .ws-proc-box::after{
+    background: rgba(255,255,255,0.14);
+  }
+
+  html.ws-theme-cyber .ws-proc-box::before,
+  html.ws-theme-noir .ws-proc-box::before{
+    background: rgba(255,255,255,0.10);
+  }
+
+  html.ws-theme-cyber .ws-proc-arrow,
+  html.ws-theme-noir .ws-proc-arrow{
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--ws-accent) 25%, transparent),
+      color-mix(in srgb, var(--ws-attn) 65%, transparent),
+      color-mix(in srgb, var(--ws-accent) 25%, transparent)
+    );
+  }
+
+  html.ws-theme-cyber .ws-proc-arrow::after,
+  html.ws-theme-noir .ws-proc-arrow::after{
+    background: color-mix(in srgb, var(--ws-attn) 55%, transparent);
+  }
+
+  html.ws-theme-cyber .ws-proc-box.good,
+  html.ws-theme-noir .ws-proc-box.good{
+    background: rgba(18,24,42,0.90);
+    border-color: color-mix(in srgb, var(--ws-accent) 35%, rgba(255,255,255,0.14));
+  }
+
+  html.ws-theme-cyber .ws-proc-box.good::after,
+  html.ws-theme-noir .ws-proc-box.good::after{
+    background: color-mix(in srgb, var(--ws-accent) 75%, transparent);
+  }
+
+  html.ws-theme-cyber .ws-proc-box.good::before,
+  html.ws-theme-noir .ws-proc-box.good::before{
+    background: color-mix(in srgb, var(--ws-attn) 55%, transparent);
+  }
+}
