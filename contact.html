@@ -7,6 +7,23 @@
   <link rel="icon" href="assets/favicon.png" type="image/png">
   <title>WebSpark – Turn a Good Site into a Great One</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Get in touch with WebSpark — send a message to start your website redesign.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.web-spark.net/contact.html">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()">
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    base-uri 'self';
+    object-src 'none';
+    frame-ancestors 'none';
+    upgrade-insecure-requests;
+    img-src 'self' data:;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' data: https://fonts.gstatic.com;
+    script-src 'self' 'unsafe-inline';
+    connect-src 'self' https://formsubmit.co;
+  ">
 
   <!-- Typography -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -1435,6 +1452,7 @@
               <a class="ws-btn-ghost" href="mailto:mcsite@web-spark.net?subject=WebSpark%20Inquiry">Email instead</a>
             </div>
 </form>
+          <div id="formStatus" style="display:none; margin-top:14px; padding:14px 16px; border-radius:12px; font-size:0.92rem; line-height:1.5;"></div>
         </div>
 
         <aside class="ws-contact-card ws-contact-card--info">
@@ -1457,10 +1475,9 @@
 </main>
 
 <script>
-  // Static-site friendly: prefill an email via mailto on submit.
-  // Note: This opens the user's email client; it does not send directly from the page.
   (function () {
-    var form = document.getElementById('contactForm');
+    var form = document.getElementById('contact-form');
+    var statusEl = document.getElementById('formStatus');
     if (!form) return;
 
     form.addEventListener('submit', function (e) {
@@ -1470,29 +1487,58 @@
       var email = (document.getElementById('email') || { value: '' }).value.trim();
       var phone = (document.getElementById('phone') || { value: '' }).value.trim();
       var website = (document.getElementById('website') || { value: '' }).value.trim();
-      var goals = (document.getElementById('goals') || { value: '' }).value.trim();
+      var message = (document.getElementById('goals') || { value: '' }).value.trim();
 
-      // Basic validation
-      if (!name || !email || !goals) {
+      if (!name || !email || !message) {
         alert('Please fill in Name, Email, and your message.');
         return;
       }
 
-      var subject = 'WebSpark Inquiry';
-      var bodyLines = [
-        'Name: ' + name,
-        'Email: ' + email,
-        phone ? ('Phone: ' + phone) : '',
-        website ? ('Website: ' + website) : '',
-        '',
-        'Message:',
-        goals
-      ].filter(Boolean);
+      var submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending\u2026'; }
+      if (statusEl) statusEl.style.display = 'none';
 
-      var body = encodeURIComponent(bodyLines.join('\n'));
-      var href = 'mailto:mcsite@web-spark.net?subject=' + encodeURIComponent(subject) + '&body=' + body;
-
-      window.location.href = href;
+      fetch('https://formsubmit.co/ajax/mcsite@web-spark.net', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          phone: phone || '(not provided)',
+          website: website || '(not provided)',
+          message: message,
+          _subject: 'WebSpark Inquiry',
+          _captcha: 'false',
+          _template: 'table'
+        })
+      })
+      .then(function(res){ return res.json(); })
+      .then(function(result){
+        if (result.success) {
+          if (statusEl) {
+            statusEl.style.display = 'block';
+            statusEl.style.background = 'rgba(34,197,94,0.08)';
+            statusEl.style.border = '1px solid rgba(34,197,94,0.25)';
+            statusEl.style.color = '#166534';
+            statusEl.textContent = 'Message sent! We\u2019ll get back to you soon.';
+          }
+          form.reset();
+        } else {
+          throw new Error('fail');
+        }
+      })
+      .catch(function(){
+        if (statusEl) {
+          statusEl.style.display = 'block';
+          statusEl.style.background = 'rgba(239,68,68,0.08)';
+          statusEl.style.border = '1px solid rgba(239,68,68,0.25)';
+          statusEl.style.color = '#991b1b';
+          statusEl.textContent = 'Something went wrong. Please try again or email directly.';
+        }
+      })
+      .finally(function(){
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Send'; }
+      });
     });
   })();
 </script>
