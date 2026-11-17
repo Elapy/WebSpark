@@ -77,7 +77,7 @@ header.ws-header {
 .ws-nav-cta {
   min-height: 44px;
 }
-/* WCAG target size guidance varies by version; this just makes mobile feel right. :contentReference[oaicite:2]{index=2} */
+/* WCAG target size guidance varies by version; this just makes mobile feel right. */
 
 .ws-hero-actions {
   gap: 10px;
@@ -113,7 +113,7 @@ section {
 }
 
 .ws-section-title {
-  font-size: 1.32rem;
+  font-size: 1.55rem;
   line-height: 1.15;
 }
 
@@ -282,7 +282,7 @@ section {
     font-size: 0.95rem;
   }
 
-  /* Buttons: better tap targets (common mobile UX guidance is ~44px tall) :contentReference[oaicite:0]{index=0} */
+  /* Buttons: better tap targets (common mobile UX guidance is ~44px tall) */
   .ws-btn-primary,
   .ws-nav-cta,
   .ws-demo-toggle{
