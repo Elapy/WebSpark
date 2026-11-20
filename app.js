@@ -1,4 +1,5 @@
-  document.getElementById('ws-year').textContent = new Date().getFullYear();
+  var wsYearEl = document.getElementById('ws-year');
+  if (wsYearEl) wsYearEl.textContent = new Date().getFullYear();
 
   // Hero selection animation + font upgrade
   window.addEventListener('load', function(){

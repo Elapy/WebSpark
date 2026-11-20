@@ -1,5 +1,6 @@
 // WebSpark contact page: footer year + FormSubmit AJAX form handling.
-document.getElementById('ws-year').textContent = new Date().getFullYear();
+var wsYearEl = document.getElementById('ws-year');
+  if (wsYearEl) wsYearEl.textContent = new Date().getFullYear();
 
 (function () {
   var form = document.getElementById('contact-form');
@@ -37,7 +38,8 @@ document.getElementById('ws-year').textContent = new Date().getFullYear();
     })
       .then(function (res) { return res.json(); })
       .then(function (result) {
-        if (!result.success) throw new Error('fail');
+        // FormSubmit returns success as the string "true"/"false", and "false" is truthy — compare explicitly.
+        if (!(result.success === true || result.success === 'true')) throw new Error('fail');
         showStatus('success', 'Message sent! We\u2019ll get back to you soon.');
         form.reset();
       })
